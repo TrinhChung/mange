@@ -26,5 +26,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        //        $this->renderable(function (Throwable $e) {
+        //            if ($e instanceof \Illuminate\Validation\ValidationException) {
+        //                return response()->json([
+        //                    'message' => 'The given data was invalid.',
+        //                    'errors' => $e->errors(),
+        //                ], 422);
+        //            }
+        //        });
     }
 }
