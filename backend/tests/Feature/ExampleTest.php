@@ -7,13 +7,13 @@ use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_health_check_success(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/api/health_check');
 
         $response->assertStatus(200);
+        $response->assertJson([
+            'message' => 'OK',
+        ]);
     }
 }
