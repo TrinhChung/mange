@@ -15,8 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('email')->unique();
+            $table->string('avatar')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->comment('md5');
+            $table->enum('role', ['admin', 'user', 'translator']);
+            $table->boolean('active')->default(false);
+            $table->dateTime('activated_at')->nullable();
+            $table->string('active_token', 20);
+            $table->string('reset_token', 20)->nullable();
+            $table->dateTime('reset_sent_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
