@@ -1,0 +1,22 @@
+.auth-container {
+  justify-content: center;
+  align-content: center;
+  padding-top: 50px;
+  .wrap-box {
+    border: 1px solid var(--color-main);
+    padding: 40px;
+    border-radius: 10px;
+    .custom-register {
+      padding-right: 40px;
+      .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: var(--color-main);
+      }
+      .ant-tabs-tab:hover {
+        color: var(--color-main);
+      }
+      .ant-tabs-ink-bar {
+        background: var(--color-main);
+      }
+    }
+  }
+}
