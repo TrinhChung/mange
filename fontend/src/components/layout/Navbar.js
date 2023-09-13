@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext, memo } from "react";
-import { Layout, Row, Col, Dropdown, Modal, Image } from "antd";
-import { BellFilled, UserOutlined } from "@ant-design/icons";
+import { Layout, Row, Col, Dropdown, Modal, Input, Button } from "antd";
+import { BellFilled, UserOutlined, SearchOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../providers/authProvider";
 import { logoutService } from "../../services/Auth";
@@ -15,6 +14,13 @@ const Navbar = ({ data }) => {
   const [current, setCurrent] = useState("home");
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+
+  const [key, setKey] = useState(
+    searchParams.get("searchInput") ? searchParams.get("searchInput") : ""
+  );
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -79,40 +85,29 @@ const Navbar = ({ data }) => {
   return (
     <Header
       style={{
-        backgroundColor: "white",
+        backgroundColor: "var(--color-main)",
         padding: 0,
         margin: 0,
         position: "sticky",
         top: 0,
         width: "100%",
-        height: 60,
+        height: "var(--height-navbar)",
         zIndex: 1,
+        color: "white",
       }}
       className="box-shadow-bottom"
     >
       <Row>
-        <Col
-          span={5}
-          style={{
-            fontSize: 50,
-            fontWeight: "bold",
-            paddingLeft: 55,
-            color: "var(--color-main)",
-          }}
-        >
-          <Row style={{ justifyContent: "center" }}>
-            <Link
-              to={"/"}
-              style={{ color: "var(--color-main)" }}
-              onClick={() => setCurrent("home")}
-            >
-              {/* <Image src={LogoNavbar} height={50} preview={false} /> */}
-            </Link>
-          </Row>
-        </Col>
-        <Col span={14} style={{ height: 60 }}>
+        <Col span={12} style={{ height: 60, paddingLeft: 20 }}>
           <Menu
-            style={{ width: "100%", display: "flex", justifyContent: "center" }}
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "start",
+              height: 55,
+              backgroundColor: "var(--color-main)",
+              color: "white",
+            }}
             onClick={(e) => {
               onClick(e);
             }}
@@ -120,6 +115,47 @@ const Navbar = ({ data }) => {
             mode="horizontal"
             items={data}
           />
+        </Col>
+        <Col
+          span={7}
+          style={{
+            fontSize: 50,
+            fontWeight: "bold",
+            paddingLeft: 55,
+            color: "var(--color-main)",
+          }}
+        >
+          <Row
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Col span={20}>
+              <Input
+                placeholder="Tìm kiếm"
+                className="input-custom"
+                defaultValue={searchParams.get("searchInput")}
+                size="large"
+                onChange={(e) => {
+                  setKey(e.target.value);
+                }}
+                allowClear={true}
+              />
+            </Col>
+            <Col span={4} style={{ alignItems: "center" }}>
+              <Row
+                style={{
+                  background: "white",
+                  height: 38,
+                  marginBottom: 2,
+                  justifyContent: "center",
+                }}
+              >
+                <SearchOutlined />
+              </Row>
+            </Col>
+          </Row>
         </Col>
         <Col span={5} style={{ paddingRight: 29 }}>
           <Row

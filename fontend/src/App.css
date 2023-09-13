@@ -3,7 +3,8 @@
 }
 
 :root {
-  --color-main: #2aa6ad;
+  --color-main: #f54558;
+  --height-navbar: 60px;
   --gray: #cccccc;
   --background-banner: #d7e1e380;
   --background-box-search: #62c1c526;
@@ -51,4 +52,39 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.ant-menu-horizontal {
+  border-bottom: none !important;
+  line-height: 28px;
+}
+
+.ant-menu-item-selected {
+  color: white !important;
+  transition: 0.5s;
+}
+
+.ant-menu-item-only-child:hover::after {
+  color: white !important;
+  border-bottom-color: white !important;
+}
+
+.ant-menu-item-selected::after {
+  color: white !important;
+  border-bottom-color: white !important;
+}
+
+.button-search {
+  background-color: var(--search);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0;
+}
+
+.input-custom {
+  border-radius: 0;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }

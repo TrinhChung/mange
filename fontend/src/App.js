@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import { AuthContext } from "./providers/authProvider";
-import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import Loading from "./pages/Loading/Loading";
+import { BrowserRouter } from "react-router-dom";
 import Auth from "./pages/Auth";
+import Guest from "./pages/Guest";
 
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);
@@ -19,6 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Auth />
+      <Guest />
 
       <ToastContainer
         position="top-right"
