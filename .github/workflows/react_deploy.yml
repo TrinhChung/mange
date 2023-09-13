@@ -20,11 +20,9 @@ jobs:
           node-version: "18"
       - name: Install dependencies
         run: npm ci
-      - name: Build website
-        run: CI=false npm run build
-      - name: Deploy to Github Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./fontend/build
+      - name: Build and Deploy to Github Pages
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
+          CI=FALSE npm run deploy
