@@ -14,6 +14,7 @@ class Manga extends Model
         'status',
         'description',
         'thumbnail',
+        'view',
     ];
 
     public function othernames()
