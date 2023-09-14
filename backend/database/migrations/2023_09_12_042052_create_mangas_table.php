@@ -17,6 +17,7 @@ return new class extends Migration
             $table->boolean('status');
             $table->text('description');
             $table->text('thumbnail', 100);
+            $table->integer('view')->default(0);
             $table->timestamps();
         });
     }
