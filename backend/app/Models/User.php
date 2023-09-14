@@ -21,6 +21,13 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'avatar',
+        'role',
+        'active',
+        'activated_at',
+        'active_token',
+        'reset_token',
+        'reset_sent_at',
     ];
 
     /**
@@ -41,4 +48,46 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function voted_mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'votes', 'user_id', 'manga_id')
+            ->using(Vote::class)->withPivot('id', 'user_id', 'manga_id', 'score')->withTimestamps();
+    }
+
+    public function bookmarked_mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'bookmarks', 'user_id', 'manga_id')
+            ->using(Bookmark::class)->withPivot('id', 'user_id', 'manga_id')->withTimestamps();
+    }
+
+    public function reacted_comments()
+    {
+        return $this->belongsToMany(Comment::class, 'reacts', 'user_id', 'comment_id')
+            ->using(React::class)->withPivot('id', 'user_id', 'comment_id', 'like')->withTimestamps();
+    }
+
+    public function commented_mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'comments', 'user_id', 'manga_id')
+            ->using(Comment::class)->withPivot('id', 'user_id', 'manga_id', 'comment', 'parent_id')->withTimestamps();
+    }
+
+    public function commented_chapters()
+    {
+        return $this->belongsToMany(Chapter::class, 'comments', 'user_id', 'chapter_id')
+            ->using(Comment::class)->withPivot('id', 'user_id', 'manga_id', 'chapter_id', 'comment', 'parent_id')->withTimestamps();
+    }
+
+    public function managing_mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'manages', 'user_id', 'manga_id')
+            ->using(Manage::class)->withPivot('id', 'user_id', 'manga_id', 'role_activated')->withTimestamps();
+    }
+
+    public function viewed_chapters()
+    {
+        return $this->belongsToMany(Chapter::class, 'views', 'user_id', 'chapter_id')
+            ->using(View::class)->withPivot('id', 'user_id', 'chapter_id', 'manga_id')->withTimestamps();
+    }
 }

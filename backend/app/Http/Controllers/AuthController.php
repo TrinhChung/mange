@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -46,6 +47,8 @@ class AuthController extends Controller
             'username' => $fields['username'],
             'email' => $fields['email'],
             'password' => md5($fields['password']),
+            'role' => 'user',
+            'active_token' => Str::random(20),
         ]);
 
         $token = $user->createToken($user->username)->plainTextToken;

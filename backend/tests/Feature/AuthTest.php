@@ -25,9 +25,8 @@ class AuthTest extends TestCase
             'user' => [
                 'username',
                 'email',
-                'updated_at',
-                'created_at',
-                'id',
+                'role',
+                'active_token',
             ],
             'token',
         ]);
@@ -58,6 +57,8 @@ class AuthTest extends TestCase
             'username' => 'testuser',
             'email' => 'testuser@example.com',
             'password' => md5('111111'),
+            'role' => 'user',
+            'active_token' => $this->faker->unique()->regexify('[A-Za-z0-9]{20}'),
         ]);
         $response = $this->post('/api/auth/login', [
             'username' => 'testuser',
@@ -103,6 +104,8 @@ class AuthTest extends TestCase
             'username' => 'testuser',
             'email' => 'testuser@example.com',
             'password' => md5('111111'),
+            'role' => 'user',
+            'active_token' => $this->faker->unique()->regexify('[A-Za-z0-9]{20}'),
         ]);
         $token = $user->createToken('testuser')->plainTextToken;
         $response = $this->withHeaders([
