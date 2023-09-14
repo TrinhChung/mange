@@ -1,6 +1,9 @@
 import React from "react";
 import HomeLayout from "../../../layouts/HomeLayout";
 import LinkCustom from "../../../components/layout/LinkCustom";
+import { Col, Row } from "antd";
+import Banner from "./Banner";
+import MangaBanner from "../../../assets/image/banner_manga_home.jpg";
 
 const Home = () => {
   const items = [
@@ -22,7 +25,24 @@ const Home = () => {
     },
   ];
 
-  return <HomeLayout menu={items}>Hello</HomeLayout>;
+  const manga = {
+    chapter: "Chapter 100",
+    image: MangaBanner,
+    name: "Attack On Titan",
+    type: "Thể loại: Action, Adventure, Shounen, Kinh dị",
+    description:
+      "Hơn 100 năm trước, giống người khổng lồ Titan đã tấn công và đẩy loài người tới bờ vực tuyệt chủng. Những con người sống sót tụ tập lại, xây bao quanh mình 1 tòa thành 3 lớp kiên cố và tự nhốt mình bên trong để trốn tránh những cuộc tấn công của người khổng lồ.",
+  };
+
+  return (
+    <HomeLayout menu={items}>
+      <Row style={{ justifyContent: "center" }}>
+        <Col span={18}>
+          <Banner manga={manga} />
+        </Col>
+      </Row>
+    </HomeLayout>
+  );
 };
 
 export default Home;
