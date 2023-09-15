@@ -35,7 +35,7 @@ const Banner = ({ manga = null }) => {
         <Row className="type_manga">{manga ? manga.type : "Name Manga"}</Row>
 
         <Row style={{ paddingTop: 30 }}>
-          <div className="button_action">Đọc</div>
+          <div className="button_action">Đọc truyện</div>
         </Row>
       </Col>
     </Row>
