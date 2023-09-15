@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/mange/static/css/main.b0fdfddb.css",
-    "main.js": "/mange/static/js/main.7136036c.js",
-    "static/js/787.3e88fd70.chunk.js": "/mange/static/js/787.3e88fd70.chunk.js",
-    "static/media/banner_manga_home.jpg": "/mange/static/media/banner_manga_home.75cb74b91fad3b386ad7.jpg",
-    "index.html": "/mange/index.html",
-    "main.b0fdfddb.css.map": "/mange/static/css/main.b0fdfddb.css.map",
-    "main.7136036c.js.map": "/mange/static/js/main.7136036c.js.map",
-    "787.3e88fd70.chunk.js.map": "/mange/static/js/787.3e88fd70.chunk.js.map"
+    "main.css": "/static/css/main.b0fdfddb.css",
+    "main.js": "/static/js/main.b5fe4ad8.js",
+    "static/js/787.3e88fd70.chunk.js": "/static/js/787.3e88fd70.chunk.js",
+    "static/media/banner_manga_home.jpg": "/static/media/banner_manga_home.75cb74b91fad3b386ad7.jpg",
+    "index.html": "/index.html",
+    "main.b0fdfddb.css.map": "/static/css/main.b0fdfddb.css.map",
+    "main.b5fe4ad8.js.map": "/static/js/main.b5fe4ad8.js.map",
+    "787.3e88fd70.chunk.js.map": "/static/js/787.3e88fd70.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b0fdfddb.css",
-    "static/js/main.7136036c.js"
+    "static/js/main.b5fe4ad8.js"
   ]
 }
