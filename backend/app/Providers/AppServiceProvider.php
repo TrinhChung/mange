@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // log query to terminal
+        if (env('APP_ENV') === 'local') {
+            DB::listen(function ($query) {
+                $sql = $query->sql;
+                $bindings = $query->bindings;
+                $time = $query->time;
+                error_log("SQL: $sql | Bindings: ".implode($bindings)." | Time: $time");
+            });
+        }
     }
 }
