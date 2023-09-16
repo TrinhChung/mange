@@ -92,7 +92,7 @@
 .box-content {
   background-color: white;
   padding: 20px 20px 40px 20px;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .scroll-bar-custom::-webkit-scrollbar {

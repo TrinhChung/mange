@@ -10,6 +10,7 @@ const Banner = ({ manga = null }) => {
         position: "relative",
         marginTop: 20,
         height: 300,
+        marginBottom: 20,
       }}
     >
       <Col className="banner_manga" span={24} style={{ width: "100%" }}>

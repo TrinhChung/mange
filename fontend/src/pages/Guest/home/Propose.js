@@ -27,7 +27,7 @@ const Propose = ({ proposes = [] }) => {
           <Col>
             <Slider {...settings}>
               {proposes.map((propose) => {
-                return <Manga propose={propose} />;
+                return <Manga manga={propose} />;
               })}
             </Slider>
           </Col>

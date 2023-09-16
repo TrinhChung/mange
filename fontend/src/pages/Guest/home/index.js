@@ -5,6 +5,8 @@ import { Col, Row } from "antd";
 import Banner from "./Banner";
 import MangaBanner from "../../../assets/image/banner_manga_home.jpg";
 import Propose from "./Propose";
+import NewUp from "./NewUp";
+import History from "./History";
 
 const Home = () => {
   const items = [
@@ -83,6 +85,156 @@ const Home = () => {
       name: "One Piece",
       link: "xxx",
     },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+  ];
+
+  const histories = [
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+      rating: 4.9,
+      time: "13 phút trước",
+    },
   ];
 
   const manga = {
@@ -100,6 +252,14 @@ const Home = () => {
         <Col span={18}>
           <Banner manga={manga} />
           <Propose proposes={proposes} />
+          <Row>
+            <Col span={16}>
+              <NewUp manga={proposes} />
+            </Col>
+            <Col span={8}>
+              <History histories={histories} />
+            </Col>
+          </Row>
         </Col>
       </Row>
     </HomeLayout>
