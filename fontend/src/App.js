@@ -5,6 +5,8 @@ import { AuthContext } from "./providers/authProvider";
 import { BrowserRouter } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Guest from "./pages/Guest";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);

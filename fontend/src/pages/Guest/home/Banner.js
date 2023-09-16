@@ -1,18 +1,24 @@
-import { Button, Col, Image, Row } from "antd";
+import { Col, Image, Row } from "antd";
 import React from "react";
-import MangaBanner from "../../../assets/image/banner_manga_home.jpg";
 import "./Home.scss";
 
 const Banner = ({ manga = null }) => {
   return (
-    <Row style={{ width: "100%", position: "relative", marginTop: 20 }}>
+    <Row
+      style={{
+        width: "100%",
+        position: "relative",
+        marginTop: 20,
+        height: 300,
+      }}
+    >
       <Col className="banner_manga" span={24} style={{ width: "100%" }}>
         <Image
-          src={MangaBanner}
+          src={manga ? manga.image : null}
           height={300}
           width="100%"
           preview={false}
-        ></Image>
+        />
       </Col>
       <Col
         style={{

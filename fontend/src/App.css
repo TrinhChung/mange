@@ -5,7 +5,7 @@
 :root {
   --color-main: #f54558;
   --height-navbar: 60px;
-  --gray: #cccccc;
+  --gray: #8a8a8a;
   --background-banner: #d7e1e380;
   --background-box-search: #62c1c526;
   --search: #18898d;
@@ -87,4 +87,19 @@
   outline: none !important;
   border: none !important;
   box-shadow: none !important;
+}
+
+.box-content {
+  background-color: white;
+  padding: 20px 20px 40px 20px;
+  margin: 20px 0;
+}
+
+.scroll-bar-custom::-webkit-scrollbar {
+  width: 3px;
+}
+
+.scroll-bar-custom::-webkit-scrollbar-thumb {
+  background: #888;
+  height: 3px;
 }

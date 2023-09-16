@@ -4,6 +4,7 @@ import LinkCustom from "../../../components/layout/LinkCustom";
 import { Col, Row } from "antd";
 import Banner from "./Banner";
 import MangaBanner from "../../../assets/image/banner_manga_home.jpg";
+import Propose from "./Propose";
 
 const Home = () => {
   const items = [
@@ -25,6 +26,65 @@ const Home = () => {
     },
   ];
 
+  const proposes = [
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+    {
+      image:
+        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+      chapter: 175,
+      name: "One Piece",
+      link: "xxx",
+    },
+  ];
+
   const manga = {
     chapter: "Chapter 100",
     image: MangaBanner,
@@ -39,6 +99,7 @@ const Home = () => {
       <Row style={{ justifyContent: "center" }}>
         <Col span={18}>
           <Banner manga={manga} />
+          <Propose proposes={proposes} />
         </Col>
       </Row>
     </HomeLayout>
