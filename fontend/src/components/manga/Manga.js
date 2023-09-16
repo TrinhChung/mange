@@ -3,7 +3,7 @@ import React from "react";
 
 const Manga = ({ manga = {} }) => {
   return (
-    <Col style={{ width: 150 }}>
+    <Col>
       <Row>
         <Image
           src={manga ? manga.image : null}

@@ -12,7 +12,7 @@ const NewUp = ({ manga = [] }) => {
         </Row>
         <Row>
           <Col>
-            <Row gutter={[24, 24]}>
+            <Row gutter={[16, 24]}>
               {manga.map((item) => {
                 return <Manga manga={item} />;
               })}

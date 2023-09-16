@@ -7,6 +7,7 @@ import MangaBanner from "../../../assets/image/banner_manga_home.jpg";
 import Propose from "./Propose";
 import NewUp from "./NewUp";
 import History from "./History";
+import TopManga from "./TopManga";
 
 const Home = () => {
   const items = [
@@ -258,6 +259,7 @@ const Home = () => {
             </Col>
             <Col span={8}>
               <History histories={histories} />
+              <TopManga manga={histories} />
             </Col>
           </Row>
         </Col>
