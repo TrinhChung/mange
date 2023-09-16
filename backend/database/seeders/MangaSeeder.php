@@ -42,7 +42,7 @@ class MangaSeeder extends Seeder
 
             //$images = [];
 
-            foreach ($element->chapters as $chapter) {
+            foreach (array_reverse($element->chapters) as $chapter) {
                 $new_chapter = Chapter::create([
                     'name' => $chapter->name,
                     'manga_id' => $manga->id,
