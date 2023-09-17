@@ -1,11 +1,7 @@
 import React from "react";
 import { Col, Row } from "antd";
-import Banner from "../home/Banner";
-import Propose from "../home/Propose";
-import NewUp from "../home/NewUp";
 import History from "../home/History";
-import TopManga from "../home/TopManga";
-import { histories, proposes } from "../home/index";
+import { histories } from "../home/index";
 import Overview from "./Overview";
 import Content from "./Content";
 import Chapter from "./Chapter";
@@ -78,17 +74,86 @@ const DetailManga = () => {
       total: 2344,
       data: [
         {
-          comment: {
-            content:
-              "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
-            userId: 1,
-            user: {
-              name: "John",
-              image:
-                "https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-1/340248805_1479710319503802_5189644552479298591_n.jpg?stp=cp0_dst-jpg_p48x48&_nc_cat=103&ccb=1-7&_nc_sid=5fac6f&_nc_ohc=Xzmyy8abdc4AX8p4KJC&_nc_ht=scontent.fhan15-2.fna&edm=AJqh0Q8EAAAA&oh=00_AfBILQuxE3CcpndLLYWNqsWomFlj_gms5xZiJ7yPdAcrWw&oe=650B4ED4",
-            },
-            children: [],
+          content:
+            "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
+          userId: 1,
+          id: 1,
+          date: "2 ngày trước",
+          user: {
+            name: "John",
+            image:
+              "https://th.bing.com/th/id/OIP.F2q51KaRxsINTH92a0JHGwHaEo?pid=ImgDet&rs=1",
           },
+          children: [
+            {
+              content:
+                "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
+              userId: 1,
+              id: 2,
+              date: "2 ngày trước",
+              user: {
+                name: "John",
+                image:
+                  "https://th.bing.com/th/id/OIP.F2q51KaRxsINTH92a0JHGwHaEo?pid=ImgDet&rs=1",
+              },
+              children: [
+                {
+                  content:
+                    "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
+                  userId: 1,
+                  id: 3,
+                  date: "2 ngày trước",
+                  user: {
+                    name: "John",
+                    image:
+                      "https://th.bing.com/th/id/OIP.F2q51KaRxsINTH92a0JHGwHaEo?pid=ImgDet&rs=1",
+                  },
+                  children: [],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          content:
+            "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
+          userId: 1,
+          id: 4,
+          date: "2 ngày trước",
+          user: {
+            name: "John",
+            image:
+              "https://th.bing.com/th/id/OIP.F2q51KaRxsINTH92a0JHGwHaEo?pid=ImgDet&rs=1",
+          },
+          children: [
+            {
+              content:
+                "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
+              userId: 1,
+              id: 5,
+              date: "2 ngày trước",
+              user: {
+                name: "John",
+                image:
+                  "https://th.bing.com/th/id/OIP.F2q51KaRxsINTH92a0JHGwHaEo?pid=ImgDet&rs=1",
+              },
+              children: [
+                {
+                  content:
+                    "Genya lúc hấp thụ tóc với kiếm cụ nhất mạnh hơn mọi trụ cột :)) nghe vô lí nhưng là sự thật .Viên đạn bắn ra có thể đuổi theo mục tiêu đến cụ nhất cũng ko né được kèm cả huyết quỷ thuật rút sạch máu và làm tê liệt. Genya là 1 trong những đứa đc buff ảo nhất để góp phần làm cụ chán đời rồi chết , MVP của cả trận đấy luôn . Genya là nv bị đánh giá thấp nhất toàn bộ truyện , nếu ko có genya cụ nhất thừa hơi cân sạch lũ còn lại.",
+                  userId: 1,
+                  id: 6,
+                  date: "2 ngày trước",
+                  user: {
+                    name: "John",
+                    image:
+                      "https://th.bing.com/th/id/OIP.F2q51KaRxsINTH92a0JHGwHaEo?pid=ImgDet&rs=1",
+                  },
+                  children: [],
+                },
+              ],
+            },
+          ],
         },
       ],
     },
