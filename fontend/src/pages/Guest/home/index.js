@@ -1,13 +1,11 @@
 import React from "react";
-import HomeLayout from "../../../layouts/HomeLayout";
-import LinkCustom from "../../../components/layout/LinkCustom";
 import { Col, Row } from "antd";
 import Banner from "./Banner";
 import MangaBanner from "../../../assets/image/banner_manga_home.jpg";
 import Propose from "./Propose";
 import NewUp from "./NewUp";
-import History from "./History";
 import TopManga from "./TopManga";
+import ListMangaSide from "../../../components/manga/ListMangaSide";
 
 export const proposes = [
   {
@@ -238,7 +236,7 @@ const Home = () => {
             <NewUp manga={proposes} />
           </Col>
           <Col span={8}>
-            <History histories={histories} />
+            <ListMangaSide listManga={histories} title={"Lịch sử"} />
             <TopManga manga={histories} />
           </Col>
         </Row>

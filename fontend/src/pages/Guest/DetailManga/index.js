@@ -1,11 +1,11 @@
 import React from "react";
 import { Col, Row } from "antd";
-import History from "../home/History";
 import { histories } from "../home/index";
 import Overview from "./Overview";
 import Content from "./Content";
 import Chapter from "./Chapter";
 import Comment from "./Comment";
+import ListMangaSide from "../../../components/manga/ListMangaSide";
 
 const DetailManga = () => {
   const manga = {
@@ -170,7 +170,12 @@ const DetailManga = () => {
             <Comment comments={manga.comments} />
           </Col>
           <Col span={8}>
-            <History histories={histories} />
+            <ListMangaSide
+              listManga={histories}
+              title={"Đề xuất"}
+              isDate={false}
+            />
+            <ListMangaSide listManga={histories} title={"Lịch sử"} />
           </Col>
         </Row>
       </Col>
