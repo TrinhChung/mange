@@ -7,3 +7,5 @@ Thành viên nhóm:
 - Đào Đức Hiệp
 - Lê Văn Hòa
 - Trần Anh Tú
+
+Để có thể gửi mail cần config như trong file env.example và chạy lệnh php artisan queue:work --queue=sendingMail
