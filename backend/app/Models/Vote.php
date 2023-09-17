@@ -9,6 +9,8 @@ class Vote extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'votes';
+
     protected $fillable = [
         'manga_id',
         'user_id',

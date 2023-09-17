@@ -12,20 +12,28 @@ class MangaTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'data' => [],
-            'links' => [
-                'first',
-                'last',
-                'prev',
-                'next',
+            'data' => [
+                '*' => [
+                    'id',
+                    'name',
+                    'thumbnail',
+                    'vote_score',
+                    'last_3_chapters' => [
+                        '*' => [
+                            'id',
+                            'name',
+                            'folder',
+                            'amount',
+                        ],
+                    ],
+                ],
             ],
+            'links',
             'meta' => [
                 'current_page',
                 'from',
                 'last_page',
-                'path',
                 'per_page',
-                'to',
                 'total',
             ],
         ]);
