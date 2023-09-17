@@ -9,235 +9,216 @@ import NewUp from "./NewUp";
 import History from "./History";
 import TopManga from "./TopManga";
 
+export const proposes = [
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+  },
+];
+
+export const histories = [
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+  {
+    image:
+      "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
+    chapter: 175,
+    name: "One Piece",
+    slug: "xxx",
+    rating: 4.9,
+    time: "13 phút trước",
+  },
+];
+
 const Home = () => {
-  const items = [
-    {
-      label: <LinkCustom to="/" label="Trang chủ" />,
-      key: "home",
-    },
-    {
-      label: <LinkCustom to={"/job"} label="Mới ra mắt" />,
-      key: "job",
-    },
-    {
-      label: <LinkCustom to={"/company"} label="Phổ biến" />,
-      key: "company",
-    },
-    {
-      label: <LinkCustom to={"/profile/"} label="Thể loại" />,
-      key: "profile",
-    },
-  ];
-
-  const proposes = [
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/vo-luyen-dinh-phong.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-    },
-  ];
-
-  const histories = [
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-    {
-      image:
-        "https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg",
-      chapter: 175,
-      name: "One Piece",
-      link: "xxx",
-      rating: 4.9,
-      time: "13 phút trước",
-    },
-  ];
-
   const manga = {
     chapter: "Chapter 100",
     image: MangaBanner,
@@ -248,23 +229,21 @@ const Home = () => {
   };
 
   return (
-    <HomeLayout menu={items}>
-      <Row style={{ justifyContent: "center" }}>
-        <Col span={18}>
-          <Banner manga={manga} />
-          <Propose proposes={proposes} />
-          <Row>
-            <Col span={16}>
-              <NewUp manga={proposes} />
-            </Col>
-            <Col span={8}>
-              <History histories={histories} />
-              <TopManga manga={histories} />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </HomeLayout>
+    <Row style={{ justifyContent: "center" }}>
+      <Col span={18}>
+        <Banner manga={manga} />
+        <Propose proposes={proposes} />
+        <Row>
+          <Col span={16}>
+            <NewUp manga={proposes} />
+          </Col>
+          <Col span={8}>
+            <History histories={histories} />
+            <TopManga manga={histories} />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   );
 };
 

@@ -148,7 +148,6 @@ const Navbar = ({ data }) => {
                 style={{
                   background: "white",
                   height: 38,
-                  marginBottom: 2,
                   justifyContent: "center",
                 }}
               >

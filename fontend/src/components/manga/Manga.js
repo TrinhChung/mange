@@ -1,7 +1,10 @@
 import { Col, Image, Row } from "antd";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Manga = ({ manga = {} }) => {
+  const navigate = useNavigate();
+
   return (
     <Col>
       <Row>
@@ -21,6 +24,12 @@ const Manga = ({ manga = {} }) => {
           fontSize: 14,
           fontWeight: "bold",
           color: "var(--gray)",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          if (!manga || !manga.slug) {
+            navigate("/");
+          } else navigate(`/detail-manga/${manga.slug}`);
         }}
       >
         {manga ? manga.name : "Name"}
