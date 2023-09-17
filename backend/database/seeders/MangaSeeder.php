@@ -8,6 +8,7 @@ use App\Models\Chapter;
 use App\Models\Image;
 use App\Models\Manga;
 use App\Models\Othername;
+use App\Models\Vote;
 use Illuminate\Database\Seeder;
 
 class MangaSeeder extends Seeder
@@ -54,6 +55,15 @@ class MangaSeeder extends Seeder
                 //     array_push($images, ['chapter_id' => $new_chapter->id,
                 //                          'link' => explode('/', $element->folder)[1].'/'.$chapter->folder.'/'.$i.'.jpg']);
                 // }
+            }
+
+            // Vote
+            for ($i = 1; $i <= 100; $i++) {
+                Vote::create([
+                    'user_id' => $i,
+                    'manga_id' => $manga->id,
+                    'score' => 0.5 * rand(1, 10),
+                ]);
             }
 
             // if(count($images) !== 0) {

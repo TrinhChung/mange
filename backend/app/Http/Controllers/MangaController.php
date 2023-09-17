@@ -15,8 +15,7 @@ class MangaController extends Controller
         $page = $request->get('page', 1);
         $category_ids = $request->get('category', []);
 
-        // TODO: tối ưu lấy chapters
-        $query = Manga::query()->with(['chapters']);
+        $query = Manga::query()->select(['id', 'name', 'thumbnail'])->with(['chapters']);
 
         if (! empty($category_ids)) {
             $query->whereHas('categories', function ($subQuery) use ($category_ids) {
@@ -25,6 +24,13 @@ class MangaController extends Controller
             }, '=', count($category_ids));
         }
 
+        // Lấy điểm trung bình vote
+        $query->withAvg('voted_by as vote_score', 'votes.score');
+
+        // Sắp xếp mặc định theo mới cập nhật
+        $query->orderByDesc('updated_at');
+
+        // Phân trang
         $mangas = $query->paginate($per_page, ['*'], 'page', $page);
 
         return MangaResource::collection($mangas);

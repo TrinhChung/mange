@@ -18,6 +18,7 @@ class Manga extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'thumbnail' => $this->thumbnail,
+            'vote_score' => $this->vote_score,
             'last_3_chapters' => $this->chapters->sortByDesc('id')->take(3)->values()->map(function ($chapter) {
                 return [
                     'id' => $chapter->id,
