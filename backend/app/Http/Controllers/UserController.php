@@ -14,7 +14,7 @@ class UserController extends Controller
     public function activate(Request $request)
     {
         $user = User::where('active_token', $request->active_token)->first();
-        if ($user && $user->activated_at == null) {
+        if ($user && $user->active == false) {
             $user->update([
                 'activated_at' => now(),
                 'active' => true,

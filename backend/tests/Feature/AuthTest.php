@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Mail\activeAccount;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
@@ -14,11 +16,14 @@ class AuthTest extends TestCase
 
     public function test_register_success(): void
     {
-        $response = $this->post('/api/auth/signup', [
+        Mail::fake();
+
+        $user = [
             'username' => 'randomuser',
             'email' => $this->faker->email,
             'password' => '111111',
-        ]);
+        ];
+        $response = $this->post('/api/auth/signup', $user);
 
         $response->assertStatus(201);
         $response->assertJsonStructure([
@@ -30,6 +35,10 @@ class AuthTest extends TestCase
             ],
             'token',
         ]);
+
+        Mail::assertSent(activeAccount::class, function ($mail) use ($user) {
+            return $mail->hasTo($user['email']);
+        });
     }
 
     public function test_register_validation_error(): void
