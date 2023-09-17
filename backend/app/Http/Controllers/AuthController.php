@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller
@@ -43,15 +44,19 @@ class AuthController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
+        DB::beginTransaction();
         $user = User::create([
             'username' => $fields['username'],
             'email' => $fields['email'],
             'password' => md5($fields['password']),
             'role' => 'user',
-            'active_token' => Str::random(20),
+            'active_token' => hash_hmac('sha256', Str::random(10), config('app.key')),
         ]);
 
+        $user->send_activation_email();
+
         $token = $user->createToken($user->username)->plainTextToken;
+        DB::commit();
 
         return response()->json([
             'user' => $user,

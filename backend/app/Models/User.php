@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Jobs\SendResetPasswordMail;
+use App\Jobs\SendWelcomeEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,6 +51,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function send_activation_email()
+    {
+        if (SendWelcomeEmail::dispatch($this)->onQueue('sendingMail')->delay(now()->addMinutes(0.05))) {
+            error_log('added');
+        }
+    }
+
+    public function send_reset_password_email()
+    {
+        if (SendResetPasswordMail::dispatch($this)->onQueue('sendingMail')->delay(now()->addMinutes(0.05))) {
+            error_log('added');
+        }
+    }
 
     public function voted_mangas()
     {
