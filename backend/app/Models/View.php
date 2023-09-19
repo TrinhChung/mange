@@ -15,6 +15,8 @@ class View extends Pivot
         'user_id',
     ];
 
+    protected $table = 'views';
+
     public function manga()
     {
         return $this->belongsTo(Manga::class, 'manga_id', 'id');

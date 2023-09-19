@@ -19,6 +19,9 @@ class Manga extends JsonResource
             'name' => $this->name,
             'thumbnail' => $this->thumbnail,
             'vote_score' => $this->vote_score,
+            'follow_count' => $this->follow_count,
+            'view_count' => $this->view_count,
+            'comments_count' => $this->comment_count,
             'last_3_chapters' => $this->chapters->sortByDesc('id')->take(3)->values()->map(function ($chapter) {
                 return [
                     'id' => $chapter->id,
@@ -27,12 +30,8 @@ class Manga extends JsonResource
                     'amount' => $chapter->amount,
                 ];
             }),
-            //                        'categories' => $this->categories->map(function ($category) {
-            //                            return [
-            //                                'id' => $category->id,
-            //                                'name' => $category->name,
-            //                            ];
-            //                        }),
+            'categories' => $this->categories->pluck('name'),
+            'othernames' => $this->othernames,
         ];
     }
 }
