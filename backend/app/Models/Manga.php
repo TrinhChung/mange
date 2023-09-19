@@ -38,6 +38,11 @@ class Manga extends Model
         return $this->hasMany(View::class, 'manga_id', 'id');
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'manga_id', 'id');
+    }
+
     public function authors()
     {
         return $this->belongsToMany(Author::class, 'author_mangas', 'manga_id', 'author_id')

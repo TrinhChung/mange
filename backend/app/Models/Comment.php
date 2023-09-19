@@ -17,6 +17,8 @@ class Comment extends Pivot
         'parent_id',
     ];
 
+    protected $table = 'comments';
+
     public function childs()
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id');
