@@ -17,7 +17,7 @@ class MangaFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
             'status' => $this->faker->randomElement(['Đang tiến hành', 'Đã hoàn thành']),
             'description' => $this->faker->text(),
             'thumbnail' => $this->faker->imageUrl(),
