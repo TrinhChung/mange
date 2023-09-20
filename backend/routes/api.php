@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ Route::get('/health_check', function () {
 });
 
 Route::get('/list-truyen', function () {
-    return \Illuminate\Support\Facades\Storage::disk('ftp')->directories('/');
+    return \Illuminate\Support\Facades\Storage::disk('ftp')->directories();
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -38,6 +39,10 @@ Route::prefix('auth')->group(function () {
 Route::prefix('mangas')->group(function () {
     Route::get('/', [MangaController::class, 'index']);
     Route::get('/{manga_id}', [MangaController::class, 'show']);
+});
+
+Route::prefix('chapter')->group(function () {
+    Route::get('/{chapter_id}', [ChapterController::class, 'show']);
 });
 
 Route::prefix('user')->group(function () {
