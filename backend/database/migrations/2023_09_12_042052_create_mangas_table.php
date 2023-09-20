@@ -19,6 +19,8 @@ return new class extends Migration
             $table->text('thumbnail', 100);
             $table->integer('view')->default(0);
             $table->timestamps();
+
+            $table->index(['updated_at'], 'mangas_updated_at_index');
         });
     }
 
