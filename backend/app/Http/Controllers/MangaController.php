@@ -16,16 +16,23 @@ class MangaController extends Controller
             'page' => 'integer|min:1',
             'category' => 'array',
             'search' => 'string',
+            'sort' => [
+                'string',
+                'regex:/^([+-]?)(updated_at|follow_count|view_count|comment_count|vote_score|status)$/',
+            ],
+        ], [
+            'sort.regex' => 'The sort field must be one of: updated_at, follow_count, view_count, comment_count, vote_score, status',
         ]);
 
         $per_page = $fields['per_page'] ?? 10;
         $page = $fields['page'] ?? 1;
-        $category_ids = $request->get('category', []);
-        $search_query = $request->get('search', '');
+        $category_ids = $fields['category'] ?? [];
+        $search_query = $fields['search'] ?? '';
+        $sort = $fields['sort'] ?? '-updated_at';
 
-        $query = Manga::query()->select(['id', 'name', 'thumbnail'])
+        $query = Manga::query()->select(['id', 'name', 'thumbnail', 'view as view_count', 'status'])
             ->with(['chapters', 'categories', 'othernames'])
-            ->withCount(['bookmarked_by as follow_count', 'views as view_count', 'comments as comment_count']);
+            ->withCount(['bookmarked_by as follow_count', 'comments as comment_count']);
 
         // Tìm kiếm theo `tên` hoặc `tên khác` chứa
         if (! empty($search_query)) {
@@ -48,8 +55,10 @@ class MangaController extends Controller
         // Lấy điểm trung bình vote
         $query->withAvg('voted_by as vote_score', 'votes.score');
 
-        // Sắp xếp mặc định theo mới cập nhật
-        $query->orderByDesc('updated_at');
+        // Sắp xếp
+        $sort_direction = $sort[0] === '-' ? 'desc' : 'asc';
+        $sort_field = $sort[0] === '-' || $sort[0] === '+' ? substr($sort, 1) : $sort;
+        $query->orderBy($sort_field, $sort_direction);
 
         // Phân trang
         $mangas = $query->paginate($per_page, ['*'], 'page', $page);

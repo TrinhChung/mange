@@ -20,6 +20,7 @@ class MangaTest extends TestCase
                 '*' => [
                     'id',
                     'name',
+                    'status',
                     'thumbnail',
                     'vote_score',
                     'last_3_chapters' => [
