@@ -73,4 +73,63 @@ class MangaTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonCount(2, 'data');
     }
+
+    public function test_show_should_return_404_if_not_found(): void
+    {
+        $response = $this->get('/api/mangas/99');
+
+        $response->assertStatus(404);
+    }
+
+    public function test_show_should_return_422_if_invalid_id(): void
+    {
+        $response = $this->get('/api/mangas/invalid_id_123');
+
+        $response->assertStatus(422);
+    }
+
+    public function test_show_should_return_correct_json_structure(): void
+    {
+        $manga = Manga::factory()->create();
+
+        $response = $this->get("/api/mangas/{$manga->id}");
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'id',
+            'name',
+            'status',
+            'description',
+            'thumbnail',
+            'view_count',
+            'follow_count',
+            'comment_count',
+            'vote_count',
+            'vote_score',
+            'chapters' => [
+                '*' => [
+                    'id',
+                    'name',
+                ],
+            ],
+            'categories' => [
+                '*' => [
+                    'id',
+                    'name',
+                ],
+            ],
+            'othernames' => [
+                '*' => [
+                    'id',
+                    'name',
+                ],
+            ],
+            'authors' => [
+                '*' => [
+                    'id',
+                    'name',
+                ],
+            ],
+        ]);
+    }
 }
