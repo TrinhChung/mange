@@ -65,4 +65,26 @@ class MangaController extends Controller
 
         return MangaResource::collection($mangas);
     }
+
+    public function show(Request $request)
+    {
+        $request->merge(['id' => $request->route('manga_id')]);
+        $fields = $this->validate($request, [
+            'id' => 'required|integer|min:1',
+        ]);
+
+        $manga = Manga::query()->select(['mangas.*', 'view as view_count'])
+            ->with(['othernames', 'authors'])
+            ->with(['chapters' => function ($subQuery) {
+                $subQuery->orderBy('id', 'desc');
+            }])
+            ->with(['categories' => function ($subQuery) {
+                $subQuery->select(['categories.id', 'name']);
+            }])
+            ->withCount(['bookmarked_by as follow_count', 'comments as comment_count', 'voted_by as vote_count'])
+            ->withAvg('voted_by as vote_score', 'votes.score')
+            ->findOrFail($fields['id']);
+
+        return response()->json($manga);
+    }
 }

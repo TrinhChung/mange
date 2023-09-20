@@ -37,6 +37,7 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('mangas')->group(function () {
     Route::get('/', [MangaController::class, 'index']);
+    Route::get('/{manga_id}', [MangaController::class, 'show']);
 });
 
 Route::prefix('user')->group(function () {
