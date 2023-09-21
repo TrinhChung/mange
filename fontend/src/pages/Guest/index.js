@@ -4,6 +4,7 @@ import Home from "./home";
 import HomeLayout from "../../layouts/HomeLayout";
 import LinkCustom from "../../components/layout/LinkCustom";
 import DetailManga from "./DetailManga";
+import Profile from "./Profile";
 
 const Guest = () => {
   const items = [
@@ -20,8 +21,8 @@ const Guest = () => {
       key: "company",
     },
     {
-      label: <LinkCustom to={"/profile/"} label="Thể loại" />,
-      key: "profile",
+      label: <LinkCustom to={"/category/"} label="Thể loại" />,
+      key: "category",
     },
   ];
 
@@ -31,6 +32,11 @@ const Guest = () => {
         <Route path="/" element={<Home />} />
         {/* <Route path="/*" element={<Navigate to="/" />} /> */}
         <Route path="/detail-manga/:name" element={<DetailManga />} />
+
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/following" element={<Profile />} />
+        <Route path="/profile/posted" element={<Profile />} />
+        <Route path="/profile/general" element={<Profile />} />
       </Routes>
     </HomeLayout>
   );
