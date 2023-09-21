@@ -8,7 +8,7 @@ const NavigationArea = () => {
   const navigate = useNavigate()
 
   return (
-    <Row className="box-content" style={{ justifyContent: "center", marginRight: 20}} >
+    <Row className="box-content" style={{ justifyContent: "center", marginRight: 10}} >
       <NavigationItem startIcon={<InfoCircleOutlined/>} content="Thông tin chung" action={() => navigate('/profile/general')} />
       <NavigationItem startIcon={<UserOutlined />} content="Hồ sơ cá nhân" action={() => navigate('/profile/')} />
       <NavigationItem startIcon={<ReadOutlined />} content="Truyện đang theo dõi" action={() => navigate('/profile/following')} />

@@ -3,10 +3,10 @@ import React from 'react'
 
 const AvatarArea = () => {
   return (
-    <Row className="box-content" style={{ justifyContent: "center", marginRight: 20}} >
+    <Row className="box-content" style={{ justifyContent: "center", marginRight: 10}} >
       <Col>
         <Row style={{ color: "var(--gray)", justifyContent: "center" }}>
-          <Avatar src="https://i.pinimg.com/564x/b8/f3/1d/b8f31d330d0d19c08e47163506acf521.jpg" size={180} />
+          <Avatar src="https://i.pinimg.com/736x/ca/b3/fc/cab3fcec1daf3fa996e846efb130ecda.jpg" size={180} />
         </Row>
         <Row style={{ color: "var(--gray)", marginBottom: 20, marginTop: 28, justifyContent: "center" }} className='title-children'> 
           <Col style={{ fontSize: 32 }}>Zhong Xina</Col>
