@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -27,13 +28,21 @@ class Handler extends ExceptionHandler
             //
         });
 
-        //        $this->renderable(function (Throwable $e) {
-        //            if ($e instanceof \Illuminate\Validation\ValidationException) {
-        //                return response()->json([
-        //                    'message' => 'The given data was invalid.',
-        //                    'errors' => $e->errors(),
-        //                ], 422);
-        //            }
-        //        });
+        $this->renderable(function (Throwable $e) {
+            if ($e instanceof \Illuminate\Validation\ValidationException) {
+                return response()->json([
+                    'message' => 'The given data was invalid.',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+
+            if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException
+                || $e instanceof NotFoundHttpException) {
+                return response()->json([
+                    'message' => 'Record Not Found',
+                    'errors' => $e->getMessage(),
+                ], 404);
+            }
+        });
     }
 }
