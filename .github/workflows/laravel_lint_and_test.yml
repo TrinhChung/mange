@@ -1,4 +1,4 @@
-name: Lint and test Laravel
+name: Backend Workflow
 
 on:
   push:
