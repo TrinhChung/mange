@@ -32,7 +32,7 @@ const ProfileComponent = () => {
   return (
     <Row className="box-content"  >
       <TitleTopLeft title="Chỉnh sửa hồ sơ" itemList={breadcrumbData} />
-      <Col span={24} style={{marginTop: 16, marginBottom: 16}}>
+      <Col span={24} style={{ marginBottom: 16}}>
         <InputGroupContainer title={"Tên tài khoản:"}>
           <Input
             onChange={onChangeUserInfoData}
