@@ -3,13 +3,13 @@ import React from 'react'
 
 const TitleTopLeft = ({title, itemList}) => {
     return (
-        <Row style={{ flexDirection: "column" }}>
-            <Col style={{ fontSize: 20, fontWeight: 600, marginBottom: 4 }}>{title}</Col>
+        <Col span={24}>
+            <Row style={{ fontSize: 20, fontWeight: 600, marginBottom: 4 }}>{title}</Row>
             <Breadcrumb
                 separator=">>"
                 items={itemList}
             />
-        </Row>
+        </Col>
     )
 }
 
