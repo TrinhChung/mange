@@ -141,3 +141,11 @@
 .bg-color-jade {
   background-color: var(--jade);
 }
+
+.color-main {
+  color: var(--color-main)
+}
+
+.color-jade {
+  color: var(--jade)
+}
