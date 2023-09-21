@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.7384b83a.css",
-    "main.js": "/static/js/main.e418d516.js",
+    "main.js": "/static/js/main.aee59a85.js",
     "static/js/787.3e88fd70.chunk.js": "/static/js/787.3e88fd70.chunk.js",
     "static/media/banner_manga_home.jpg": "/static/media/banner_manga_home.75cb74b91fad3b386ad7.jpg",
     "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
@@ -10,11 +10,11 @@
     "static/media/slick.woff": "/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/index.html",
     "main.7384b83a.css.map": "/static/css/main.7384b83a.css.map",
-    "main.e418d516.js.map": "/static/js/main.e418d516.js.map",
+    "main.aee59a85.js.map": "/static/js/main.aee59a85.js.map",
     "787.3e88fd70.chunk.js.map": "/static/js/787.3e88fd70.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7384b83a.css",
-    "static/js/main.e418d516.js"
+    "static/js/main.aee59a85.js"
   ]
 }
