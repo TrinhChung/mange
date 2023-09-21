@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Manga as MangaResource;
 use App\Models\Manga;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MangaController extends Controller
@@ -84,6 +85,15 @@ class MangaController extends Controller
             ->withCount(['bookmarked_by as follow_count', 'comments as comment_count', 'voted_by as vote_count'])
             ->withAvg('voted_by as vote_score', 'votes.score')
             ->findOrFail($fields['id']);
+
+        // Thêm thông tin nếu user đã đăng nhập
+        $user = Auth::guard('sanctum')->user();
+        if ($user) {
+            $manga->user_bookmarked = $manga->bookmarked_by()->where('user_id', $user->id)->exists();
+            $manga->user_vote = $manga->voted_by()->where('user_id', $user->id)->value('score');
+            $manga->user_latest_chapter_id = $user->viewed_chapters()
+                ->where('views.manga_id', $manga->id)->max('chapter_id');
+        }
 
         return response()->json($manga);
     }

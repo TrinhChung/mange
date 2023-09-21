@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Manga;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -130,6 +131,21 @@ class MangaTest extends TestCase
                     'name',
                 ],
             ],
+        ]);
+    }
+
+    public function test_show_structure_when_authenticated(): void
+    {
+        $manga = Manga::factory()->create();
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get("/api/mangas/{$manga->id}");
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'user_bookmarked',
+            'user_vote',
+            'user_latest_chapter_id',
         ]);
     }
 }
