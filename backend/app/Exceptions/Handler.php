@@ -31,17 +31,23 @@ class Handler extends ExceptionHandler
         $this->renderable(function (Throwable $e) {
             if ($e instanceof \Illuminate\Validation\ValidationException) {
                 return response()->json([
+                    'success' => 0,
                     'message' => 'The given data was invalid.',
                     'errors' => $e->errors(),
                 ], 422);
-            }
-
-            if ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException
+            } elseif ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException
                 || $e instanceof NotFoundHttpException) {
                 return response()->json([
+                    'success' => 0,
                     'message' => 'Record Not Found',
                     'errors' => $e->getMessage(),
                 ], 404);
+            } elseif ($e instanceof \Illuminate\Database\QueryException) {
+                return response()->json([
+                    'success' => 0,
+                    'message' => 'Query failed',
+                    'errors' => $e->getMessage(),
+                ], 500);
             }
         });
     }

@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('auth')->group(function () {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware('activated');
     Route::post('/signup', [AuthController::class, 'signup']);
     Route::middleware('auth:sanctum')->delete('/logout', [AuthController::class, 'logout']);
 });
@@ -39,6 +39,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('mangas')->group(function () {
     Route::get('/', [MangaController::class, 'index']);
     Route::get('/{manga_id}', [MangaController::class, 'show']);
+    Route::middleware('auth:sanctum')->post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
 });
 
 Route::prefix('chapter')->group(function () {
