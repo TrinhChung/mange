@@ -1,12 +1,12 @@
-import React from "react";
-import { Spin } from "antd";
-import HomeLayout from "../../layouts/HomeLayout";
+import React from 'react'
+import { Spin } from 'antd'
+import HomeLayout from '../../layouts/HomeLayout'
 const Loading = () => {
-  return (
-    <Spin tip="Loading" size="large">
-      <HomeLayout></HomeLayout>
-    </Spin>
-  );
-};
+    return (
+        <Spin tip='Loading' size='large'>
+            <HomeLayout></HomeLayout>
+        </Spin>
+    )
+}
 
-export default Loading;
+export default Loading
