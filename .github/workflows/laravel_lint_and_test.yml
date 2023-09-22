@@ -4,10 +4,12 @@ on:
   push:
     paths:
       - "backend/**"
+      - ".github/workflows/**"
     branches: [main]
   pull_request:
     paths:
       - "backend/**"
+      - ".github/workflows/**"
     branches: [main]
 
 jobs:
@@ -39,6 +41,10 @@ jobs:
           php-version: "8.2"
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Set up Redis
+        run: |
+          sudo apt-get install redis-server
+          sudo systemctl start redis-server
       - name: Test Laravel
         run: |
           touch database/database.testing.sqlite
