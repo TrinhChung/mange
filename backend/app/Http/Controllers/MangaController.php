@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Manga as MangaResource;
 use App\Models\Manga;
+use App\Traits\AuthTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MangaController extends Controller
 {
+    use AuthTrait;
+
     public function index(Request $request)
     {
         $fields = $this->validate($request, [
@@ -96,5 +99,23 @@ class MangaController extends Controller
         }
 
         return response()->json($manga);
+    }
+
+    public function bookmarkToggle(Request $request)
+    {
+        $user = $request->user();
+
+        $request->merge(['id' => $request->route('manga_id')]);
+        $fields = $this->validate($request, [
+            'id' => 'required|integer|min:1',
+        ]);
+
+        $manga = Manga::findOrFail($request->id);
+        $user->bookmarked_mangas()->toggle($manga->id);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'handle bookmark successfully',
+        ], 200);
     }
 }

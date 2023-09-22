@@ -12,21 +12,7 @@ class AuthController extends Controller
 {
     public function login(Request $request): JsonResponse
     {
-        $fields = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        $user = User::where('username', $fields['username'])
-            ->where('password', md5($fields['password']))
-            ->first();
-
-        if (! $user) {
-            return response()->json([
-                'message' => 'Incorrect username or password',
-            ], 401);
-        }
-
+        $user = $request->user;
         $user->tokens()->delete();
         $token = $user->createToken($user->username)->plainTextToken;
 

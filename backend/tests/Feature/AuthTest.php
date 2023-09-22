@@ -68,6 +68,7 @@ class AuthTest extends TestCase
             'password' => md5('111111'),
             'role' => 'user',
             'active_token' => $this->faker->unique()->regexify('[A-Za-z0-9]{20}'),
+            'active' => 1,
         ]);
         $response = $this->post('/api/auth/login', [
             'username' => 'testuser',
