@@ -68,4 +68,36 @@ class UserTest extends TestCase
         $responseView = $this->get('/activate'.'/'.$token);
         $responseView->assertViewIs('account.invalidActiveToken');
     }
+
+    public function test_me_should_return_user_info(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->get('/api/user/me');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'user' => [
+                'id',
+                'username',
+                'email',
+                'avatar',
+                'active',
+                'activated_at',
+                'role',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+
+        $response->assertJson([
+            'success' => 1,
+            'user' => [
+                'id' => $user->id,
+            ],
+        ]);
+    }
 }

@@ -47,5 +47,6 @@ Route::prefix('chapter')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
+    Route::middleware('auth:sanctum')->get('/me', [UserController::class, 'me']);
     Route::post('/request_reset_password', [UserController::class, 'requestResetPassword']);
 });

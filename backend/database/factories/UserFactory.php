@@ -23,6 +23,7 @@ class UserFactory extends Factory
             'username' => 'user'.$count++,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'avatar' => $this->faker->imageUrl(),
             'password' => md5('111111'),
             'role' => 'user',
             'active_token' => Str::random(20),
