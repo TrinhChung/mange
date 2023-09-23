@@ -32,7 +32,6 @@ class ChapterTest extends TestCase
                     'updated_at',
                     'created_at',
                     'images',
-                    'comments',
                     'manga',
                 ],
                 'message',

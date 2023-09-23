@@ -32,6 +32,11 @@ class Chapter extends Model
             ->using(Comment::class)->withPivot('id', 'user_id', 'manga_id', 'chapter_id', 'comment', 'parent_id')->withTimestamps();
     }
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'chapter_id', 'id');
+    }
+
     public function viewed_by()
     {
         return $this->belongsToMany(User::class, 'views', 'chapter_id', 'user_id')

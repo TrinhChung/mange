@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('manga_id')->constrained('mangas')->nullable();
-            $table->foreignId('chapter_id')->constrained('chapters')->nullable();
+            $table->foreignId('manga_id')->nullable()->constrained('mangas');
+            $table->foreignId('chapter_id')->nullable()->constrained('chapters');
             $table->foreignId('user_id')->constrained('users');
             $table->text('comment');
-            $table->foreignId('parent_id')->constrained('comments')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained('comments');
             $table->timestamps();
         });
     }

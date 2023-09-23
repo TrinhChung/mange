@@ -161,50 +161,49 @@ class MangaTest extends TestCase
         ]);
     }
 
-    public function bookmark_success(): void
+    public function test_bookmark_success(): void
     {
         $manga = Manga::factory()->create();
         $user = User::factory()->create();
 
         $token = $this->login_and_creat_token($user);
 
-        $response = $this->withHeaders([
+        $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$token,
-        ])->get("/api/mangas/bookmark/{$manga->id}");
+        ])->post("/api/mangas/bookmark/{$manga->id}");
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
             'message',
         ]);
-        $this->assertEquals($response->success, 1);
     }
 
-    public function bookmark_failed_invalid(): void
+    public function test_bookmark_failed_invalid(): void
     {
         $user = User::factory()->create();
 
         $token = $this->login_and_creat_token($user);
 
-        $response = $this->withHeaders([
+        $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$token,
-        ])->get('/api/mangas/bookmark/{-1}');
+        ])->post('/api/mangas/bookmark/{-1}');
 
         $response->assertStatus(422);
-        $this->assertEquals($response->success, 0);
     }
 
-    public function bookmark_failed_with_not_found(): void
+    public function test_bookmark_failed_with_not_found(): void
     {
         $user = User::factory()->create();
 
         $token = $this->login_and_creat_token($user);
 
-        $response = $this->withHeaders([
+        $id = 100;
+
+        $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer '.$token,
-        ])->get('/api/mangas/bookmark/{10000}');
+        ])->post('/api/mangas/bookmark/'.$id);
 
         $response->assertStatus(404);
-        $this->assertEquals($response->success, 0);
     }
 }

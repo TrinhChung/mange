@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -40,10 +41,14 @@ Route::prefix('mangas')->group(function () {
     Route::get('/', [MangaController::class, 'index']);
     Route::get('/{manga_id}', [MangaController::class, 'show']);
     Route::middleware('auth:sanctum')->post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
+    Route::middleware('auth:sanctum')->post('{manga_id}/comment', [CommentController::class, 'create']);
+    Route::get('{manga_id}/comments', [CommentController::class, 'getAllComment']);
 });
 
 Route::prefix('chapter')->group(function () {
     Route::get('/{chapter_id}', [ChapterController::class, 'show']);
+    Route::middleware('auth:sanctum')->post('{chapter_id}/comment', [CommentController::class, 'create']);
+    Route::get('{chapter_id}/comments', [CommentController::class, 'getAllComment']);
 });
 
 Route::prefix('user')->group(function () {
