@@ -149,3 +149,7 @@
 .color-jade {
     color: var(--jade);
 }
+
+.user-search-bar-custom .ant-input-wrapper * {
+    background-color: #ebebeb;
+}
