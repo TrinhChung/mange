@@ -98,7 +98,11 @@ class MangaController extends Controller
                 ->where('views.manga_id', $manga->id)->max('chapter_id');
         }
 
-        return response()->json($manga);
+        return response()->json([
+            'success' => 1,
+            'message' => 'handle bookmark successfully',
+            'data' => $manga,
+        ], 200);
     }
 
     public function bookmarkToggle(Request $request)

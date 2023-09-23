@@ -104,38 +104,41 @@ class MangaTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'id',
-            'name',
-            'status',
-            'description',
-            'thumbnail',
-            'view_count',
-            'follow_count',
-            'comment_count',
-            'vote_count',
-            'vote_score',
-            'chapters' => [
-                '*' => [
-                    'id',
-                    'name',
+            'success',
+            'data' => [
+                'id',
+                'name',
+                'status',
+                'description',
+                'thumbnail',
+                'view_count',
+                'follow_count',
+                'comment_count',
+                'vote_count',
+                'vote_score',
+                'chapters' => [
+                    '*' => [
+                        'id',
+                        'name',
+                    ],
                 ],
-            ],
-            'categories' => [
-                '*' => [
-                    'id',
-                    'name',
+                'categories' => [
+                    '*' => [
+                        'id',
+                        'name',
+                    ],
                 ],
-            ],
-            'othernames' => [
-                '*' => [
-                    'id',
-                    'name',
+                'othernames' => [
+                    '*' => [
+                        'id',
+                        'name',
+                    ],
                 ],
-            ],
-            'authors' => [
-                '*' => [
-                    'id',
-                    'name',
+                'authors' => [
+                    '*' => [
+                        'id',
+                        'name',
+                    ],
                 ],
             ],
         ]);
@@ -150,9 +153,11 @@ class MangaTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'user_bookmarked',
-            'user_vote',
-            'user_latest_chapter_id',
+            'data' => [
+                'user_bookmarked',
+                'user_vote',
+                'user_latest_chapter_id',
+            ],
         ]);
     }
 
@@ -169,7 +174,7 @@ class MangaTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'sucess',
+            'success',
             'message',
         ]);
         $this->assertEquals($response->success, 1);

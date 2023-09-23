@@ -10,7 +10,19 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    //
+    /**
+     * Trả về thông tin của user đang đăng nhập.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me(Request $request)
+    {
+        return response()->json([
+            'success' => 1,
+            'user' => $request->user(),
+        ], 200);
+    }
+
     public function activate(Request $request)
     {
         $user = User::where('active_token', $request->active_token)->first();
