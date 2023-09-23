@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use PDOException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -42,7 +43,7 @@ class Handler extends ExceptionHandler
                     'message' => 'Record Not Found',
                     'errors' => $e->getMessage(),
                 ], 404);
-            } elseif ($e instanceof \Illuminate\Database\QueryException) {
+            } elseif ($e instanceof \Illuminate\Database\QueryException || $e instanceof PDOException) {
                 return response()->json([
                     'success' => 0,
                     'message' => 'Query failed',
