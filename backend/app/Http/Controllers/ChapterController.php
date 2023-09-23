@@ -24,7 +24,9 @@ class ChapterController extends Controller
             'id' => 'required|integer|min:1',
         ]);
 
-        $chapter = Chapter::query()->with('images')->with('commented_by')->with('manga')
+        $chapter = Chapter::query()
+            ->with('images')
+            ->with('manga')
             ->findOrFail($fields['id']);
         $chapter = new ChapterResources($chapter);
 

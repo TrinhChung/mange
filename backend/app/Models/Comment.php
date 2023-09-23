@@ -21,7 +21,7 @@ class Comment extends Pivot
 
     public function childs()
     {
-        return $this->hasMany(Comment::class, 'parent_id', 'id');
+        return $this->hasMany(Comment::class, 'parent_id', 'id')->with('childs', 'user');
     }
 
     public function parent()
@@ -32,11 +32,6 @@ class Comment extends Pivot
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function allChilds()
-    {
-        return $this->childs()->with('allChilds', 'user');
     }
 
     public function reacted_by()
