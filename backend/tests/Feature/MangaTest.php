@@ -4,19 +4,14 @@ namespace Tests\Feature;
 
 use App\Models\Manga;
 use App\Models\User;
+use App\Traits\TestHelper;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class MangaTest extends TestCase
 {
     use RefreshDatabase;
-
-    private function login_and_creat_token($user)
-    {
-        $token = $user->createToken('testuser')->plainTextToken;
-
-        return $token;
-    }
+    use TestHelper;
 
     public function test_should_return_empty_if_no_mangas(): void
     {

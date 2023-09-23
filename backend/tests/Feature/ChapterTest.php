@@ -20,7 +20,7 @@ class ChapterTest extends TestCase
     {
         $chapter = Chapter::factory()->create();
 
-        $response = $this->get("/api/chapter/{$chapter->id}");
+        $response = $this->get("/api/chapters/{$chapter->id}");
         //dd($response->json());
         $response->assertStatus(200);
         $response->assertJsonStructure(
@@ -42,7 +42,7 @@ class ChapterTest extends TestCase
     public function test_get_info_fail_with_not_found(): void
     {
         $id = 20000;
-        $response = $this->get("/api/chapter/{$id}");
+        $response = $this->get("/api/chapters/{$id}");
         //dd($response->json());
         $response->assertStatus(404);
     }
@@ -50,7 +50,7 @@ class ChapterTest extends TestCase
     public function test_get_info_fail_with_invalid_id(): void
     {
         $id = -1;
-        $response = $this->get("/api/chapter/{$id}");
+        $response = $this->get("/api/chapters/{$id}");
         //dd($response->json());
         $response->assertStatus(422);
     }

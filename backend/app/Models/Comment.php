@@ -9,6 +9,8 @@ class Comment extends Pivot
 {
     use HasFactory;
 
+    public $incrementing = true;
+
     protected $fillable = [
         'manga_id',
         'chapter_id',

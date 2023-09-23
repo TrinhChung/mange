@@ -45,7 +45,7 @@ Route::prefix('mangas')->group(function () {
     Route::get('{manga_id}/comments', [CommentController::class, 'getAllComment']);
 });
 
-Route::prefix('chapter')->group(function () {
+Route::prefix('chapters')->group(function () {
     Route::get('/{chapter_id}', [ChapterController::class, 'show']);
     Route::middleware('auth:sanctum')->post('{chapter_id}/comment', [CommentController::class, 'create']);
     Route::get('{chapter_id}/comments', [CommentController::class, 'getAllComment']);
