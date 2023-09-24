@@ -1,5 +1,5 @@
 import React from 'react';
-import {Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Home from '../Guest/home';
 import HomeLayout from '../../layouts/HomeLayout';
 import DetailManga from '../Guest/DetailManga';
@@ -8,32 +8,32 @@ import LinkCustom from '../../components/layout/LinkCustom';
 
 const User = () => {
   const items = [
-        {
-            label: <LinkCustom to='/' label='Trang chủ' />,
-            key: 'home'
-        },
-        {
-            label: <LinkCustom to={'/job'} label='Mới ra mắt' />,
-            key: 'job'
-        },
-        {
-            label: <LinkCustom to={'/company'} label='Phổ biến' />,
-            key: 'company'
-        },
-        {
-            label: <LinkCustom to={'/category/'} label='Thể loại' />,
-            key: 'category'
-        }
-    ]
+    {
+      label: <LinkCustom to="/" label="Trang chủ" />,
+      key: 'home',
+    },
+    {
+      label: <LinkCustom to={'/job'} label="Mới ra mắt" />,
+      key: 'job',
+    },
+    {
+      label: <LinkCustom to={'/company'} label="Phổ biến" />,
+      key: 'company',
+    },
+    {
+      label: <LinkCustom to={'/category/'} label="Thể loại" />,
+      key: 'category',
+    },
+  ];
   return (
     <HomeLayout menu={items}>
-            <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/detail-manga/:name' element={<DetailManga />} />
-                <Route path='/profile/*' element={<Profile />} />
-            </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/detail-manga/:name" element={<DetailManga />} />
+        <Route path="/profile/*" element={<Profile />} />
+      </Routes>
     </HomeLayout>
   );
-}
+};
 
 export default User;
