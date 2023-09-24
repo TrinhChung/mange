@@ -100,4 +100,53 @@ class UserTest extends TestCase
             ],
         ]);
     }
+
+    public function test_me_should_return_error_when_not_login(): void
+    {
+        $response = $this->get('/api/user/me');
+        $response->assertStatus(401);
+    }
+
+    public function test_patch_me_should_update_user_info_with_valid_data(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->patch('/api/user/me', [
+            'email' => 'test@example.com',
+            'password' => '111111',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'user' => [
+                'id',
+                'username',
+                'email',
+                'avatar',
+                'active',
+                'activated_at',
+                'role',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+    }
+
+    public function test_patch_me_should_return_error_with_invalid_email(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->patch('/api/user/me', [
+            'email' => '123456',
+        ]);
+
+        $response->assertStatus(422);
+    }
 }
