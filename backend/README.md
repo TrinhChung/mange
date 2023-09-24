@@ -14,6 +14,8 @@ php artisan migrate:fresh --seed
 
 # 4. Chạy app
 php artisan serve
+
+# Để có thể gửi mail cần config như trong file env.example và chạy lệnh php artisan queue:work --queue=sendingMail
 ```
 
 Chạy test, cần cài xdebug dll (windows) hoặc so (linux) để chạy coverage:

@@ -23,6 +23,37 @@ class UserController extends Controller
         ], 200);
     }
 
+    /**
+     * Cập nhật thông tin của user đang đăng nhập.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function patchMe(Request $request)
+    {
+        // Có thể gửi trùng email lại của mình
+        // nhưng không được trùng với email của user khác
+        $fields = $this->validate($request, [
+            'email' => [
+                'string',
+                'unique:users,email,'.$request->user()->id,
+                'email',
+            ],
+            'password' => 'string|min:6',
+        ]);
+
+        if (isset($fields['password'])) {
+            $fields['password'] = md5($fields['password']);
+        }
+
+        $user = $request->user();
+        $user->update($fields);
+
+        return response()->json([
+            'success' => 1,
+            'user' => $user,
+        ], 200);
+    }
+
     public function activate(Request $request)
     {
         $user = User::where('active_token', $request->active_token)->first();
