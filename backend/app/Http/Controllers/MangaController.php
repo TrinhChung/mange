@@ -35,7 +35,7 @@ class MangaController extends Controller
         $sort = $fields['sort'] ?? '-updated_at';
 
         $query = Manga::query()->select(['id', 'name', 'thumbnail', 'view as view_count', 'status'])
-            ->with(['chapters', 'categories', 'othernames'])
+            ->with(['chapters', 'categories', 'othernames', 'authors'])
             ->withCount(['bookmarked_by as follow_count', 'comments as comment_count']);
 
         // Tìm kiếm theo `tên` hoặc `tên khác` chứa
@@ -43,6 +43,9 @@ class MangaController extends Controller
             $query->where(function ($subQuery) use ($search_query) {
                 $subQuery->where('name', 'like', "%{$search_query}%")
                     ->orWhereHas('othernames', function ($subQuery) use ($search_query) {
+                        $subQuery->where('name', 'like', "%{$search_query}%");
+                    })
+                    ->orWhereHas('authors', function ($subQuery) use ($search_query) {
                         $subQuery->where('name', 'like', "%{$search_query}%");
                     });
             });

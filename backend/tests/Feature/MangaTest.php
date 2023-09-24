@@ -70,11 +70,14 @@ class MangaTest extends TestCase
         Manga::factory()->create()->othernames()->create([
             'name' => 'Non collapsable 2',
         ]);
+        Manga::factory()->create()->authors()->create([
+            'name' => 'Non collapsable 3',
+        ]);
 
         $response = $this->get('/api/mangas?search=collapsable');
 
         $response->assertStatus(200);
-        $response->assertJsonCount(2, 'data');
+        $response->assertJsonCount(3, 'data');
     }
 
     public function test_show_should_return_404_if_not_found(): void
