@@ -60,6 +60,23 @@ class AuthTest extends TestCase
         ]);
     }
 
+    public function test_register_invalid_email_format(): void
+    {
+        $response = $this->post('/api/auth/signup', [
+            'username' => 'testuser',
+            'email' => 'testuser',
+            'password' => '111111',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'email',
+            ],
+        ]);
+    }
+
     public function test_login_success(): void
     {
         User::factory()->create([
