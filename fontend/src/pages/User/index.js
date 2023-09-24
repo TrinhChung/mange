@@ -30,10 +30,7 @@ const User = () => {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/detail-manga/:name' element={<DetailManga />} />
-                <Route path='/profile' element={<Profile />} />
-                <Route path='/profile/following' element={<Profile />} />
-                <Route path='/profile/posted' element={<Profile />} />
-                <Route path='/profile/general' element={<Profile />} />
+                <Route path='/profile/*' element={<Profile />} />
             </Routes>
     </HomeLayout>
   );
