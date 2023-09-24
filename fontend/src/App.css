@@ -1,155 +1,166 @@
 .App {
-    text-align: center;
+  text-align: center;
 }
 
 :root {
-    --color-main: #f54558;
-    --height-navbar: 60px;
-    --gray: #8a8a8a;
-    --background-banner: #d7e1e380;
-    --background-box-search: #62c1c526;
-    --search: #18898d;
-    --height-banner: 300px;
-    --color-image: #095a88;
-    --color-job-box: #62c2c53e;
-    --color-yellow: #f9ba19d6;
-    --color-gray-job: #898484;
-    --color-smoke: rgba(217, 217, 217, 0.13);
-    --color-gray-card-user: rgba(217, 217, 217, 0.47);
-    --background-hr: #f5f5f5;
-    --violet: #9f73c1;
-    --jade: #45b3b4;
+  --color-main: #f54558;
+  --height-navbar: 60px;
+  --gray: #8a8a8a;
+  --background-banner: #d7e1e380;
+  --background-box-search: #62c1c526;
+  --search: #18898d;
+  --height-banner: 300px;
+  --color-image: #095a88;
+  --color-job-box: #62c2c53e;
+  --color-yellow: #f9ba19d6;
+  --color-gray-job: #898484;
+  --color-smoke: rgba(217, 217, 217, 0.13);
+  --color-gray-card-user: rgba(217, 217, 217, 0.47);
+  --background-hr: #f5f5f5;
+  --violet: #9f73c1;
+  --jade: #45b3b4;
 }
 
 .App-logo {
-    height: 40vmin;
-    pointer-events: none;
+  height: 40vmin;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
 .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .App-link {
-    color: #61dafb;
+  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ant-menu-horizontal {
-    border-bottom: none !important;
-    line-height: 28px;
+  border-bottom: none !important;
+  line-height: 28px;
 }
 
 .ant-menu-item-selected {
-    color: white !important;
-    transition: 0.5s;
+  color: white !important;
+  transition: 0.5s;
 }
 
 .ant-menu-item-only-child:hover::after {
-    color: white !important;
-    border-bottom-color: white !important;
+  color: white !important;
+  border-bottom-color: white !important;
 }
 
 .ant-menu-item-selected::after {
-    color: white !important;
-    border-bottom-color: white !important;
+  color: white !important;
+  border-bottom-color: white !important;
 }
 
 .button-search {
-    background-color: var(--search);
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 0;
+  background-color: var(--search);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0;
 }
 
 .input-custom {
-    border-radius: 0;
-    outline: none !important;
-    border: none !important;
-    box-shadow: none !important;
+  border-radius: 0;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .box-content {
-    background-color: white;
-    padding: 20px 20px 40px 20px;
-    margin: 10px 0;
+  background-color: white;
+  padding: 20px 20px 40px 20px;
+  margin: 10px 0;
 }
 
 .scroll-bar-custom::-webkit-scrollbar {
-    width: 3px;
+  width: 3px;
 }
 
 .scroll-bar-custom::-webkit-scrollbar-thumb {
-    background: #888;
-    height: 3px;
+  background: #888;
+  height: 3px;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .text_title {
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .badge-category {
-    background-color: var(--violet);
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
-    padding: 5px 10px;
-    cursor: pointer;
+  background-color: var(--violet);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .button-view {
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 16px;
-    color: white;
-    line-height: 19px;
-    cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: white;
+  line-height: 19px;
+  cursor: pointer;
 }
 
 .bg-color-main {
-    background-color: var(--color-main);
+  background-color: var(--color-main);
 }
 
 .bg-color-violet {
-    background-color: var(--violet);
+  background-color: var(--violet);
 }
 
 .bg-color-jade {
-    background-color: var(--jade);
+  background-color: var(--jade);
 }
 
 .color-main {
-    color: var(--color-main);
+  color: var(--color-main);
 }
 
 .color-jade {
-    color: var(--jade);
+  color: var(--jade);
 }
 
 .user-search-bar-custom .ant-input-wrapper * {
-    background-color: #ebebeb;
+  background-color: #ebebeb;
+}
+
+.input-form {
+  outline: none !important;
+  border: 1px solid var(--gray) !important;
+  border-radius: 0 !important;
+  padding: 7px 8px;
 }

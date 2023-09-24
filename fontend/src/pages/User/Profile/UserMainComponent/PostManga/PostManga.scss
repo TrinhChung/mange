@@ -1,0 +1,26 @@
+.select-input {
+  outline: none !important;
+  border: 1px solid var(--gray) !important;
+  border-radius: 0 !important;
+  padding: 3px 0px;
+
+  .ant-select-selector {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.upload-image {
+  position: absolute;
+  top: -99999px;
+  left: -99999px;
+}
+
+.label-upload-image {
+  border: 1px solid var(--gray) !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray);
+}
