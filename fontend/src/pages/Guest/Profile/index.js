@@ -1,12 +1,24 @@
 import { Col, Row } from 'antd'
 import React from 'react'
-import AvatarArea from './AvatarArea'
-import NavigationArea from './NavigationArea'
+import NavigationArea from '../../../components/profile/NavigationArea'
 import { useLocation } from 'react-router-dom'
 import GeneralComponent from './UserMainComponent/GeneralComponent'
 import ProfileComponent from './UserMainComponent/ProfileComponent'
 import FollowingComponent from './UserMainComponent/FollowingComponent'
 import PostedComponent from './UserMainComponent/PostedComponent'
+import AvatarArea from '../../../components/profile/AvatarArea'
+import {InfoCircleOutlined, UserOutlined, KeyOutlined, ReadOutlined, LogoutOutlined} from '@ant-design/icons';
+
+const menu = [
+        {content: "Thông tin chung", path: "/profile/general", icon: <InfoCircleOutlined />},
+        {content: "Hồ sơ cá nhân", path: "/profile/", icon: <UserOutlined />},
+        {content: "Truyện đang theo dõi", path: "/profile/following", icon: <ReadOutlined />},
+        {content: "Truyện đã đăng", path: "/profile/posted", icon: <ReadOutlined />},
+        {content: "Đổi mật khẩu", path: "/profile/general", icon: <KeyOutlined />},
+        {content: "Đăng xuất", path: null, icon: <LogoutOutlined />},
+
+
+    ]
 
 const Profile = () => {
     const location = useLocation()
@@ -35,7 +47,7 @@ const Profile = () => {
                 <Row>
                     <Col span={8}>
                         <AvatarArea />
-                        <NavigationArea />
+                        <NavigationArea menu={menu}/>
                     </Col>
                     <Col span={16}>{generateComponent(pathname)}</Col>
                 </Row>

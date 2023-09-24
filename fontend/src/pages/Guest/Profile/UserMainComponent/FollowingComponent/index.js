@@ -1,6 +1,6 @@
 import { Col, Input, Row } from 'antd'
 import React, { useState } from 'react'
-import TitleTopLeft from '../TitleTopLeft'
+import TitleTopLeft from '../../../../../components/layout/TitleTopLeft'
 import UserStory from '../UserStory'
 import { useLocation } from 'react-router-dom'
 

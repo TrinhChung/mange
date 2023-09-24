@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd'
 import React from 'react'
-import TitleTopLeft from '../TitleTopLeft'
+import TitleTopLeft from '../../../../../components/layout/TitleTopLeft'
 
 const breadcrumbData = [
     {
