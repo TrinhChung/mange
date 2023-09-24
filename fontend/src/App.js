@@ -7,21 +7,32 @@ import Auth from './pages/Auth'
 import Guest from './pages/Guest'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+import User from './pages/User'
 
 function App() {
     const { authUser, setAuthUser } = useContext(AuthContext)
     const [token, setToken] = useState(localStorage.getItem('accessToken'))
+    const [user, setUser] = useState({});
+    
 
     useEffect(() => {
         setToken(localStorage.getItem('accessToken'))
     }, [authUser])
 
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('auth-user')))
+        console.log(user)
+    },[])
+
     const role = authUser && authUser.role ? authUser.role : null
 
     return (
         <BrowserRouter>
-            <Auth />
-            <Guest />
+            {user == null && <Auth />}
+            
+            {user && user.success == false && <Guest />}
+            {user && user.success == true && <User/>}
+            
 
             <ToastContainer
                 position='top-right'
