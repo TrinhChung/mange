@@ -1,14 +1,14 @@
-name: Backend Workflow
+name: Backend Test Coverage
 
 on:
-  pull_request:
+  push:
     paths:
       - "backend/**"
       - ".github/workflows/**"
     branches: [main]
 
 jobs:
-  laravel-pint:
+  laravel-test-with-coverage:
     runs-on: ubuntu-22.04
     defaults:
       run:
@@ -19,21 +19,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
-      - name: Lint Laravel with Pint
-        run: ./vendor/bin/pint --test
-  laravel-test:
-    runs-on: ubuntu-22.04
-    defaults:
-      run:
-        working-directory: ./backend
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
+          coverage: "xdebug"
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
       - name: Set up Redis
@@ -44,4 +30,12 @@ jobs:
         run: |
           touch database/database.testing.sqlite
           php artisan config:clear
-          php artisan test
+          php artisan test --coverage-html coverage
+      - name: Upload coverage to vps
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: '167.71.197.242'
+          username: coverage
+          password: ${{ secrets.COVERAGE_PASSWORD }}
+          source: ./backend/coverage/*
+          target: /mnt/volume_sgp1_01/laravel_coverage
