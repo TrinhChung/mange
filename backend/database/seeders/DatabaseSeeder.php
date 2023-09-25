@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        \App\Models\User::factory()->create([
+            'username' => 'user',
+            'role' => 'admin',
+            'active' => true,
+            'activated_at' => now(),
+        ]);
         \App\Models\User::factory(100)->create();
 
         DB::beginTransaction();

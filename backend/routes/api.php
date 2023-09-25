@@ -52,7 +52,14 @@ Route::prefix('chapters')->group(function () {
 });
 
 Route::prefix('user')->group(function () {
-    Route::middleware('auth:sanctum')->get('/me', [UserController::class, 'me']);
-    Route::middleware('auth:sanctum')->patch('/me', [UserController::class, 'patchMe']);
     Route::post('/request_reset_password', [UserController::class, 'requestResetPassword']);
+});
+
+Route::prefix('me')->group(function () {
+    Route::middleware('auth:sanctum')->get('/', [UserController::class, 'me']);
+    Route::middleware('auth:sanctum')->patch('/', [UserController::class, 'patchMe']);
+});
+
+Route::prefix('users')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
 });

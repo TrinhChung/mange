@@ -76,7 +76,7 @@ class UserTest extends TestCase
             'activated_at' => now(),
         ]);
 
-        $response = $this->actingAs($user)->get('/api/user/me');
+        $response = $this->actingAs($user)->get('/api/me');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
@@ -103,7 +103,7 @@ class UserTest extends TestCase
 
     public function test_me_should_return_error_when_not_login(): void
     {
-        $response = $this->get('/api/user/me');
+        $response = $this->get('/api/me');
         $response->assertStatus(401);
     }
 
@@ -114,7 +114,7 @@ class UserTest extends TestCase
             'activated_at' => now(),
         ]);
 
-        $response = $this->actingAs($user)->patch('/api/user/me', [
+        $response = $this->actingAs($user)->patch('/api/me', [
             'email' => 'test@example.com',
             'password' => '111111',
         ]);
@@ -143,10 +143,57 @@ class UserTest extends TestCase
             'activated_at' => now(),
         ]);
 
-        $response = $this->actingAs($user)->patch('/api/user/me', [
+        $response = $this->actingAs($user)->patch('/api/me', [
             'email' => '123456',
         ]);
 
         $response->assertStatus(422);
+    }
+
+    public function test_index_should_block_guest(): void
+    {
+        $response = $this->get('/api/users');
+        $response->assertStatus(401);
+    }
+
+    public function test_index_should_block_non_admin_user(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->get('/api/users');
+        $response->assertStatus(403);
+    }
+
+    public function test_index_should_return_list_of_users(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'role' => 'admin',
+        ]);
+
+        $response = $this->actingAs($user)->get('/api/users');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'data' => [
+                'data' => [
+                    '*' => [
+                        'id',
+                        'username',
+                        'email',
+                        'role',
+                        'active',
+                        'updated_at',
+                    ],
+                ],
+                'current_page',
+                'last_page',
+                'per_page',
+            ],
+        ]);
     }
 }
