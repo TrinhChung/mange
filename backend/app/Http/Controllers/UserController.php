@@ -4,12 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    public function index(Request $request): JsonResponse
+    {
+        $this->authorize('viewAny', User::class);
+
+        $fields = $this->validate($request, [
+            'per_page' => 'integer|min:1',
+            'page' => 'integer|min:1',
+        ]);
+
+        $per_page = $fields['per_page'] ?? 10;
+        $page = $fields['page'] ?? 1;
+
+        $users = User::query()->select(['id', 'username', 'email', 'role', 'active', 'updated_at'])
+            ->paginate($per_page, ['*'], 'page', $page);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $users,
+        ], 200);
+    }
+
     /**
      * Trả về thông tin của user đang đăng nhập.
      *

@@ -52,6 +52,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     public function send_activation_email()
     {
         if (SendWelcomeEmail::dispatch($this)->onQueue('sendingMail')->delay(now()->addMinutes(0.05))) {

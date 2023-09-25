@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use PDOException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -49,6 +50,12 @@ class Handler extends ExceptionHandler
                     'message' => 'Query failed',
                     'errors' => $e->getMessage(),
                 ], 500);
+            } elseif ($e instanceof AccessDeniedHttpException) {
+                return response()->json([
+                    'success' => 0,
+                    'message' => 'Access Denied',
+                    'errors' => $e->getMessage(),
+                ], 403);
             }
         });
     }
