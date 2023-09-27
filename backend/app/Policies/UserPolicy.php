@@ -28,6 +28,6 @@ class UserPolicy
     {
         return $user->id === $viewedUser->id
             ? Response::allow()
-            : Response::deny('You can only view your own profile.');
+            : Response::deny('You are not allowed to see this profile.');
     }
 }
