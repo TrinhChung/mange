@@ -196,4 +196,75 @@ class UserTest extends TestCase
             ],
         ]);
     }
+
+    public function test_show_should_block_guest(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $response = $this->get('/api/users/'.$user->id);
+        $response->assertStatus(401);
+    }
+
+    public function test_show_should_success_if_get_current_user(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $response = $this->actingAs($user)->get('/api/users/'.$user->id);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'data' => [
+                'id',
+                'username',
+                'email',
+                'role',
+                'active',
+                'updated_at',
+            ],
+        ]);
+    }
+
+    public function test_show_should_success_if_admin_get_other_user(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'role' => 'admin',
+        ]);
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $response = $this->actingAs($user)->get('/api/users/'.$user2->id);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'data' => [
+                'id',
+                'username',
+                'email',
+                'role',
+                'active',
+                'updated_at',
+            ],
+        ]);
+    }
+
+    public function test_show_should_fail_when_user_get_another_user(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $response = $this->actingAs($user)->get('/api/users/'.$user2->id);
+        $response->assertStatus(403);
+    }
 }

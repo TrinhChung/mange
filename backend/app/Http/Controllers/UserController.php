@@ -32,6 +32,18 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function show($user_id, Request $request): JsonResponse
+    {
+        $user = User::findOrFail($user_id);
+
+        $this->authorize('view', $user);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $user,
+        ], 200);
+    }
+
     /**
      * Trả về thông tin của user đang đăng nhập.
      *
