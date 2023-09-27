@@ -62,4 +62,5 @@ Route::prefix('me')->group(function () {
 
 Route::prefix('users')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [UserController::class, 'index']);
+    Route::get('/{user_id}', [UserController::class, 'show']);
 });
