@@ -55,9 +55,10 @@ Route::prefix('user')->group(function () {
     Route::post('/request_reset_password', [UserController::class, 'requestResetPassword']);
 });
 
-Route::prefix('me')->group(function () {
-    Route::middleware('auth:sanctum')->get('/', [UserController::class, 'me']);
-    Route::middleware('auth:sanctum')->patch('/', [UserController::class, 'patchMe']);
+Route::prefix('me')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [UserController::class, 'me']);
+    Route::patch('/', [UserController::class, 'patchMe']);
+    Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
 });
 
 Route::prefix('users')->middleware('auth:sanctum')->group(function () {

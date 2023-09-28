@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -266,5 +268,86 @@ class UserTest extends TestCase
         ]);
         $response = $this->actingAs($user)->get('/api/users/'.$user2->id);
         $response->assertStatus(403);
+    }
+
+    public function test_update_my_avatar_should_fail_if_no_images(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $response = $this->actingAs($user)->post('/api/me/avatar');
+        $response->assertStatus(422);
+    }
+
+    public function test_update_my_avatar_should_fail_if_wrong_mime_type(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $file = UploadedFile::fake()->create('avatar.pdf', 100, 'application/pdf');
+        $response = $this->actingAs($user)->post('/api/me/avatar', [
+            'avatar' => $file,
+        ]);
+        $response->assertStatus(422);
+    }
+
+    public function test_update_my_avatar_should_success_if_valid_image(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+        $file = UploadedFile::fake()->image('test.jpg');
+        $response = $this->actingAs($user)->post('/api/me/avatar', [
+            'avatar' => $file,
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'user' => [
+                'id',
+                'username',
+                'email',
+                'avatar',
+                'active',
+                'activated_at',
+                'role',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+    }
+
+    public function test_update_my_avatar_should_delete_old_avatar_if_exists(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'avatar' => 'avatar153269.jpg',
+        ]);
+        Storage::put('public/avatars/avatar153269.jpg', 'fake image');
+
+        $response = $this->actingAs($user)->post('/api/me/avatar', [
+            'avatar' => UploadedFile::fake()->image('test.jpg'),
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'user' => [
+                'id',
+                'username',
+                'email',
+                'avatar',
+                'active',
+                'activated_at',
+                'role',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+        Storage::assertMissing('public/avatars/avatar153269.jpg');
+        Storage::delete('public/avatars/'.$user->avatar);
     }
 }

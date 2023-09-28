@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -81,6 +82,33 @@ class UserController extends Controller
 
         $user = $request->user();
         $user->update($fields);
+
+        return response()->json([
+            'success' => 1,
+            'user' => $user,
+        ], 200);
+    }
+
+    public function updateMyAvatar(Request $request)
+    {
+        $fields = $this->validate($request, [
+            'avatar' => 'required|image|max:10240',
+        ]);
+
+        // Xóa ảnh cũ trong storage nếu có
+        if ($request->user()->avatar) {
+            $path = 'public/avatars/'.$request->user()->avatar;
+            if (Storage::exists($path)) {
+                Storage::delete($path);
+            }
+        }
+
+        $user = $request->user();
+        $fileName = $user->id.'_'.time().'.'.$fields['avatar']->extension();
+        $fields['avatar']->storeAs('public/avatars', $fileName);
+        $user->update([
+            'avatar' => $fileName,
+        ]);
 
         return response()->json([
             'success' => 1,
