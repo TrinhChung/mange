@@ -12,6 +12,11 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | CHỈ DÀNH CHO ADMIN
+    |--------------------------------------------------------------------------
+    */
     public function index(Request $request): JsonResponse
     {
         $this->authorize('viewAny', User::class);
@@ -36,7 +41,6 @@ class UserController extends Controller
     public function show($user_id, Request $request): JsonResponse
     {
         $user = User::findOrFail($user_id);
-
         $this->authorize('view', $user);
 
         return response()->json([
@@ -45,16 +49,58 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * Trả về thông tin của user đang đăng nhập.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    public function patch($user_id, Request $request): JsonResponse
+    {
+        $user = User::findOrFail($user_id);
+        $this->authorize('update', $user);
+
+        $fields = $this->validate($request, [
+            'username' => 'string|unique:users,username,'.$user->id,
+            'email' => 'string|email|unique:users,email,'.$user->id,
+            'password' => 'string|min:6',
+            'role' => 'string|in:admin,translator,user',
+            'active' => 'boolean',
+        ]);
+
+        if (isset($fields['password'])) {
+            $fields['password'] = md5($fields['password']);
+        }
+        $user->update($fields);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $user,
+        ], 200);
+    }
+
+    public function updateUserAvatar($user_id, Request $request): JsonResponse
+    {
+        $user = User::findOrFail($user_id);
+        $this->authorize('update', $user);
+
+        $fields = $this->validate($request, [
+            'avatar' => 'required|image|max:10240',
+        ]);
+
+        $user = $this->handleUpdateAvatar($user, $fields['avatar']);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $user,
+        ], 200);
+
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CHO MỌI USER
+    |--------------------------------------------------------------------------
+    */
     public function me(Request $request)
     {
         return response()->json([
             'success' => 1,
-            'user' => $request->user(),
+            'data' => $request->user(),
         ], 200);
     }
 
@@ -85,7 +131,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
-            'user' => $user,
+            'data' => $user,
         ], 200);
     }
 
@@ -95,24 +141,11 @@ class UserController extends Controller
             'avatar' => 'required|image|max:10240',
         ]);
 
-        // Xóa ảnh cũ trong storage nếu có
-        if ($request->user()->avatar) {
-            $path = 'public/avatars/'.$request->user()->avatar;
-            if (Storage::exists($path)) {
-                Storage::delete($path);
-            }
-        }
-
-        $user = $request->user();
-        $fileName = $user->id.'_'.time().'.'.$fields['avatar']->extension();
-        $fields['avatar']->storeAs('public/avatars', $fileName);
-        $user->update([
-            'avatar' => $fileName,
-        ]);
+        $user = $this->handleUpdateAvatar($request->user(), $fields['avatar']);
 
         return response()->json([
             'success' => 1,
-            'user' => $user,
+            'data' => $user,
         ], 200);
     }
 
@@ -158,5 +191,31 @@ class UserController extends Controller
                 'user' => $user,
             ], 200);
         }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | HELPER
+    |--------------------------------------------------------------------------
+    */
+    private function handleUpdateAvatar(User $user, $avatar): User
+    {
+        // Xóa ảnh cũ trong storage nếu có
+        if ($user->avatar) {
+            $path = 'public/avatars/'.$user->avatar;
+            if (Storage::exists($path)) {
+                Storage::delete($path);
+            }
+        }
+
+        DB::beginTransaction();
+        $fileName = $user->id.'_'.time().'.'.$avatar->extension();
+        $avatar->storeAs('public/avatars', $fileName);
+        $user->update([
+            'avatar' => $fileName,
+        ]);
+        DB::commit();
+
+        return $user;
     }
 }

@@ -27,4 +27,9 @@ class UserPolicy
             ? Response::allow()
             : Response::deny('You are not allowed to see this profile.');
     }
+
+    public function update(User $user, User $viewedUser): Response
+    {
+        return Response::deny('You are not allowed to change this user.');
+    }
 }

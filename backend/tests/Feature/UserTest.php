@@ -82,7 +82,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'user' => [
+            'data' => [
                 'id',
                 'username',
                 'email',
@@ -97,7 +97,7 @@ class UserTest extends TestCase
 
         $response->assertJson([
             'success' => 1,
-            'user' => [
+            'data' => [
                 'id' => $user->id,
             ],
         ]);
@@ -124,7 +124,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'user' => [
+            'data' => [
                 'id',
                 'username',
                 'email',
@@ -150,6 +150,67 @@ class UserTest extends TestCase
         ]);
 
         $response->assertStatus(422);
+    }
+
+    public function test_patch_user_should_return_error_when_not_admin(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->patch('/api/users/'.$user2->id, [
+            'email' => 'test123@gmail.com',
+        ]);
+
+        $response->assertStatus(403);
+    }
+
+    public function test_patch_user_should_return_error_with_invalid_email(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'role' => 'admin',
+        ]);
+
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->patch('/api/users/'.$user2->id, [
+            'email' => '123456',
+        ]);
+
+        $response->assertStatus(422);
+    }
+
+    public function test_patch_user_should_success_with_valid_data(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'role' => 'admin',
+        ]);
+
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->patch('/api/users/'.$user2->id, [
+            'email' => 'testing@gmail.com',
+            'role' => 'translator',
+            'active' => 0,
+        ]);
+
+        $response->assertStatus(200);
     }
 
     public function test_index_should_block_guest(): void
@@ -306,7 +367,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'user' => [
+            'data' => [
                 'id',
                 'username',
                 'email',
@@ -335,7 +396,60 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'user' => [
+            'data' => [
+                'id',
+                'username',
+                'email',
+                'avatar',
+                'active',
+                'activated_at',
+                'role',
+                'created_at',
+                'updated_at',
+            ],
+        ]);
+        Storage::assertMissing('public/avatars/avatar153269.jpg');
+        Storage::delete('public/avatars/'.$user->avatar);
+    }
+
+    public function test_update_user_avatar_should_error_when_not_admin(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+        ]);
+
+        $response = $this->actingAs($user)->post('/api/users/'.$user2->id.'/avatar');
+        $response->assertStatus(403);
+    }
+
+    public function test_update_user_avatar_should_delete_old_avatar_if_exists(): void
+    {
+        $user = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'role' => 'admin',
+        ]);
+        Storage::put('public/avatars/avatar1532691.jpg', 'fake image');
+
+        $user2 = User::factory()->create([
+            'active' => 1,
+            'activated_at' => now(),
+            'avatar' => 'avatar1532691.jpg',
+        ]);
+
+        $response = $this->actingAs($user)->post('/api/users/'.$user2->id.'/avatar', [
+            'avatar' => UploadedFile::fake()->image('test.jpg'),
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'data' => [
                 'id',
                 'username',
                 'email',
