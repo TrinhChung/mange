@@ -38,10 +38,14 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('mangas')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/bookmarked', [MangaController::class, 'getBookmarkedMangas']);
+        Route::post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
+        Route::post('{manga_id}/comment', [CommentController::class, 'create']);
+    });
+
     Route::get('/', [MangaController::class, 'index']);
     Route::get('/{manga_id}', [MangaController::class, 'show']);
-    Route::middleware('auth:sanctum')->post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
-    Route::middleware('auth:sanctum')->post('{manga_id}/comment', [CommentController::class, 'create']);
     Route::get('{manga_id}/comments', [CommentController::class, 'getAllComment']);
 });
 

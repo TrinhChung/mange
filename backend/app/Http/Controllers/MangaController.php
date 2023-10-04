@@ -108,6 +108,41 @@ class MangaController extends Controller
         ], 200);
     }
 
+    public function getBookmarkedMangas(Request $request)
+    {
+        $fields = $this->validate($request, [
+            'per_page' => 'integer|min:1',
+            'page' => 'integer|min:1',
+            'search' => 'string',
+        ]);
+
+        $per_page = $fields['per_page'] ?? 10;
+        $page = $fields['page'] ?? 1;
+        $search_query = $fields['search'] ?? '';
+
+        $query = Manga::query()->select(['mangas.id', 'name', 'thumbnail'])
+            ->join('bookmarks', 'mangas.id', '=', 'bookmarks.manga_id')
+            ->where('bookmarks.user_id', $request->user()->id);
+
+        // Get latest chapter
+        $query->with(['chapters' => function ($subQuery) {
+            $subQuery->orderBy('id', 'desc')->limit(1);
+        }]);
+
+        // Tìm kiếm theo `tên`
+        if (! empty($search_query)) {
+            $query->where('name', 'like', "%{$search_query}%");
+        }
+
+        $mangas = $query->paginate($per_page, ['*'], 'page', $page);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'get bookmarked mangas successfully',
+            'data' => $mangas,
+        ], 200);
+    }
+
     public function bookmarkToggle(Request $request)
     {
         $user = $request->user();
@@ -122,6 +157,9 @@ class MangaController extends Controller
 
         return response()->json([
             'success' => 1,
+            'data' => [
+                'bookmarked' => $manga->bookmarked_by()->where('user_id', $user->id)->exists(),
+            ],
             'message' => 'handle bookmark successfully',
         ], 200);
     }
