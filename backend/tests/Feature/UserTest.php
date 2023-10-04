@@ -208,9 +208,13 @@ class UserTest extends TestCase
             'email' => 'testing@gmail.com',
             'role' => 'translator',
             'active' => 0,
+            'password' => '19921229',
         ]);
 
         $response->assertStatus(200);
+
+        $user2 = User::find($user2->id);
+        $this->assertTrue(md5('19921229') === $user2->password);
     }
 
     public function test_index_should_block_guest(): void

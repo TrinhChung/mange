@@ -61,6 +61,32 @@ class MangaTest extends TestCase
         ]);
     }
 
+    public function test_index_should_return_latest_chapters(): void
+    {
+        $manga = Manga::factory()->create();
+        $manga->chapters()->create([
+            'name' => 'Chapter 1',
+            'folder' => 'folder',
+            'amount' => 10,
+        ]);
+
+        $response = $this->get('/api/mangas');
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'last_3_chapters' => [
+                        '*' => [
+                            'id',
+                            'name',
+                            'folder',
+                            'amount',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
+
     public function test_search_query_success(): void
     {
         Manga::factory()->count(10)->create();
@@ -203,5 +229,44 @@ class MangaTest extends TestCase
         ])->post('/api/mangas/bookmark/'.$id);
 
         $response->assertStatus(404);
+    }
+
+    public function test_get_bookmarked_fail_if_not_login(): void
+    {
+        $response = $this->get('/api/mangas/bookmarked');
+
+        $response->assertStatus(401);
+    }
+
+    public function test_get_bookmarked_success(): void
+    {
+        $user = User::factory()->create();
+        $manga = Manga::factory()->create();
+        $user->bookmarked_mangas()->attach($manga->id);
+
+        $response = $this->actingAs($user)->get('/api/mangas/bookmarked');
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'data' => [
+                'current_page',
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'thumbnail',
+                        'chapters' => [
+                            '*' => [
+                                'id',
+                                'name',
+                                'folder',
+                                'amount',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
     }
 }
