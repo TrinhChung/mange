@@ -16,28 +16,29 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('accessToken'));
   const [user, setUser] = useState({});
 
-
   useEffect(() => {
     window.io = require('socket.io-client');
 
     window.Echo = new Echo({
       client: Socketio,
-      broadcaster: "socket.io",
-      host: "http://localhost:6001",
-    })
+      broadcaster: 'socket.io',
+      host: 'http://localhost:6001',
+    });
 
-    window.Echo.connector.socket.on("connect", function () {
-      console.log("connect success")
-    })
+    window.Echo.connector.socket.on('connect', function () {
+      console.log('connect success');
+    });
 
-    window.Echo.connector.socket.on("disconnect", function () {
-      console.log("disconnected")
-    })
+    window.Echo.connector.socket.on('disconnect', function () {
+      console.log('disconnected');
+    });
 
-    window.Echo.channel('laravel_database_my-channel')
-        .listen(".my-event", (e) => {
-          console.log(e);
-        });
+    window.Echo.channel('laravel_database_my-channel').listen(
+      '.my-event',
+      (e) => {
+        console.log(e);
+      }
+    );
   }, []);
 
   useEffect(() => {
