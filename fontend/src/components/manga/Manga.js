@@ -3,8 +3,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hostImg } from '../../const/index';
 
-const { Paragraph, Text } = Typography;
-
 const Manga = ({ manga = {} }) => {
   const navigate = useNavigate();
 
@@ -25,7 +23,16 @@ const Manga = ({ manga = {} }) => {
         />
       </Row>
       <Row
-        style={{ paddingTop: 8, width: 150, fontWeight: 'bold', fontSize: 14 }}
+        style={{
+          paddingTop: 8,
+          width: 150,
+          fontWeight: 'bold',
+          fontSize: 14,
+          cursor: 'pointer',
+        }}
+        onClick={() => {
+          navigate(`/live-manga/${manga?.slug}/${manga.last_3_chapters[0].id}`);
+        }}
       >
         #
         {manga?.last_3_chapters?.length > 0 && manga.last_3_chapters[0].name

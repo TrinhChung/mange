@@ -2,7 +2,6 @@ import React from 'react';
 import { Col, Row } from 'antd';
 import TitleChildren from '../../../components/layout/TitleChildren';
 import { UnorderedListOutlined } from '@ant-design/icons';
-import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
 const Chapter = ({ chapters = [], nameManga = 'name' }) => {
@@ -90,9 +89,7 @@ const Chapter = ({ chapters = [], nameManga = 'name' }) => {
                     return (
                       <RowChapter
                         chapter={chapter}
-                        date={moment(
-                          chapter?.created_at ? chapter?.created_at : new Date()
-                        ).format('DD/MM/YYYY')}
+                        date={chapter?.created_at_formated}
                         action={handleViewChapter}
                       />
                     );

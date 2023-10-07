@@ -1,20 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Image, Row, Select } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getChapterDetail } from '../../../services/Guest/index';
 import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons';
+import Comment from '../DetailManga/Comment';
 const DetailChapter = () => {
   const [images, setImages] = useState([]);
+  const [chapters, setChapters] = useState([]);
+  const [index, setIndex] = useState(0);
   const { name, id } = useParams();
+  const navigate = useNavigate();
+
   const fetchDetailChapter = async (id) => {
     const data = await getChapterDetail(id);
     if (data.status === 200 && data.data && data.data.images) {
       setImages(data.data.images);
+      if (data.data.manga && data.data.manga.chapters) {
+        var arr = data.data.manga.chapters;
+        setChapters(
+          arr.map((chapter) => {
+            return { value: chapter.id, label: chapter.name };
+          })
+        );
+        setIndex(arr.findIndex((chapter) => chapter.id == id));
+      }
     }
   };
 
   useEffect(() => {
-    console.log(id);
     fetchDetailChapter(id);
   }, [id]);
 
@@ -34,32 +47,55 @@ const DetailChapter = () => {
         >
           <Col style={{ fontSize: 40 }}>
             <LeftCircleOutlined
-              style={{ cursor: 'pointer' }}
+              style={{
+                cursor: `${index > 0 ? 'pointer' : 'default'}`,
+                color: `${index > 0 ? 'black' : 'gray'}`,
+              }}
               onClick={() => {
                 console.log(id);
               }}
             />
           </Col>
-          <Col>
-            <Select
-              defaultValue="lucy"
+          {chapters && chapters.length > 0 && (
+            <Col>
+              <Select
+                defaultValue={
+                  chapters.length > 0 && index >= 0
+                    ? chapters[index]?.label
+                    : 'Chapter'
+                }
+                style={{
+                  width: 400,
+                }}
+                onChange={(value) => {
+                  navigate(`/live-manga/${name}/${value}`);
+                }}
+                value={chapters[index]?.value}
+                className="custom-select-chapter"
+                options={chapters}
+              />
+            </Col>
+          )}
+
+          <Col style={{ fontSize: 40 }}>
+            <RightCircleOutlined
               style={{
-                width: 400,
+                cursor: `${
+                  index >= 0 && index < chapters.length - 1
+                    ? 'pointer'
+                    : 'default'
+                }`,
+                color: `${
+                  index >= 0 && index < chapters.length - 1 ? 'black' : 'gray'
+                }`,
               }}
-              className="custom-select-chapter"
-              options={[
-                {
-                  value: 'lucy',
-                  label: 'Lucy',
-                },
-              ]}
+              onClick={() => {
+                navigate(`/live-manga/${name}/${chapters[index + 1].value}`);
+              }}
             />
           </Col>
-          <Col style={{ fontSize: 40 }}>
-            <RightCircleOutlined />
-          </Col>
         </Row>
-        <Row style={{ paddingBottom: 40 }}>
+        <Row style={{ paddingBottom: 40, minHeight: 800 }}>
           {images &&
             images.length > 0 &&
             images.map((image, index) => {
@@ -73,6 +109,7 @@ const DetailChapter = () => {
               );
             })}
         </Row>
+        <Comment comments={null} />
       </Col>
     </Row>
   );
