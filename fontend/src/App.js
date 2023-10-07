@@ -54,10 +54,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      {user == null && <Auth />}
+      <Guest />
+      {/* {user == null && <Auth />}
 
       {user && user.success == false && <Guest />}
-      {user && user.success == true && <User />}
+      {user && user.success == true && <User />} */}
 
       <ToastContainer
         position="top-right"

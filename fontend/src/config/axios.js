@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const NODE_ENV = process.env.NODE_ENV;
+
 const instance = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: NODE_ENV === "production" ? "https://api.mange.uetvnu.id.vn" : "http://localhost:8000",
 });
 
 instance.interceptors.request.use(
