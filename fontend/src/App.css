@@ -164,3 +164,9 @@
   border-radius: 0 !important;
   padding: 7px 8px;
 }
+
+.custom-select-chapter {
+  border: none !important;
+  outline: none !important;
+  height: 40px;
+}

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Title from '../../../components/layout/Title';
 import Manga from '../../../components/manga/Manga';
 import Slider from 'react-slick';
-import { useReducer, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const Propose = ({ proposes = [] }) => {
   const [manga, setManga] = useState([]);
@@ -20,7 +20,6 @@ const Propose = ({ proposes = [] }) => {
   };
   useEffect(() => {
     setManga(proposes);
-    console.log(manga);
   }, [proposes]);
 
   return (

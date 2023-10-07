@@ -16,6 +16,12 @@ const Manga = ({ manga = {} }) => {
           preview={false}
           width={150}
           height={200}
+          style={{ cursor: 'pointer' }}
+          onClick={() => {
+            if (manga && manga.slug) {
+              navigate(`/detail-manga/${manga.id}`);
+            }
+          }}
         />
       </Row>
       <Row
@@ -37,7 +43,7 @@ const Manga = ({ manga = {} }) => {
         }}
         onClick={() => {
           if (manga && manga.slug) {
-            navigate(`/detail-manga/${manga.slug}`);
+            navigate(`/detail-manga/${manga.id}`);
           }
         }}
       >
