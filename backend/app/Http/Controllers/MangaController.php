@@ -102,6 +102,14 @@ class MangaController extends Controller
                 ->where('views.manga_id', $manga->id)->max('chapter_id');
         }
 
+        $manga->chapters->transform(function ($chapter) {
+            $chapter->created_at_formated = $chapter->created_at->format('j/n/Y');
+            $chapter->updated_at_formated = $chapter->updated_at->format('j/n/Y');
+            unset($chapter->folder);
+
+            return $chapter;
+        });
+
         return response()->json([
             'success' => 1,
             'message' => 'handle bookmark successfully',

@@ -26,7 +26,9 @@ class ChapterController extends Controller
 
         $chapter = Chapter::query()
             ->with('images')
-            ->with('manga')
+            ->with(['manga' => function ($query) {
+                $query->with('chapters:manga_id,id,name');
+            }])
             ->findOrFail($fields['id']);
         $chapter = new ChapterResources($chapter);
 
