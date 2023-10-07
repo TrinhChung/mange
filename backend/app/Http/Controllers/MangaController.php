@@ -91,6 +91,7 @@ class MangaController extends Controller
             ->withCount(['bookmarked_by as follow_count', 'comments as comment_count', 'voted_by as vote_count'])
             ->withAvg('voted_by as vote_score', 'votes.score')
             ->findOrFail($fields['id']);
+        $manga->slug = explode('/', $manga->thumbnail)[0];
 
         // Thêm thông tin nếu user đã đăng nhập
         $user = Auth::guard('sanctum')->user();
