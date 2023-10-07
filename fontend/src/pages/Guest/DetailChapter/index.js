@@ -52,7 +52,7 @@ const DetailChapter = () => {
                 color: `${index > 0 ? 'black' : 'gray'}`,
               }}
               onClick={() => {
-                console.log(id);
+                navigate(`/live-manga/${name}/${chapters[index - 1].value}`);
               }}
             />
           </Col>
