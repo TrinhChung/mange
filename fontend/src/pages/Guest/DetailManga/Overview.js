@@ -3,8 +3,10 @@ import { Col, Row, Rate, Image } from 'antd';
 import Manga from '../../../components/manga/Manga';
 import RowInfo from './RowInfo';
 import { hostImg } from '../../../const/index';
+import { useNavigate } from 'react-router-dom';
 
 const Overview = ({ manga = {} }) => {
+  const navigate = useNavigate();
   const infos = [
     // { children: 'Dịch giả', content: 'translator' },
     { children: 'Tình trạng', content: 'status' },
@@ -68,8 +70,32 @@ const Overview = ({ manga = {} }) => {
                 })}
             </Row>
             <Row style={{ gap: 12 }}>
-              <Col className="button-view bg-color-main">Đọc từ đầu</Col>
-              <Col className="button-view bg-color-main">Đọc mới nhất</Col>
+              <Col
+                className="button-view bg-color-main"
+                onClick={() => {
+                  if (manga && manga?.chapters.length > 0) {
+                    navigate(
+                      `/live-manga/${manga?.slug}/${
+                        manga?.chapters[manga?.chapters.length - 1].id
+                      }`
+                    );
+                  }
+                }}
+              >
+                Đọc từ đầu
+              </Col>
+              <Col
+                className="button-view bg-color-main"
+                onClick={() => {
+                  if (manga && manga?.chapters.length > 0) {
+                    navigate(
+                      `/live-manga/${manga?.slug}/${manga?.chapters[0].id}`
+                    );
+                  }
+                }}
+              >
+                Đọc mới nhất
+              </Col>
               <Col className="button-view bg-color-jade">Theo dõi</Col>
             </Row>
           </Col>
