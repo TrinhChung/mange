@@ -3,13 +3,12 @@ import './App.css';
 import { ToastContainer } from 'react-toastify';
 import { AuthContext } from './providers/authProvider';
 import { BrowserRouter } from 'react-router-dom';
-import Auth from './pages/Auth';
 import Guest from './pages/Guest';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import User from './pages/User';
 import Echo from 'laravel-echo';
 import Socketio from 'socket.io-client';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);
