@@ -9,6 +9,7 @@ import ListMangaSide from '../../../components/manga/ListMangaSide';
 import { useContext } from 'react';
 import { AuthContext } from '../../../providers/authProvider';
 import { MangaContext } from '../../../providers/mangaProvider/index';
+import AdPanel from './AdPanel';
 
 export const proposes = [
   {
@@ -247,6 +248,7 @@ const Home = () => {
           <Col span={8}>
             <ListMangaSide listManga={histories} title={'Lịch sử'} />
             <TopManga manga={histories} />
+            <AdPanel />
           </Col>
         </Row>
       </Col>

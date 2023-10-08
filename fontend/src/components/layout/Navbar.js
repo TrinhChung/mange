@@ -15,7 +15,6 @@ import { logoutService } from '../../services/Auth';
 const { Header } = Layout;
 const Navbar = ({ data }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
-  console.log(authUser);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [current, setCurrent] = useState('home');
   const navigate = useNavigate();
@@ -104,7 +103,15 @@ const Navbar = ({ data }) => {
       className="box-shadow-bottom"
     >
       <Row>
-        <Col span={12} style={{ height: 60, paddingLeft: 20 }}>
+        <Col
+          span={12}
+          style={{
+            height: 60,
+            paddingLeft: 20,
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
           <Menu
             style={{
               width: '100%',
@@ -122,6 +129,7 @@ const Navbar = ({ data }) => {
             items={data}
           />
         </Col>
+
         <Col
           span={7}
           style={{
@@ -149,6 +157,7 @@ const Navbar = ({ data }) => {
                 allowClear={true}
               />
             </Col>
+
             <Col span={4} style={{ alignItems: 'center' }}>
               <Row
                 style={{
