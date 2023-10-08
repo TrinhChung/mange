@@ -14,8 +14,14 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory()->create([
-            'username' => 'user',
+            'username' => 'admin',
             'role' => 'admin',
+            'active' => true,
+            'activated_at' => now(),
+        ]);
+        \App\Models\User::factory()->create([
+            'username' => 'user',
+            'role' => 'user',
             'active' => true,
             'activated_at' => now(),
         ]);
