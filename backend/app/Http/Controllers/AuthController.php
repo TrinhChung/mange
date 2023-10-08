@@ -17,8 +17,12 @@ class AuthController extends Controller
         $token = $user->createToken($user->username)->plainTextToken;
 
         return response()->json([
-            'user' => $user,
-            'token' => $token,
+            'success' => 1,
+            'message' => 'Đăng nhập thành công!',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ],
         ], 200);
     }
 
@@ -45,8 +49,12 @@ class AuthController extends Controller
         DB::commit();
 
         return response()->json([
-            'user' => $user,
-            'token' => $token,
+            'success' => 1,
+            'message' => 'Đăng ký tài khoản thành công!',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ],
         ], 201);
     }
 
@@ -56,7 +64,8 @@ class AuthController extends Controller
         $user->tokens()->delete();
 
         return response()->json([
-            'message' => 'Logged out successfully',
+            'success' => 1,
+            'message' => 'Đăng xuất thành công!',
         ], 200);
     }
 }

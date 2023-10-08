@@ -34,26 +34,26 @@ class Handler extends ExceptionHandler
             if ($e instanceof \Illuminate\Validation\ValidationException) {
                 return response()->json([
                     'success' => 0,
-                    'message' => 'The given data was invalid.',
+                    'message' => 'Dữ liệu đã nhập không hợp lệ',
                     'errors' => $e->errors(),
                 ], 422);
             } elseif ($e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException
                 || $e instanceof NotFoundHttpException) {
                 return response()->json([
                     'success' => 0,
-                    'message' => 'Record Not Found',
+                    'message' => 'Không tìm thấy dữ liệu',
                     'errors' => $e->getMessage(),
                 ], 404);
             } elseif ($e instanceof \Illuminate\Database\QueryException || $e instanceof PDOException) {
                 return response()->json([
                     'success' => 0,
-                    'message' => 'Query failed',
+                    'message' => 'Query thất bại',
                     'errors' => $e->getMessage(),
                 ], 500);
             } elseif ($e instanceof AccessDeniedHttpException) {
                 return response()->json([
                     'success' => 0,
-                    'message' => 'Access Denied',
+                    'message' => 'Không có quyền truy cập',
                     'errors' => $e->getMessage(),
                 ], 403);
             }

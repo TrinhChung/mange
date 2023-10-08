@@ -27,13 +27,17 @@ class AuthTest extends TestCase
 
         $response->assertStatus(201);
         $response->assertJsonStructure([
-            'user' => [
-                'username',
-                'email',
-                'role',
-                'active_token',
+            'success',
+            'message',
+            'data' => [
+                'user' => [
+                    'username',
+                    'email',
+                    'role',
+                    'active_token',
+                ],
+                'token',
             ],
-            'token',
         ]);
 
         Mail::assertSent(activeAccount::class, function ($mail) use ($user) {
@@ -141,6 +145,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
+            'success',
             'message',
         ]);
     }

@@ -67,7 +67,7 @@ class CommentController extends Controller
         return response()->json([
             'success' => 1,
             'data' => $data,
-            'message' => 'get comments success',
+            'message' => 'Lấy comment thành công',
         ]);
     }
 }

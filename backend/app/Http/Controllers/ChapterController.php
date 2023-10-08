@@ -47,7 +47,7 @@ class ChapterController extends Controller
         return response()->json([
             'success' => 1,
             'data' => $chapter,
-            'message' => 'get chapter data success',
+            'message' => 'Lấy chapter thành công!',
         ], 200);
     }
 }
