@@ -18,20 +18,24 @@ const Login = () => {
   const handlerLogin = async () => {
     const data = {
       role: ROLE[role].label,
-      email: email,
+      username: email,
       password: password,
     };
-
-    const res = await loginService(data);
-    if (res.success === 1 && res.data && res.data.accessToken) {
-      toast.success('Đăng nhập thành công!', 2);
-      localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken));
-      setAuthUser(res.data.user);
-      navigate('/');
-    } else {
-      toast.error('Tài khoản hoặc mật khẩu không chính xác');
+    try {
+      const res = await loginService(data);
+      if (res.user && res.token) {
+        toast.success('Đăng nhập thành công!', 2);
+        console.log(res.token);
+        localStorage.setItem('accessToken', JSON.stringify(res.token));
+        localStorage.setItem('authUser', JSON.stringify(res.user));
+        setAuthUser(res.user);
+        navigate('/');
+      } else {
+        toast.error('Tài khoản hoặc mật khẩu không chính xác');
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
-    console.log(res);
   };
 
   return (
@@ -44,7 +48,7 @@ const Login = () => {
           <Col span={24} style={{ paddingRight: 40 }}>
             <Row>
               <Col span={24}>
-                <RowVertical title={'Email'}>
+                <RowVertical title={'Tên đăng nhập'}>
                   <Input
                     style={{
                       marginBottom: 20,
@@ -72,7 +76,7 @@ const Login = () => {
                 cursor: 'pointer',
               }}
               onClick={() => {
-                navigate('/forgot-password');
+                navigate('/auth/forgot-password');
               }}
             >
               Quên mật khẩu
@@ -93,7 +97,7 @@ const Login = () => {
                     color: 'var(--color-main)',
                   }}
                   onClick={() => {
-                    navigate('/signup');
+                    navigate('/auth/signup');
                   }}
                 >
                   Đăng ký tài khoản tại đây

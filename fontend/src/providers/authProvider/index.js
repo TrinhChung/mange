@@ -15,10 +15,16 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    if (!authUser && token) {
+    const userLocal = JSON.parse(localStorage.getItem('authUser'));
+
+    if (userLocal) {
+      setAuthUser(userLocal);
+    }
+
+    if (!userLocal && token) {
       handlerLogin();
     }
-  }, [authUser]);
+  }, []);
 
   return (
     <AuthContext.Provider

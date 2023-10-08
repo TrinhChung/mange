@@ -10,6 +10,7 @@ import { logoutService } from '../../services/Auth';
 const { Header } = Layout;
 const Navbar = ({ data }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
+  console.log(authUser);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [current, setCurrent] = useState('home');
   const navigate = useNavigate();
@@ -37,23 +38,30 @@ const Navbar = ({ data }) => {
   }, [pathname]);
 
   const onLogout = async () => {
-    localStorage.removeItem('accessToken');
-    setAuthUser(null);
     try {
       const res = await logoutService();
-      if (res.success) {
+      if (res.status === 200) {
         toast.success('Đã đăng xuất');
       } else {
-        toast.error('Có lỗi xảy ra');
+        toast.error(res.message);
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('authUser');
+    setAuthUser(null);
+    setIsOpenModal(false);
 
-    navigate('/login');
+    navigate('/');
   };
 
   const items = [
+    {
+      label: 'Login',
+      key: 'auth/login',
+      icon: <UserOutlined />,
+    },
     {
       label: 'Profile',
       key: 'profile',
@@ -172,7 +180,7 @@ const Navbar = ({ data }) => {
                   <UserOutlined style={{ fontSize: '20px' }} />
                 </Col>
                 <Col>
-                  <div>{authUser?.fullname}</div>
+                  <div>{authUser?.username}</div>
                 </Col>
               </Row>
             </Dropdown>

@@ -9,7 +9,7 @@ import Echo from 'laravel-echo';
 import Socketio from 'socket.io-client';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);
   const [token, setToken] = useState(localStorage.getItem('accessToken'));
@@ -46,7 +46,6 @@ function App() {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('auth-user')));
-    //console.log(user);
   }, []);
 
   const role = authUser && authUser.role ? authUser.role : null;
