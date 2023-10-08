@@ -1,6 +1,11 @@
 import { useState, useEffect, useContext, memo } from 'react';
-import { Layout, Row, Col, Dropdown, Modal, Input, Button } from 'antd';
-import { BellFilled, UserOutlined, SearchOutlined } from '@ant-design/icons';
+import { Layout, Row, Col, Dropdown, Modal, Input } from 'antd';
+import {
+  BellFilled,
+  UserOutlined,
+  SearchOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -57,11 +62,6 @@ const Navbar = ({ data }) => {
   };
 
   const items = [
-    {
-      label: 'Login',
-      key: 'auth/login',
-      icon: <UserOutlined />,
-    },
     {
       label: 'Profile',
       key: 'profile',
@@ -163,28 +163,55 @@ const Navbar = ({ data }) => {
           </Row>
         </Col>
         <Col span={5} style={{ paddingRight: 29 }}>
-          <Row
-            style={{
-              justifyContent: 'flex-end',
-              fontSize: '20px!important',
-              gap: 10,
-            }}
-          >
-            <Col>
-              <BellFilled style={{ fontSize: '20px' }} className="color-icon" />
-            </Col>
-            <Col>|</Col>
-            <Dropdown menu={menuProps} trigger={['click']}>
-              <Row style={{ gap: 5, cursor: 'pointer' }}>
+          {authUser ? (
+            <Row
+              style={{
+                justifyContent: 'flex-end',
+                fontSize: '20px!important',
+                gap: 10,
+              }}
+            >
+              <Col>
+                <BellFilled
+                  style={{ fontSize: '20px' }}
+                  className="color-icon"
+                />
+              </Col>
+              <Col>|</Col>
+              <Dropdown menu={menuProps} trigger={['click']}>
+                <Row style={{ gap: 5, cursor: 'pointer' }}>
+                  <Col>
+                    <UserOutlined style={{ fontSize: '20px' }} />
+                  </Col>
+                  <Col>
+                    <div>{authUser?.username}</div>
+                  </Col>
+                </Row>
+              </Dropdown>
+            </Row>
+          ) : (
+            <Row
+              style={{
+                justifyContent: 'flex-end',
+                fontSize: '20px!important',
+                gap: 10,
+              }}
+            >
+              <Row
+                style={{ gap: 5, cursor: 'pointer' }}
+                onClick={() => {
+                  navigate('/auth/login');
+                }}
+              >
                 <Col>
-                  <UserOutlined style={{ fontSize: '20px' }} />
+                  <LogoutOutlined style={{ fontSize: '20px' }} />
                 </Col>
                 <Col>
-                  <div>{authUser?.username}</div>
+                  <div>Đăng nhập</div>
                 </Col>
               </Row>
-            </Dropdown>
-          </Row>
+            </Row>
+          )}
         </Col>
       </Row>
       <Modal

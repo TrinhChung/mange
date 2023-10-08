@@ -9,7 +9,7 @@ import { AuthContext } from '../../providers/authProvider/index';
 import { loginService } from '../../services/Auth';
 
 const Login = () => {
-  const { authUser, setAuthUser } = useContext(AuthContext);
+  const { setAuthUser } = useContext(AuthContext);
   const [role, setRole] = useState(0);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,12 +23,12 @@ const Login = () => {
     };
     try {
       const res = await loginService(data);
-      if (res.user && res.token) {
+      if (res.data && res.data.user && res.data.token) {
         toast.success('Đăng nhập thành công!', 2);
-        console.log(res.token);
-        localStorage.setItem('accessToken', JSON.stringify(res.token));
-        localStorage.setItem('authUser', JSON.stringify(res.user));
-        setAuthUser(res.user);
+        console.log(res.data.token);
+        localStorage.setItem('accessToken', JSON.stringify(res.data.token));
+        localStorage.setItem('authUser', JSON.stringify(res.data.user));
+        setAuthUser(res.data.user);
         navigate('/');
       } else {
         toast.error('Tài khoản hoặc mật khẩu không chính xác');
