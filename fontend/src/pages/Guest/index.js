@@ -5,6 +5,7 @@ import HomeLayout from '../../layouts/HomeLayout';
 import LinkCustom from '../../components/layout/LinkCustom';
 import DetailManga from './DetailManga';
 import DetailChapter from './DetailChapter';
+import Auth from '../Auth';
 
 const Guest = () => {
   const items = [
@@ -26,14 +27,21 @@ const Guest = () => {
     },
   ];
 
+  const wrapLayout = (children) => {
+    return <HomeLayout menu={items}>{children}</HomeLayout>;
+  };
+
   return (
-    <HomeLayout menu={items}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/detail-manga/:name" element={<DetailManga />} />
-        <Route path="/live-manga/:name/:id" element={<DetailChapter />} />
-      </Routes>
-    </HomeLayout>
+    <Routes>
+      <Route path="/" element={wrapLayout(<Home />)} />
+      <Route path="/detail-manga/:name" element={wrapLayout(<DetailManga />)} />
+      <Route
+        path="/live-manga/:name/:id"
+        element={wrapLayout(<DetailChapter />)}
+      />
+      <Route path="/auth/*" element={<Auth />} />
+      <Route path="/*" element={wrapLayout(<div>Chua dinh nghia</div>)} />
+    </Routes>
   );
 };
 
