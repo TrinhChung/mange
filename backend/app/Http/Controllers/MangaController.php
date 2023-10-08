@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Manga as MangaResource;
+use App\Http\Resources\MangaCollection;
 use App\Models\Manga;
 use App\Traits\AuthTrait;
 use Illuminate\Http\Request;
@@ -70,7 +70,7 @@ class MangaController extends Controller
         // Phân trang
         $mangas = $query->paginate($per_page, ['*'], 'page', $page);
 
-        return MangaResource::collection($mangas);
+        return new MangaCollection($mangas);
     }
 
     public function show(Request $request)
@@ -112,7 +112,7 @@ class MangaController extends Controller
 
         return response()->json([
             'success' => 1,
-            'message' => 'handle bookmark successfully',
+            'message' => 'Lấy thông tin truyện thành công',
             'data' => $manga,
         ], 200);
     }
@@ -147,7 +147,7 @@ class MangaController extends Controller
 
         return response()->json([
             'success' => 1,
-            'message' => 'get bookmarked mangas successfully',
+            'message' => 'Lấy danh sách bookmark thành công',
             'data' => $mangas,
         ], 200);
     }
@@ -163,13 +163,14 @@ class MangaController extends Controller
 
         $manga = Manga::findOrFail($request->id);
         $user->bookmarked_mangas()->toggle($manga->id);
+        $bookmarked = $manga->bookmarked_by()->where('user_id', $user->id)->exists();
 
         return response()->json([
             'success' => 1,
             'data' => [
-                'bookmarked' => $manga->bookmarked_by()->where('user_id', $user->id)->exists(),
+                'bookmarked' => $bookmarked,
             ],
-            'message' => 'handle bookmark successfully',
+            'message' => ($bookmarked ? 'Thêm' : 'Xóa').' bookmark thành công',
         ], 200);
     }
 }

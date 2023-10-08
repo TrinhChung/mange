@@ -34,6 +34,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
+            'message' => 'Lấy danh sách user thành công',
             'data' => $users,
         ], 200);
     }
@@ -45,6 +46,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
+            'message' => 'Lấy thông tin user thành công',
             'data' => $user,
         ], 200);
     }
@@ -69,6 +71,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
+            'message' => 'Cập nhật thông tin user thành công',
             'data' => $user,
         ], 200);
     }
@@ -86,6 +89,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
+            'message' => 'Cập nhật avatar thành công',
             'data' => $user,
         ], 200);
 
@@ -100,6 +104,7 @@ class UserController extends Controller
     {
         return response()->json([
             'success' => 1,
+            'message' => 'Lấy thông tin cá nhân thành công',
             'data' => $request->user(),
         ], 200);
     }
@@ -131,6 +136,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
+            'message' => 'Cập nhật thông tin cá nhân thành công',
             'data' => $user,
         ], 200);
     }
@@ -145,6 +151,7 @@ class UserController extends Controller
 
         return response()->json([
             'success' => 1,
+            'message' => 'Cập nhật avatar thành công',
             'data' => $user,
         ], 200);
     }
@@ -173,7 +180,7 @@ class UserController extends Controller
             if ($sent_at->diffInMinutes($now) > 10) {
                 return response()->json([
                     'user' => $user,
-                    'message' => 'token đã quá hạn 10 phút sử dụng',
+                    'message' => 'Token đã quá hạn 10 phút sử dụng',
                 ], 200);
             }
         }
@@ -188,6 +195,8 @@ class UserController extends Controller
             DB::commit();
 
             return response()->json([
+                'success' => 1,
+                'message' => 'Gửi email thành công',
                 'user' => $user,
             ], 200);
         }

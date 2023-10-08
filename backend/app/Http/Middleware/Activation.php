@@ -25,14 +25,14 @@ class Activation
         if (! $user) {
             return response()->json([
                 'success' => 0,
-                'message' => 'Incorrect username or password',
+                'message' => 'Sai tên đăng nhập hoặc mật khẩu',
             ], 401);
         }
 
         if ($user->active != 1) {
             return response()->json([
                 'success' => 0,
-                'message' => 'User not active',
+                'message' => 'Người dùng chưa được kích hoạt',
             ], 401);
         }
         $request->merge(['user' => $user]);

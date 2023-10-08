@@ -19,6 +19,8 @@ class MangaTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
+            'success',
+            'message',
             'data' => [
                 '*' => [
                     'id',

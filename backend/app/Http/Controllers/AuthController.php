@@ -18,8 +18,11 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => 1,
-            'user' => $user,
-            'token' => $token,
+            'message' => 'Đăng nhập thành công!',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ],
         ], 200);
     }
 
@@ -47,8 +50,11 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => 1,
-            'user' => $user,
-            'token' => $token,
+            'message' => 'Đăng ký tài khoản thành công!',
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ],
         ], 201);
     }
 
@@ -59,7 +65,7 @@ class AuthController extends Controller
 
         return response()->json([
             'success' => 1,
-            'message' => 'Logged out successfully',
+            'message' => 'Đăng xuất thành công!',
         ], 200);
     }
 }

@@ -82,6 +82,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
@@ -124,6 +125,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
@@ -246,6 +248,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'data' => [
                     '*' => [
@@ -284,6 +287,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
@@ -310,6 +314,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
@@ -371,6 +376,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
@@ -400,6 +406,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
@@ -453,6 +460,7 @@ class UserTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
+            'message',
             'data' => [
                 'id',
                 'username',
