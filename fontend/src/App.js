@@ -21,7 +21,7 @@ function App() {
     window.Echo = new Echo({
       client: Socketio,
       broadcaster: 'socket.io',
-      host: 'http://localhost:6001',
+      host: process.env.NODE_ENV === 'production' ? 'https://api.mange.uetvnu.id.vn:6001' : 'http://localhost:6001',
     });
 
     window.Echo.connector.socket.on('connect', function () {
