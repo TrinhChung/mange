@@ -4,6 +4,8 @@ const path = require('path');
 dotenv.config({ path: path.resolve(__dirname, './.env') });
 const EchoServer = require('laravel-echo-server');
 
+const NODE_ENV = process.env.NODE_ENV;
+
 const options = {
 	"authHost": process.env.LARAVEL_ECHO_AUTH_HOST,
 	"authEndpoint": "/broadcasting/auth",
@@ -20,10 +22,10 @@ const options = {
       "host": "localhost"
 		}
 	},
-	"devMode": true,
+	"devMode": NODE_ENV === 'development',
 	"host": "0.0.0.0",
 	"port": "6001",
-	"protocol": "https",
+	"protocol": NODE_ENV === 'development' ? 'http' : 'https',
 	"socketio": {},
 	"secureOptions": 67108864,
 	"sslCertPath": process.env.LARAVEL_ECHO_SSL_CERT_PATH,
