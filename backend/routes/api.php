@@ -61,6 +61,10 @@ Route::prefix('user')->group(function () {
     Route::post('/request_reset_password', [UserController::class, 'requestResetPassword']);
 });
 
+Route::prefix('comments')->middleware('auth:sanctum')->group(function () {
+    Route::post('{id}/react', [CommentController::class, 'react']);
+});
+
 Route::prefix('me')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [UserController::class, 'me']);
     Route::patch('/', [UserController::class, 'patchMe']);

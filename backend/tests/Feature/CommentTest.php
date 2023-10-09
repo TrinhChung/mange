@@ -247,4 +247,92 @@ class CommentTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    public function test_react_normal_success()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now()->addDays(-2),
+        ]);
+        $token = $this->login_and_creat_token($user);
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+
+        $response = $this->actingAs($user)->post('/api/comments/1/react', [
+            'reaction' => 0,
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertEquals(0, $user->reacted_comments()->count());
+        $response->assertJsonStructure([
+            'success',
+            'data',
+            'message',
+        ]);
+    }
+
+    public function test_react_like_or_dislike_success()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now()->addDays(-2),
+        ]);
+        $token = $this->login_and_creat_token($user);
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+
+        $response = $this->actingAs($user)->post('/api/comments/1/react', [
+            'reaction' => 1,
+        ]);
+
+        //dd($user->reacted_comments);
+
+        $response->assertStatus(200);
+        $this->assertEquals(1, $user->reacted_comments()->first()->pivot->like);
+        $response->assertJsonStructure([
+            'success',
+            'data',
+            'message',
+        ]);
+    }
+
+    public function test_react_failed_with_not_login()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now()->addDays(-2),
+        ]);
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+
+        $response = $this->post('/api/comments/1/react', [
+            'reaction' => 1,
+        ]);
+        $response->assertStatus(401);
+    }
+
+    public function test_react_failed_with_invalid_data()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now()->addDays(-2),
+        ]);
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+
+        $response = $this->actingAs($user)->post('/api/comments/1/react', [
+            'reaction' => 2,
+        ]);
+        $response->assertStatus(422);
+    }
+
+    public function test_react_failed_with_notfound_comment()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now()->addDays(-2),
+        ]);
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+
+        $response = $this->actingAs($user)->post('/api/comments/100/react', [
+            'reaction' => 1,
+        ]);
+        $response->assertStatus(500);
+    }
 }

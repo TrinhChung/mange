@@ -9,6 +9,12 @@ class Comment extends Pivot
 {
     use HasFactory;
 
+    const LIKE = 1;
+
+    const DISLIKE = -1;
+
+    const NORMAL = 0;
+
     public $incrementing = true;
 
     protected $fillable = [
