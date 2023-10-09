@@ -10,4 +10,12 @@ trait TestHelper
 
         return $token;
     }
+
+    public function create_activated_user()
+    {
+        return \App\Models\User::factory()->create([
+            'active' => true,
+            'activated_at' => now(),
+        ]);
+    }
 }

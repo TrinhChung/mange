@@ -9,11 +9,6 @@ trait AuthTrait
 {
     public function getUser(Request $request)
     {
-        $user = null;
-        if ($request->bearerToken()) {
-            $user = Auth::guard('sanctum')->user();
-        }
-
-        return $user;
+        return Auth::guard('sanctum')->user();
     }
 }

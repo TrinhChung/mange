@@ -5,6 +5,7 @@ use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MangaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,7 @@ Route::prefix('mangas')->group(function () {
         Route::get('/bookmarked', [MangaController::class, 'getBookmarkedMangas']);
         Route::post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
         Route::post('{manga_id}/comment', [CommentController::class, 'create']);
+        Route::post('{manga_id}/vote', [VoteController::class, 'vote']);
     });
 
     Route::get('/', [MangaController::class, 'index']);

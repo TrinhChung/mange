@@ -20,7 +20,9 @@ class UserFactory extends Factory
         static $count = 1;
 
         return [
-            'username' => 'user'.$count++,
+            'username' => env('APP_ENV') === 'testing'
+                                                        ? fake()->unique()->userName()
+                                                        : 'user'.$count++,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'avatar' => $this->faker->unique()->imageUrl(),
