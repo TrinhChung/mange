@@ -33,7 +33,9 @@ class CommentTest extends TestCase
 
     private function post_comment_success($type)
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'activated_at' => now()->addDays(-2),
+        ]);
         $token = $this->login_and_creat_token($user);
 
         if ($type === 'manga') {
@@ -229,5 +231,20 @@ class CommentTest extends TestCase
         ]);
 
         $response->assertStatus(500);
+    }
+
+    public function test_post_comment_failed_on_manga_with_not_activated_more_than_1_day()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now(),
+        ]);
+        $manga = Manga::factory()->create();
+
+        $response = $this->actingAs($user)->post("/api/mangas/{$manga->id}/comment", [
+            'comment' => 'truyen hay day',
+            'parent_id' => null,
+        ]);
+
+        $response->assertStatus(403);
     }
 }

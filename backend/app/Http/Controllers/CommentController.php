@@ -22,6 +22,14 @@ class CommentController extends Controller
             'comment' => 'required|string',
         ]);
 
+        // only allow account that has been activated longer than 1 day
+        if ($request->user()->activated_at->diffInDays(now()) < 1) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Bạn phải chờ 1 ngày sau khi kích hoạt tài khoản để có thể comment',
+            ], 403);
+        }
+
         $comment = Comment::create([
             'user_id' => $request->user()->id,
             'manga_id' => $fields['manga_id'],
