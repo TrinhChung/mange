@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Rules\Reaction;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -77,5 +78,34 @@ class CommentController extends Controller
             'data' => $data,
             'message' => 'Lấy comment thành công',
         ]);
+    }
+
+    public function react(Request $request)
+    {
+        $request->merge(['comment_id' => $request->id]);
+        $user = $request->user();
+
+        $fields = $this->validate($request, [
+            'comment_id' => 'required|min:1',
+            'reaction' => ['required', 'integer', new Reaction],
+        ]);
+
+        $reaction = $fields['reaction'];
+
+        if ($reaction === Comment::NORMAL) {
+            $user->reacted_comments()->detach($fields['comment_id']);
+        } else {
+            $user->reacted_comments()->syncWithoutDetaching([
+                $fields['comment_id'] => ['like' => $reaction, 'created_at' => now()],
+            ]);
+        }
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Đã'.($reaction === 0 ? ' hủy' : '').' react thành công',
+            'data' => [
+                'reaction' => $user->reacted_comments()->where('comment_id', $fields['comment_id'])->value('like'),
+            ],
+        ], 200);
     }
 }
