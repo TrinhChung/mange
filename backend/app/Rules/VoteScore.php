@@ -11,7 +11,7 @@ class VoteScore implements ValidationRule
     {
         $value = (float) $value;
 
-        if ($value < 0.5 || $value > 5.0) {
+        if ($value < 0.0 || $value > 5.0) {
             $fail("$attribute phải nằm trong khoảng từ 0.5 đến 5.0");
         }
 

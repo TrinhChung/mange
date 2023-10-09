@@ -20,16 +20,20 @@ class VoteController extends Controller
         $vote_score = (float) $fields['score'];
         $user = $request->user();
 
-        $user->voted_mangas()->syncWithoutDetaching([
-            $manga_id => [
-                'score' => $vote_score,
-                'created_at' => now(),
-            ],
-        ]);
+        if ($vote_score === 0.0) {
+            $user->voted_mangas()->detach($manga_id);
+        } else {
+            $user->voted_mangas()->syncWithoutDetaching([
+                $manga_id => [
+                    'score' => $vote_score,
+                    'created_at' => now(),
+                ],
+            ]);
+        }
 
         return response()->json([
             'success' => 1,
-            'message' => 'Đã vote thành công',
+            'message' => 'Đã'.($vote_score === 0.0 ? ' hủy' : '').' vote thành công',
             'data' => [
                 'score' => $user->voted_mangas()->where('manga_id', $manga_id)->value('score'),
             ],

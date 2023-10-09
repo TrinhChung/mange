@@ -22,7 +22,7 @@ class VoteTest extends TestCase
     {
         $user = $this->create_activated_user();
         $response = $this->actingAs($user)->postJson('/api/mangas/1/vote', [
-            'score' => 0.0,
+            'score' => 6.0,
         ]);
 
         $response->assertStatus(422);
@@ -56,5 +56,19 @@ class VoteTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+    }
+
+    public function test_vote_cancel_should_success(): void
+    {
+        $user = $this->create_activated_user();
+        $response = $this->actingAs($user)->postJson('/api/mangas/1/vote', [
+            'score' => 0.0,
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('votes', [
+            'user_id' => $user->id,
+            'manga_id' => 1,
+        ]);
     }
 }
