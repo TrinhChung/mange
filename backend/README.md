@@ -18,6 +18,24 @@ php artisan serve
 # Để có thể gửi mail cần config như trong file env.example và chạy lệnh php artisan queue:work --queue=sendingMail
 ```
 
+Chạy Queue Worker và Laravel Echo Server:
+
+```bash
+# Queue Worker (tab riêng)
+php artisan queue:work
+php artisan queue:work --queue=sendingMail
+
+# hoặc chạy background
+nohup php artisan queue:work --daemon >> storage/logs/laravel.log &
+
+# Laravel Echo Server (tab riêng)
+npm run echo
+
+# hoặc chạy background
+npm i -g pm2
+pm2 start laravel-echo-server
+```
+
 Chạy test, cần cài xdebug dll (windows) hoặc so (linux) để chạy coverage:
 
 ```bash
