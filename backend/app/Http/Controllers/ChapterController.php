@@ -73,8 +73,7 @@ class ChapterController extends Controller
 
             for ($i = 0; $i < count($images); $i++) {
                 $imageName = $i.'.jpg';
-                Redis::set("{$mangaFolder}:{$imageName}", file_get_contents($images[$i]));
-                array_push($batches, new UploadImage("{$mangaFolder}:{$imageName}", $mangaFolder, $number, $imageName));
+                $batches[] = new UploadImage($images[$i]->getRealPath(), $mangaFolder, $number, $imageName);
             }
 
             $chapter = Chapter::create([
@@ -89,7 +88,7 @@ class ChapterController extends Controller
                     return response()->json([
                         'success' => 1,
                         'data' => $chapter,
-                        'message' => 'chapter created',
+                        'message' => 'Tạo chapter thành công',
                     ]);
                 }
                 )->catch(function (Batch $batch, Exception $error) use ($chapter) {
@@ -119,7 +118,7 @@ class ChapterController extends Controller
 
                 return response()->json([
                     'success' => 0,
-                    'message' => 'can not upload images',
+                    'message' => 'Không thể tải ảnh lên server',
                 ], 500);
             }
 
@@ -131,7 +130,7 @@ class ChapterController extends Controller
 
                 return response()->json([
                     'success' => 0,
-                    'message' => 'can not upload images',
+                    'message' => 'Không thể tải ảnh lên server',
                 ], 500);
             }
 
@@ -144,12 +143,12 @@ class ChapterController extends Controller
             return response()->json([
                 'success' => 1,
                 'data' => $chapter,
-                'message' => 'chapter created',
+                'message' => 'Tạo chapter thành công',
             ]);
         } else {
             return response()->json([
                 'success' => 0,
-                'message' => 'no images found',
+                'message' => 'Không tìm thấy hình ảnh',
             ], 422);
         }
     }

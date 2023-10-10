@@ -10,6 +10,7 @@ class Manga extends Model
     use HasFactory;
 
     const STATUS_ONGOING = 0;
+
     const STATUS_COMPLETED = 1;
 
     protected $fillable = [

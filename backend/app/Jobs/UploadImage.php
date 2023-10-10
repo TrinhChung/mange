@@ -9,17 +9,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 
 class UploadImage implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
-    public $file;
+    public $filePath;
 
     public $mangaFolder;
 
@@ -27,28 +23,19 @@ class UploadImage implements ShouldQueue
 
     public $imageName;
 
-    public function __construct($file, $mangaFolder, $number, $imageName)
+    public function __construct($filePath, $mangaFolder, $number, $imageName)
     {
-        //
-        $this->file = $file;
+        $this->filePath = $filePath;
         $this->mangaFolder = $mangaFolder;
         $this->number = $number;
         $this->imageName = $imageName;
     }
 
-    /**
-     * Execute the job.
-     */
     public function handle(): void
     {
-        //
-        //dd($this->file);
-        if (! Storage::disk('ftp')->put("/{$this->mangaFolder}/{$this->number}/{$this->imageName}", Redis::get($this->file))) {
+        if (! Storage::disk('ftp')->put("/{$this->mangaFolder}/{$this->number}/{$this->imageName}", file_get_contents($this->filePath))) {
             Storage::disk('ftp')->deleteDirectory("/{$this->mangaFolder}/{$this->number}/");
-            Redis::del($this->file);
-            throw new Exception('failed to upload images');
+            throw new Exception('Tải ảnh lên server thất bại');
         }
-
-        Redis::del($this->file);
     }
 }

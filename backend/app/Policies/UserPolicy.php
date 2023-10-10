@@ -18,18 +18,18 @@ class UserPolicy
 
     public function viewAny(User $user): Response
     {
-        return Response::deny('You must be an administrator.');
+        return Response::deny('Chỉ admin mới được truy cập chức năng này.');
     }
 
     public function view(User $user, User $viewedUser): Response
     {
         return $user->id === $viewedUser->id
             ? Response::allow()
-            : Response::deny('You are not allowed to see this profile.');
+            : Response::deny('Không được phép xem thông tin này.');
     }
 
     public function update(User $user, User $viewedUser): Response
     {
-        return Response::deny('You are not allowed to change this user.');
+        return Response::deny('Không được phép cập nhật thông tin này.');
     }
 }

@@ -16,7 +16,7 @@ class CheckCreateChapter
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $request->merge(['manga_id' => 'manga_id']);
+        $request->merge(['manga_id' => $request->route('manga_id')]);
         $fields = $request->validate([
             'manga_id' => 'required|integer|min:1',
             'name' => 'string',
@@ -24,12 +24,12 @@ class CheckCreateChapter
             'by' => 'required|string',
         ]);
 
-        $manga = Manga::findOrFail($request->manga_id);
-
-        if (! $manga->managed_by()->exist($request->user()->id)) {
+        $manga = Manga::findOrFail($fields['manga_id']);
+        $user = $request->user();
+        if (! ($manga->managed_by()->where('user_id', $user->id)->exists() || $user->isAdmin())) {
             return response()->json([
                 'success' => 0,
-                'message' => 'Can not access',
+                'message' => 'Không có quyền thêm chapter cho truyện này',
             ], 403);
         }
         $request->merge(['manga' => $manga]);

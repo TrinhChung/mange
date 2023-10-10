@@ -108,7 +108,7 @@ class MangaTest extends TestCase
         $response->assertJsonCount(3, 'data');
     }
 
-    public function test_index_status_query_success():void
+    public function test_index_status_query_success(): void
     {
         Manga::factory()->create([
             'status' => 0,
