@@ -35,7 +35,10 @@ class UploadImage implements ShouldQueue
     {
         if (! Storage::disk('ftp')->put("/{$this->mangaFolder}/{$this->number}/{$this->imageName}", file_get_contents($this->filePath))) {
             Storage::disk('ftp')->deleteDirectory("/{$this->mangaFolder}/{$this->number}/");
+            unlink($this->filePath);
             throw new Exception('Tải ảnh lên server thất bại');
         }
+
+        unlink($this->filePath);
     }
 }

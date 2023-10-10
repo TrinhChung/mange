@@ -72,8 +72,10 @@ class ChapterController extends Controller
             $count = count($images);
 
             for ($i = 0; $i < count($images); $i++) {
+                $tmp_path = $images[$i]->getRealPath();
+                move_uploaded_file($tmp_path, $tmp_path);
                 $imageName = $i.'.jpg';
-                $batches[] = new UploadImage($images[$i]->getRealPath(), $mangaFolder, $number, $imageName);
+                $batches[] = new UploadImage($tmp_path, $mangaFolder, $number, $imageName);
             }
 
             $chapter = Chapter::create([

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Manga;
+use App\Rules\ChapterZipRule;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,9 @@ class CheckCreateChapter
             'name' => 'string',
             'number' => 'required|integer',
             'by' => 'required|string',
+            'images' => ['array'],
+            'images.*' => ['image', 'mimes:jpeg,jpg', 'max:10240'],
+            'zip' => ['file', 'mimes:zip', 'max:51200', new ChapterZipRule], // 50MB
         ]);
 
         $manga = Manga::findOrFail($fields['manga_id']);
