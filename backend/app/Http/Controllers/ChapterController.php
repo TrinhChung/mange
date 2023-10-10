@@ -60,6 +60,79 @@ class ChapterController extends Controller
 
     public function create(Request $request)
     {
+        $request->merge(['manga_id' => $request->route('manga_id')]);
+        $fields = $request->validate([
+            'manga_id' => 'required|integer|min:1',
+            'name' => 'string',
+            'number' => 'required|integer',
+        ]);
+
+        $manga = Manga::findOrFail($fields['manga_id']);
+        $this->authorize('updateManga', $manga);
+
+        $chapter_from_number = Chapter::where('manga_id', $fields['manga_id'])
+            ->where('folder', 'like', "%/{$fields['number']}/")->first();
+
+        if ($chapter_from_number) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Chapter này đã tồn tại',
+                'data' => $chapter_from_number,
+            ], 422);
+        }
+
+        $chapter = Chapter::create([
+            'manga_id' => $fields['manga_id'],
+            'name' => "Chapter {$fields['number']}: {$fields['name']}",
+            'folder' => explode('/', $manga->thumbnail)[0]."/{$fields['number']}/",
+            'amount' => 0,
+        ]);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $chapter,
+            'message' => 'Tạo chapter thành công',
+        ], 201);
+    }
+
+    public function update(Request $request)
+    {
+        $request->merge(['chapter_id' => $request->route('chapter_id')]);
+        $fields = $this->validate($request, [
+            'chapter_id' => 'required|integer|min:1',
+            'name' => 'string',
+            'number' => 'integer',
+        ]);
+
+        $chapter = Chapter::findOrFail($fields['chapter_id']);
+        $manga = $chapter->manga;
+        $this->authorize('updateManga', $manga);
+
+        // Validate number does not exist
+        $chapter_from_number = $manga->chapters()->where('folder', 'like', "%/{$fields['number']}/")->first();
+        if ($chapter_from_number && $chapter_from_number->id !== $chapter->id) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Chapter number đã tồn tại trong truyện này',
+                'data' => $chapter_from_number,
+            ], 422);
+        }
+
+        $name = $fields['name'] ? "Chapter {$fields['number']}: {$fields['name']}" : $chapter->name;
+        $chapter->update([
+            'name' => $name,
+            'folder' => explode('/', $manga->thumbnail)[0]."/{$fields['number']}/",
+        ]);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Sửa chapter thành công',
+            'data' => $chapter,
+        ]);
+    }
+
+    public function uploadImages(Request $request)
+    {
         $manga = $request->manga;
         $mangaFolder = explode('/', $manga->thumbnail)[0];
         $manga_id = $request->manga_id;

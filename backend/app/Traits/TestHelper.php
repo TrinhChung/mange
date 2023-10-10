@@ -18,4 +18,13 @@ trait TestHelper
             'activated_at' => now(),
         ]);
     }
+
+    public function create_admin()
+    {
+        return \App\Models\User::factory()->create([
+            'active' => true,
+            'activated_at' => now(),
+            'role' => 'admin',
+        ]);
+    }
 }
