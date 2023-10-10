@@ -49,6 +49,7 @@ Route::prefix('mangas')->group(function () {
     Route::get('/', [MangaController::class, 'index']);
     Route::get('/{manga_id}', [MangaController::class, 'show']);
     Route::get('{manga_id}/comments', [CommentController::class, 'getAllComment']);
+    Route::middleware('auth:sanctum')->post('{manga_id}/chapter', [ChapterController::class, 'create'])->middleware('validToCreateChapter');
 });
 
 Route::prefix('chapters')->group(function () {
