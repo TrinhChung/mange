@@ -12,7 +12,9 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-ftp": "^3.16",
         "phpseclib/phpseclib": "^3.0",
-        "predis/predis": "^2.2"
+        "predis/predis": "^2.2",
+        "ext-fileinfo": "*",
+        "ext-zip": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

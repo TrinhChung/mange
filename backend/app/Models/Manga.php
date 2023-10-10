@@ -76,4 +76,9 @@ class Manga extends Model
         return $this->belongsToMany(User::class, 'manages', 'manga_id', 'user_id')
             ->using(Manage::class)->withPivot('id', 'user_id', 'manga_id', 'role_activated')->withTimestamps();
     }
+
+    public function getSlug(): string
+    {
+        return explode('/', $this->thumbnail)[0];
+    }
 }

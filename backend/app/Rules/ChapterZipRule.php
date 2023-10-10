@@ -24,8 +24,9 @@ class ChapterZipRule implements ValidationRule
         }
 
         for ($i = 0; $i < $zip->numFiles; $i++) {
-            if (! $zip->statName("{$i}.jpg")) {
-                $fail('Các file phải sắp xếp theo thứ tự 0.jpg -> n.jpg');
+            $mime = mime_content_type('zip://'.$value->path().'#'.$zip->getNameIndex($i));
+            if (! in_array($mime, ['image/jpeg', 'image/png'])) {
+                $fail('Zip chứa file không phải là ảnh');
 
                 return;
             }

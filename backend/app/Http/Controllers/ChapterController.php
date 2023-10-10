@@ -7,6 +7,7 @@ use App\Jobs\UploadImage;
 use App\Models\Chapter;
 use App\Models\Manga;
 use App\Models\View;
+use App\Rules\ChapterZipRule;
 use App\Traits\AuthTrait;
 use Exception;
 use Illuminate\Bus\Batch;
@@ -131,7 +132,7 @@ class ChapterController extends Controller
         ]);
     }
 
-    public function uploadImages(Request $request)
+    public function uploadImagesOld(Request $request)
     {
         $manga = $request->manga;
         $mangaFolder = explode('/', $manga->thumbnail)[0];
@@ -225,6 +226,109 @@ class ChapterController extends Controller
                 'success' => 0,
                 'message' => 'Không tìm thấy hình ảnh',
             ], 422);
+        }
+    }
+
+    public function uploadImages(Request $request)
+    {
+        $request->merge(['chapter_id' => $request->route('chapter_id')]);
+        $fields = $request->validate([
+            'chapter_id' => 'required|integer|min:1',
+            'images' => ['array'],
+            'images.*' => ['image', 'mimes:jpeg,jpg,png', 'max:10240'],
+            'zip' => ['file', 'mimes:zip', 'max:51200', new ChapterZipRule], // 50MB
+        ]);
+
+        if (! $request->hasFile('images') && ! $request->hasFile('zip')) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Không nhận được file zip hoặc ảnh',
+            ], 422);
+        }
+
+        $chapter = Chapter::findOrFail($fields['chapter_id']);
+        $manga = $chapter->manga;
+        $this->authorize('updateManga', $manga);
+
+        // Sau khi file đã upload hết lên server Laravel
+        $old_amount = $chapter->amount;
+        try {
+            $batch = [];
+            $added_amount = 0;
+
+            if ($request->hasFile('images')) {
+                $images = $request->file('images');
+
+                // Natural Sort (8, 9, 10, 11, 12) regardless of padding.
+                // Lexical Sort (1, 10, 11, 12, 2).
+                $images = collect($images)->sort(function ($a, $b) {
+                    return strnatcmp($a->getClientOriginalName(), $b->getClientOriginalName());
+                });
+
+                for ($i = $old_amount; $i < count($images) + $old_amount; $i++) {
+                    // Không cần tmp vì SSE xong mới xóa
+                    $batch[] = new UploadImage($images[$i - $old_amount]->getRealPath(), $manga->getSlug(),
+                        $chapter->getNumber(), $i.'.jpg');
+                }
+
+                $added_amount += count($images);
+            } elseif ($request->hasFile('zip')) {
+                $zip = new ZipArchive();
+                $zip->open($request->file('zip')->getRealPath());
+                if (! $zip->extractTo(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'))) {
+                    throw new Exception('Không thể giải nén file zip');
+                }
+                $file_count = $zip->numFiles;
+
+                // Natural Sort
+                $extracted_file_names = [];
+                for ($i = 0; $i < $file_count; $i++) {
+                    $extracted_file_names[] = $zip->getNameIndex($i);
+                }
+                natsort($extracted_file_names);
+
+                for ($i = $old_amount; $i < $file_count + $old_amount; $i++) {
+                    $batch[] = new UploadImage(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'.$extracted_file_names[$i - $old_amount]),
+                        $manga->getSlug(), $chapter->getNumber(), $i.'.jpg');
+                }
+
+                $zip->close();
+                $added_amount += $file_count;
+            }
+
+            $bus = Bus::batch($batch)->catch(function (Batch $batch, Exception $error) {
+                return response()->json([
+                    'success' => 0,
+                    'message' => $error->getMessage(),
+                ], 500);
+            })->finally(function (Batch $batch) use ($manga, $chapter) {
+                // Clean up zip temp files
+                \File::deleteDirectory(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'));
+            })->dispatch();
+
+            // Server Sent Event
+            return response()->stream(
+                function () use ($bus, $chapter, $added_amount) {
+                    while ($bus->finished() === false) {
+                        $bus = $bus->fresh();
+                        echo 'data: '.$bus->processedJobs().'/'.$bus->totalJobs.' '.$bus->progress()."%\n\n";
+                        ob_flush();
+                        flush();
+                        sleep(1);
+                    }
+                    $chapter->update([
+                        'amount' => $chapter->amount + $added_amount,
+                    ]);
+                }, 200, [
+                    'Content-Type' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'X-Accel-Buffering' => 'no',
+                ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => 0,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 }

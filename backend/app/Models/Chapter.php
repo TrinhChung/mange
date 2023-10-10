@@ -42,4 +42,9 @@ class Chapter extends Model
         return $this->belongsToMany(User::class, 'views', 'chapter_id', 'user_id')
             ->using(View::class)->withPivot('id', 'user_id', 'chapter_id', 'manga_id')->withTimestamps();
     }
+
+    public function getNumber()
+    {
+        return (int) explode('/', $this->folder)[1];
+    }
 }

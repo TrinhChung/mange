@@ -8,23 +8,21 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckCreateChapter
+class CheckUploadChapter
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $request->merge(['manga_id' => $request->route('manga_id')]);
+        $request->merge(['chapter_id' => $request->route('chapter_id')]);
         $fields = $request->validate([
-            'manga_id' => 'required|integer|min:1',
-            'name' => 'string',
-            'number' => 'required|integer',
+            'chapter_id' => 'required|integer|min:1',
             'by' => 'required|string',
             'images' => ['array'],
-            'images.*' => ['image', 'mimes:jpeg,jpg', 'max:10240'],
+            'images.*' => ['image', 'mimes:jpeg,jpg,png', 'max:10240'],
             'zip' => ['file', 'mimes:zip', 'max:51200', new ChapterZipRule], // 50MB
         ]);
 

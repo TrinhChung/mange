@@ -50,12 +50,12 @@ Route::prefix('mangas')->group(function () {
     Route::get('/', [MangaController::class, 'index']);
     Route::get('/{manga_id}', [MangaController::class, 'show']);
     Route::get('{manga_id}/comments', [CommentController::class, 'getAllComment']);
-    //    Route::middleware(['auth:sanctum', 'validToCreateChapter'])->post('{manga_id}/chapter', [ChapterController::class, 'create']);
 });
 
 Route::prefix('chapters')->group(function () {
     Route::get('/{chapter_id}', [ChapterController::class, 'show']);
     Route::middleware('auth:sanctum')->patch('/{chapter_id}', [ChapterController::class, 'update']);
+    Route::middleware('auth:sanctum')->post('/{chapter_id}', [ChapterController::class, 'uploadImages']);
     Route::middleware('auth:sanctum')->post('{chapter_id}/comment', [CommentController::class, 'create']);
     Route::get('{chapter_id}/comments', [CommentController::class, 'getAllComment']);
 });
