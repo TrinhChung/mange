@@ -20,6 +20,7 @@ class MangaController extends Controller
             'page' => 'integer|min:1',
             'category' => 'array',
             'search' => 'string',
+            'status' => 'integer|in:0,1',
             'sort' => [
                 'string',
                 'regex:/^([+-]?)(updated_at|follow_count|view_count|comment_count|vote_score|status)$/',
@@ -32,6 +33,7 @@ class MangaController extends Controller
         $page = $fields['page'] ?? 1;
         $category_ids = $fields['category'] ?? [];
         $search_query = $fields['search'] ?? '';
+        $status = $fields['status'] ?? null;
         $sort = $fields['sort'] ?? '-updated_at';
 
         $query = Manga::query()->select(['id', 'name', 'thumbnail', 'view as view_count', 'status'])
@@ -49,6 +51,11 @@ class MangaController extends Controller
                         $subQuery->where('name', 'like', "%{$search_query}%");
                     });
             });
+        }
+
+        // Filter theo status
+        if (isset($status)) {
+            $query->where('status', $status);
         }
 
         // Filter theo category

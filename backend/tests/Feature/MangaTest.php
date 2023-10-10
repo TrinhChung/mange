@@ -108,6 +108,24 @@ class MangaTest extends TestCase
         $response->assertJsonCount(3, 'data');
     }
 
+    public function test_index_status_query_success():void
+    {
+        Manga::factory()->create([
+            'status' => 0,
+        ]);
+        Manga::factory()->create([
+            'status' => 1,
+        ]);
+
+        $response = $this->get('/api/mangas?status=0');
+
+        $response->assertStatus(200);
+        $mangas = $response->json('data');
+        foreach ($mangas as $manga) {
+            $this->assertEquals(0, $manga['status']);
+        }
+    }
+
     public function test_show_should_return_404_if_not_found(): void
     {
         $response = $this->get('/api/mangas/99');
@@ -125,6 +143,11 @@ class MangaTest extends TestCase
     public function test_show_should_return_correct_json_structure(): void
     {
         $manga = Manga::factory()->create();
+        $manga->chapters()->create([
+            'name' => 'Chapter 1',
+            'folder' => 'folder',
+            'amount' => 10,
+        ]);
 
         $response = $this->get("/api/mangas/{$manga->id}");
 
@@ -246,7 +269,7 @@ class MangaTest extends TestCase
         $manga = Manga::factory()->create();
         $user->bookmarked_mangas()->attach($manga->id);
 
-        $response = $this->actingAs($user)->get('/api/mangas/bookmarked');
+        $response = $this->actingAs($user)->get('/api/mangas/bookmarked?search='.$manga->name);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
