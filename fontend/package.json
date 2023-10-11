@@ -32,7 +32,8 @@
         "eject": "react-scripts eject",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build",
-        "format": "npx prettier . --write"
+        "format": "npx prettier . --write",
+        "cypress:open": "cypress open"
     },
     "eslintConfig": {
         "extends": [
@@ -54,6 +55,7 @@
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.0-placeholder-for-preset-env.2",
+        "cypress": "^13.3.0",
         "prettier": "^3.0.3"
     }
 }
