@@ -56,6 +56,7 @@ Route::prefix('chapters')->group(function () {
     Route::get('/{chapter_id}', [ChapterController::class, 'show']);
     Route::middleware('auth:sanctum')->patch('/{chapter_id}', [ChapterController::class, 'update']);
     Route::middleware('auth:sanctum')->post('/{chapter_id}', [ChapterController::class, 'uploadImages']);
+    Route::middleware('auth:sanctum')->post('/{chapter_id}/sort', [ChapterController::class, 'sortImages']);
     Route::middleware('auth:sanctum')->post('{chapter_id}/comment', [CommentController::class, 'create']);
     Route::get('{chapter_id}/comments', [CommentController::class, 'getAllComment']);
 });

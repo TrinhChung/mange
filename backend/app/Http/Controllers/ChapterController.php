@@ -7,6 +7,7 @@ use App\Jobs\UploadImage;
 use App\Models\Chapter;
 use App\Models\Manga;
 use App\Models\View;
+use App\Rules\ChapterImageSortOderRule;
 use App\Rules\ChapterZipRule;
 use App\Traits\AuthTrait;
 use Exception;
@@ -330,5 +331,65 @@ class ChapterController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function sortImages(Request $request)
+    {
+        $request->merge(['chapter_id' => $request->route('chapter_id')]);
+        $fields = $request->validate([
+            'chapter_id' => 'required|integer|min:1',
+            'order' => ['required', 'array', new ChapterImageSortOderRule($request->route('chapter_id'))],
+            'order.*' => 'integer|min:-1',
+        ]);
+
+        $chapter = Chapter::findOrFail($fields['chapter_id']);
+        $manga = $chapter->manga;
+        $order = $fields['order'];
+        $this->authorize('updateManga', $manga);
+
+        // -1 là xóa, còn lại là vị trí mới của index ảnh hiện tại
+        // [0,1,2,3,4] => [2,3,4,0,1] | [3,-1,0,2,1] | ...
+        // TODO: Thêm batch nếu lag
+
+        // Tìm index lệch số đầu tiên
+        $first_wrong_index = count($order);
+        for ($i = 0; $i < count($order); $i++) {
+            if ($order[$i] !== $i) {
+                $first_wrong_index = $i;
+                break;
+            }
+        }
+
+        // Chuyển tất cả các file còn lại vào tmp của folder chapter
+        $chapter_path = "/{$manga->getSlug()}/{$chapter->getNumber()}/";
+        for ($i = $first_wrong_index; $i < count($order); $i++) {
+            Storage::disk('ftp')->move("{$chapter_path}{$i}.jpg",
+                "{$chapter_path}/tmp/{$i}.jpg");
+        }
+
+        // Chuyển lại về folder ảnh theo thứ tự mới
+        for ($i = $first_wrong_index; $i < count($fields['order']); $i++) {
+            if ($order[$i] !== -1) {
+                Storage::disk('ftp')->move("{$chapter_path}/tmp/{$order[$i]}.jpg",
+                    "{$chapter_path}{$i}.jpg");
+            }
+        }
+
+        // Xóa tất cả các file còn lại trong tmp
+        if ($first_wrong_index !== count($order)) {
+            Storage::disk('ftp')->deleteDirectory("{$chapter_path}/tmp");
+        }
+        $files = Storage::disk('ftp')->files($chapter_path);
+
+        // Update amount
+        $chapter->update([
+            'amount' => count($files),
+        ]);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Sắp xếp ảnh thành công',
+            'data' => $files,
+        ]);
     }
 }
