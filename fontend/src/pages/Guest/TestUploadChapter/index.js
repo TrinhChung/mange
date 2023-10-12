@@ -27,7 +27,7 @@ const TestUploadChapter = () => {
     const handleUpload = async () => {
         try {
             const formData = new FormData();
-            if (fileList.length === 1 && fileList[0].type === 'application/zip') {
+            if (fileList.length === 1 && fileList[0].type.includes('zip')) {
                 formData.append('zip', fileList[0]);
             } else {
                 for (let i = 0; i < fileList.length; i++) {
@@ -71,7 +71,8 @@ const TestUploadChapter = () => {
             const response = await axios.post('/api/chapters/18186/sort', { order });
             toast.success(response.message);
             setSavingOrder(false);
-
+            setChapter(null);
+            await getChapter();
         } catch (error) {
             console.log(error);
             toast.error(error.message);
@@ -118,9 +119,19 @@ const TestUploadChapter = () => {
                 <Typography.Title level={2}>Tải ảnh lên</Typography.Title>
             </Col>
         </Row>
+        <Row>
+            <Col span={18} offset={3}>
+                <Typography.Text >Tải lên nhiều file ảnh hoặc 1 file zip, tối đa 400MB.</Typography.Text>
+            </Col>
+        </Row>
+        <br />
+
         <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col span={18} offset={3}>
-                <input type="file" onChange={(e) => { setFileList(e.target.files); setUploadProgress(null); setStreamData('') }} multiple accept='image/png, image/jpeg, image/jpg, application/zip' />
+                <input
+                    type="file" onChange={(e) => { setFileList(e.target.files); setUploadProgress(null); setStreamData('') }}
+                    multiple accept='image/png, image/jpeg, image/jpg, application/zip'
+                    placeholder='Chọn file (nhiều file ảnh hoặc 1 file zip)' />
             </Col>
         </Row>
 
