@@ -157,13 +157,12 @@ const TestUploadChapter = () => {
                         if (data.position === -1) return null;
                         let imageName = data.imageLink.split('/').slice(-1)[0];
                         if (imageName.split('?').length > 1) imageName = imageName.split('?')[0];
-                        const realIndex = index - imageOrder.filter((number, idx) => number === -1 && idx < index).length;
                         return <Col span={6} key={data.position}>
                             <Card
                                 title={<Select value={data.position} options={selectOptions} onChange={(v) =>
                                     handleSwapImage(data.position, v)} />}
                                 extra={<Button type="link" danger onClick={() => handleDeleteIndex(data.position)}><DeleteOutlined /></Button>}>
-                                <Image src={data.imageLink} />
+                                <Image src={data.imageLink.replace('images', 'images/thumbnail')} preview={{ src: data.imageLink }} />
                                 <br />
                                 <Typography.Text>{imageName}</Typography.Text>
                             </Card>
