@@ -317,6 +317,13 @@ class ChapterController extends Controller
                         flush();
                         sleep(1);
                     }
+
+                    if (! $bus->hasFailures()) {
+                        echo 'data: Thành công';
+                        ob_flush();
+                        flush();
+                    }
+
                     $chapter->update([
                         'amount' => $chapter->amount + $added_amount,
                     ]);
@@ -370,8 +377,8 @@ class ChapterController extends Controller
         // Chuyển lại về folder ảnh theo thứ tự mới
         for ($i = $first_wrong_index; $i < count($fields['order']); $i++) {
             if ($order[$i] !== -1) {
-                Storage::disk('ftp')->move("{$chapter_path}/tmp/{$order[$i]}.jpg",
-                    "{$chapter_path}{$i}.jpg");
+                Storage::disk('ftp')->move("{$chapter_path}/tmp/{$i}.jpg",
+                    "{$chapter_path}{$order[$i]}.jpg");
             }
         }
 

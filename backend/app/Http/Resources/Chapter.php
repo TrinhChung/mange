@@ -19,9 +19,9 @@ class Chapter extends JsonResource
             'name' => $this->name,
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
-            'images' => array_map(function ($value) {
+            'images' => $this->amount > 0 ? array_map(function ($value) {
                 return 'https://bachnguyencoder.id.vn/images/'.$this->folder.$value.'.jpg';
-            }, range(0, $this->amount - 1)),
+            }, range(0, $this->amount - 1)) : [],
             'manga' => (function () {
                 $manga = $this->manga->toArray();
                 $manga['thumbnail'] = 'https://bachnguyencoder.id.vn/images/'.$manga['thumbnail'];

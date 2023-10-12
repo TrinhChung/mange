@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Form, Image, Progress, Row, Select, Spin, Typography, Upload, message } from 'antd';
+import { Button, Card, Col, Form, Image, Progress, Row, Select, Space, Spin, Typography, Upload, message } from 'antd';
 import { UploadOutlined, InboxOutlined, LoadingOutlined, DeleteOutlined } from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
 import axios from '../../../config/axios';
+import { toast } from 'react-toastify';
 
 const TestUploadChapter = () => {
     const [fileList, setFileList] = useState([]);
@@ -11,6 +12,7 @@ const TestUploadChapter = () => {
     const [streamData, setStreamData] = useState('');
     const [chapter, setChapter] = useState(null);
     const [imageOrder, setImageOrder] = useState([]);
+    const [savingOrder, setSavingOrder] = useState(false);
 
     useEffect(() => {
         getChapter()
@@ -19,59 +21,102 @@ const TestUploadChapter = () => {
     const getChapter = async () => {
         const res = await axios.get('/api/chapters/18186');
         setChapter(res.data);
-        setImageOrder(res.data.images.map((image, index) => index));
+        setImageOrder(res.data.images.map((image, index) => { return { position: index, imageLink: `${image}?${Date.now()}` } })); // prevent cache
     }
 
     const handleUpload = async () => {
-        const formData = new FormData();
-        if (fileList.length === 1 && fileList[0].type === 'application/zip') {
-            formData.append('zip', fileList[0]);
-        } else {
-            for (let i = 0; i < fileList.length; i++) {
-                formData.append('images[]', fileList[i]);
+        try {
+            const formData = new FormData();
+            if (fileList.length === 1 && fileList[0].type === 'application/zip') {
+                formData.append('zip', fileList[0]);
+            } else {
+                for (let i = 0; i < fileList.length; i++) {
+                    formData.append('images[]', fileList[i]);
+                }
             }
+            setUploading(true);
+
+            const response = await axios.post('/api/chapters/18186', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                onUploadProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(percentCompleted);
+                    console.log("percentCompleted", percentCompleted);
+                },
+                responseType: 'stream',
+                onDownloadProgress: (progressEvent) => {
+                    const allLines = progressEvent.event.target.responseText.split('data: ');
+                    setStreamData(allLines[allLines.length - 1]);
+                }
+            })
+
+            toast.success("Tải ảnh lên thành công");
+            setUploading(false);
+            setFileList([]);
+            setChapter(null);
+            await getChapter();
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message);
         }
-        setUploading(true);
-
-        const response = await axios.post('/api/chapters/18186', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            onUploadProgress: (progressEvent) => {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                setUploadProgress(percentCompleted);
-                console.log("percentCompleted", percentCompleted);
-            },
-            responseType: 'stream',
-            onDownloadProgress: (progressEvent) => {
-                const allLines = progressEvent.event.target.responseText.split('data: ');
-                setStreamData(allLines[allLines.length - 1]);
-            }
-        })
-
-        setUploading(false);
-        setFileList([]);
-        setChapter(null);
-        await getChapter();
     };
 
-    const [previous, setPrevious] = useState(null);
-    const selectOptions = imageOrder.filter((number) => number !== -1).sort().map((number, index) => { return { label: `Trang ${index}`, value: index } })
+    const handleSaveOrder = async () => {
+        try {
+            const order = imageOrder.map((data) => data.position);
+            setSavingOrder(true);
 
-    const swapImageHandle = (e, index) => {
-        // index là vị trí cũ, value là vị trí mới
+            const response = await axios.post('/api/chapters/18186/sort', { order });
+            toast.success(response.message);
+            setSavingOrder(false);
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message);
+        }
+    }
+
+    const selectOptions = imageOrder.filter((data) => data.position !== -1).sort().map((data, index) => { return { label: `Trang ${index}`, value: index } })
+
+    const handleSwapImage = (oldPosition, newPosition) => {
         const newImageOrder = [...imageOrder];
-        const temp = newImageOrder[index];
-        newImageOrder[index] = newImageOrder[e.target.value];
-        newImageOrder[e.target.value] = temp;
+        const oldIndex = newImageOrder.findIndex((data) => data.position === oldPosition);
+        const newIndex = newImageOrder.findIndex((data) => data.position === newPosition);
+        newImageOrder[oldIndex].position = newPosition;
+        newImageOrder[newIndex].position = oldPosition;
         setImageOrder(newImageOrder);
-        e.target.value = previous;
-        setPrevious(null);
+
+        console.log(newImageOrder);
+    }
+
+    const handleDeleteIndex = (position) => {
+        const newImageOrder = [...imageOrder];
+        const index = newImageOrder.findIndex((data) => data.position === position);
+        const oldValue = newImageOrder[index].position;
+        newImageOrder[index].position = -1;
+
+        // Giảm tất cả các giá trị lớn hơn oldValue đi 1, giữ nguyên imageLink
+        for (let i = 0; i < newImageOrder.length; i++) {
+            if (newImageOrder[i].position > oldValue) {
+                newImageOrder[i].position -= 1;
+            }
+        }
+        setImageOrder(newImageOrder);
+
+        console.log(newImageOrder);
+    }
+
+    const revertChanges = () => {
+        setImageOrder(chapter.images.map((image, index) => { return { position: index, imageLink: image } }));
     }
 
     return <div>
         <Row>
-            <Typography.Title level={2}>Tải ảnh lên</Typography.Title>
+            <Col span={18} offset={3}>
+                <Typography.Title level={2}>Tải ảnh lên</Typography.Title>
+            </Col>
         </Row>
         <Row style={{ display: 'flex', alignItems: 'center' }}>
             <Col span={18} offset={3}>
@@ -97,18 +142,18 @@ const TestUploadChapter = () => {
         <Row style={{ marginTop: 16 }}>
             <Col span={18} offset={3}>
                 <Row gutter={[16, 16]}>
-                    {chapter ? imageOrder.map((number, index) => {
-                        const imageName = chapter.images[number].split('/').slice(-1)[0];
-                        if (number === -1) return null;
-                        return <Col span={6} key={number}>
+                    {chapter ? [...imageOrder].sort((a, b) => a.position - b.position).map((data, index) => {
+                        if (data.position === -1) return null;
+                        let imageName = data.imageLink.split('/').slice(-1)[0];
+                        if (imageName.split('?').length > 1) imageName = imageName.split('?')[0];
+                        const realIndex = index - imageOrder.filter((number, idx) => number === -1 && idx < index).length;
+                        return <Col span={6} key={data.position}>
                             <Card
-                                title={
-                                    <select defaultValue={index} value={index} onChange={e => swapImageHandle(e, index)} onFocus={e => setPrevious(e.target.value)}>
-                                        {selectOptions.map((option) => <option value={option.value}>{option.label}</option>)}
-                                    </select>
-                                }
-                                extra={<Button type="link" danger><DeleteOutlined /></Button>}>
-                                <Image src={chapter.images[number]} />
+                                title={<Select value={data.position} options={selectOptions} onChange={(v) =>
+                                    handleSwapImage(data.position, v)} />}
+                                extra={<Button type="link" danger onClick={() => handleDeleteIndex(data.position)}><DeleteOutlined /></Button>}>
+                                <Image src={data.imageLink} />
+                                <br />
                                 <Typography.Text>{imageName}</Typography.Text>
                             </Card>
                         </Col>
@@ -116,7 +161,16 @@ const TestUploadChapter = () => {
                 </Row>
             </Col>
         </Row>
-
+        <br />
+        <Row >
+            <Col offset={6} span={12} align="middle">
+                <Space>
+                    <Button disabled={imageOrder.every((data, index) => data.position === index)} onClick={revertChanges}>Hoàn tác</Button>
+                    <Button disabled={imageOrder.every((data, index) => data.position === index)} type="primary" onClick={handleSaveOrder} loading={savingOrder}>Lưu lại</Button>
+                </Space>
+            </Col>
+        </Row>
+        <br />
     </div >;
 }
 
