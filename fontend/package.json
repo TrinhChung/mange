@@ -27,13 +27,14 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "react-scripts build",
+        "build": "CI=false react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d build",
         "format": "npx prettier . --write",
-        "cypress:open": "cypress open"
+        "cypress:open": "cypress open",
+        "cy:run": "cypress run"
     },
     "eslintConfig": {
         "extends": [

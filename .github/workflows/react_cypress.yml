@@ -1,0 +1,29 @@
+name: Test React Cypress
+
+on:
+  push:
+    paths:
+      - "fontend/**"
+    branches: [main]
+  pull_request:
+    paths:
+      - "fontend/**"
+    branches: [main]
+  
+jobs:
+  cypress-run:
+    name: Cypress Run
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./fontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        timeout-minutes: 10
+        with:
+          working-directory: fontend
+          build: npm run build
+          start: npm start
