@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Manga extends Model
 {
@@ -20,6 +21,11 @@ class Manga extends Model
         'thumbnail',
         'view',
     ];
+
+    public function reported_by(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'reportable');
+    }
 
     public function othernames()
     {

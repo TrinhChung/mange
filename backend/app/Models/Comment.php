@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Comment extends Pivot
@@ -26,6 +27,11 @@ class Comment extends Pivot
     ];
 
     protected $table = 'comments';
+
+    public function reported_by(): MorphToMany
+    {
+        return $this->morphToMany(User::class, 'reportable');
+    }
 
     public function childs()
     {

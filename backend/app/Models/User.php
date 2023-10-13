@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Jobs\SendResetPasswordMail;
 use App\Jobs\SendWelcomeEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,6 +53,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'activated_at' => 'datetime',
     ];
+
+    public function translate_require_forms()
+    {
+        return $this->hasMany(TranslateRequireForm::class, 'user_id', 'id');
+    }
+
+    public function reported_comments(): MorphToMany
+    {
+        return $this->morphedByMany(Comment::class, 'reportable');
+    }
+
+    public function reported_mangas(): MorphToMany
+    {
+        return $this->morphedByMany(Manga::class, 'reportable');
+    }
 
     public function isAdmin(): bool
     {
