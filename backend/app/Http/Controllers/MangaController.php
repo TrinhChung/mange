@@ -13,6 +13,8 @@ class MangaController extends Controller
 {
     use AuthTrait;
 
+    const REPORT_LIMIT = 100;
+
     public function index(Request $request)
     {
         $fields = $this->validate($request, [
@@ -178,6 +180,26 @@ class MangaController extends Controller
                 'bookmarked' => $bookmarked,
             ],
             'message' => ($bookmarked ? 'Thêm' : 'Xóa').' bookmark thành công',
+        ], 200);
+    }
+
+    public function getReportedMangas(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'admin') {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Can not access',
+            ], 403);
+        }
+
+        $reportedMangas = Manga::has('reported_by', '>', $this::REPORT_LIMIT)->get();
+
+        return response()->json([
+            'success' => 1,
+            'data' => new MangaCollection($reportedMangas),
+            'message' => 'success',
         ], 200);
     }
 }

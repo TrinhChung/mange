@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MangaController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Http\Request;
@@ -45,6 +46,7 @@ Route::prefix('mangas')->group(function () {
         Route::post('{manga_id}/comment', [CommentController::class, 'create']);
         Route::post('{manga_id}/vote', [VoteController::class, 'vote']);
         Route::post('{manga_id}/chapter', [ChapterController::class, 'create']);
+        Route::get('reported', [MangaController::class, 'getReportedMangas']);
     });
 
     Route::get('/', [MangaController::class, 'index']);
@@ -67,6 +69,11 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('comments')->middleware('auth:sanctum')->group(function () {
     Route::post('{id}/react', [CommentController::class, 'react']);
+    Route::get('reported', [CommentController::class, 'getReportedComments']);
+});
+
+Route::prefix('report')->middleware('auth:sanctum')->group(function () {
+    Route::post('{reportable}/{id}', [ReportController::class, 'create']);
 });
 
 Route::prefix('me')->middleware('auth:sanctum')->group(function () {

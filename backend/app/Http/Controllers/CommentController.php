@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     //
+    const REPORT_LIMIT = 100;
 
     public function create(Request $request)
     {
@@ -106,6 +107,26 @@ class CommentController extends Controller
             'data' => [
                 'reaction' => $user->reacted_comments()->where('comment_id', $fields['comment_id'])->value('like'),
             ],
+        ], 200);
+    }
+
+    public function getReportedComments(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'admin') {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Can not access',
+            ], 403);
+        }
+
+        $reportedComments = Comment::has('reported_by', '>', $this::REPORT_LIMIT)->get();
+
+        return response()->json([
+            'success' => 1,
+            'data' => new $reportedComments,
+            'message' => 'success',
         ], 200);
     }
 }
