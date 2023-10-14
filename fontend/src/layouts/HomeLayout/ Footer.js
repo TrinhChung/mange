@@ -14,8 +14,8 @@ const FooterComponent = () => {
   };
 
   const box2 = {
-    title: 'Danh cho cac em nu K66',
-    data: ['TIM NY', 'CHO DAO DUC HIEP', 'CV'],
+    title: 'Dành cho cac em nữ K66J',
+    data: ['Anh Trịnh Văn Chung', 'yêu các em!'],
   };
 
   const box3 = {

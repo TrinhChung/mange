@@ -24,3 +24,40 @@
   align-items: center;
   color: var(--gray);
 }
+
+.image-preview {
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+  padding: 16px;
+  background-color: #eeeeee;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+
+  &-item {
+    background-color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+
+    &-top {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    &-name {
+      font-size: 12px;
+      width: 90%;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      display: -webkit-box;
+      margin-bottom: 4px;
+    }
+  }
+}

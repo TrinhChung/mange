@@ -33,7 +33,7 @@ const menu = [
     path: '/profile/posted',
     icon: <ReadOutlined />,
   },
-  { content: 'Tải truyện lên', path: '/profile/post', icon: <KeyOutlined /> },
+  // { content: 'Tải truyện lên', path: '/profile/post', icon: <KeyOutlined /> },
   { content: 'Đổi mật khẩu', path: '/profile/general', icon: <KeyOutlined /> },
   { content: 'Đăng xuất', path: null, icon: <LogoutOutlined /> },
 ];

@@ -80,12 +80,14 @@ const DetailChapter = () => {
           <Col style={{ fontSize: 40 }}>
             <RightCircleOutlined
               style={{
-                cursor: `${index >= 0 && index < chapters.length - 1
+                cursor: `${
+                  index >= 0 && index < chapters.length - 1
                     ? 'pointer'
                     : 'default'
-                  }`,
-                color: `${index >= 0 && index < chapters.length - 1 ? 'black' : 'gray'
-                  }`,
+                }`,
+                color: `${
+                  index >= 0 && index < chapters.length - 1 ? 'black' : 'gray'
+                }`,
               }}
               onClick={() => {
                 navigate(`/live-manga/${name}/${chapters[index + 1].value}`);
