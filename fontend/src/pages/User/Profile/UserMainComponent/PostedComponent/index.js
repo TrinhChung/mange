@@ -2,7 +2,7 @@ import { Col, Input, Row } from 'antd';
 import React, { useState } from 'react';
 import TitleTopLeft from '../../../../../components/layout/TitleTopLeft';
 import UserStory from '../UserStory';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const breadcrumbData = [
   {
@@ -18,6 +18,7 @@ const breadcrumbData = [
 ];
 const { Search } = Input;
 const PostedComponent = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const [key, setKey] = useState(
@@ -49,7 +50,12 @@ const PostedComponent = () => {
             setKey(e.target.value);
           }}
         />
-        <div className="button-view bg-color-main">Đăng truyện</div>
+        <div
+          className="button-view bg-color-main"
+          onClick={() => navigate('/profile/post')}
+        >
+          Đăng truyện
+        </div>
       </Col>
       <UserStory
         headerText={{

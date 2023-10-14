@@ -7,6 +7,7 @@ import DetailManga from './DetailManga';
 import DetailChapter from './DetailChapter';
 import Auth from '../Auth';
 import TestUploadChapter from './TestUploadChapter';
+import Profile from '../User/Profile';
 
 const Guest = () => {
   const items = [
@@ -29,7 +30,7 @@ const Guest = () => {
     {
       label: <LinkCustom to={'/test-upload-chapter'} label="Tét úp ảnh" />,
       key: 'test-upload-chapter',
-    }
+    },
   ];
 
   const wrapLayout = (children) => {
@@ -44,8 +45,12 @@ const Guest = () => {
         path="/live-manga/:name/:id"
         element={wrapLayout(<DetailChapter />)}
       />
-      <Route path="/test-upload-chapter" element={wrapLayout(<TestUploadChapter />)} />
+      <Route
+        path="/test-upload-chapter"
+        element={wrapLayout(<TestUploadChapter />)}
+      />
       <Route path="/auth/*" element={<Auth />} />
+      <Route path="/profile/*" element={wrapLayout(<Profile />)} />
       <Route path="/*" element={wrapLayout(<div>Chua dinh nghia</div>)} />
     </Routes>
   );

@@ -1,11 +1,31 @@
-import React from 'react';
-import { Form, Input, Select } from 'antd';
+import React, { useState } from 'react';
+import { Col, Form, Input, Row, Select } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
 const FormChapter = () => {
+  const [uploadedImages, setUploadedImages] = useState([]);
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+
+    if (files.length > 0) {
+      setUploadedImages([...uploadedImages, ...files]);
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    const updatedImages = [...uploadedImages];
+    updatedImages.splice(index, 1);
+    setUploadedImages(updatedImages);
+  };
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  console.log(uploadedImages, 'uploadedImages');
+
   return (
     <Form
       name="basic"
@@ -47,7 +67,7 @@ const FormChapter = () => {
         <Input className="input-form" />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         label="Tóm tắt"
         name="summary"
         rules={[
@@ -63,7 +83,7 @@ const FormChapter = () => {
           placeholder="maxLength is 6"
           maxLength={6}
         />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         label="Nội dung"
         name="content"
@@ -74,8 +94,35 @@ const FormChapter = () => {
           },
         ]}
       >
-        <input type="file" multiple />
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
       </Form.Item>
+
+      {uploadedImages.length > 0 && (
+        <div className="image-preview">
+          {uploadedImages.map((image, index) => (
+            <div className="image-preview-item">
+              <div className="image-preview-item-top">
+                <span>Page: {index + 1}</span>
+                <CloseCircleOutlined
+                  style={{ color: '#eb2f96', cursor: 'pointer' }}
+                  onClick={() => handleRemoveImage(index)}
+                />
+              </div>
+              <div className="image-preview-item-name">{image.name}</div>
+              <img
+                key={index}
+                src={URL.createObjectURL(image)}
+                alt={`image ${index}`}
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </Form>
   );
 };

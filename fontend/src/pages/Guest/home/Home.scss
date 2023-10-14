@@ -1,42 +1,42 @@
 .banner_manga {
-    position: absolute;
-    top: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .chip_chapter {
-    padding: 6px 15px;
-    background-color: gray;
-    border-radius: 4px;
+  padding: 6px 15px;
+  background-color: gray;
+  border-radius: 4px;
 }
 
 .chip_chapter:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .name_manga {
-    font-size: 40px;
-    font-weight: 900;
-    padding-bottom: 20px;
+  font-size: 40px;
+  font-weight: 900;
+  padding-bottom: 20px;
 }
 
 .type_manga {
-    font-size: 16px;
-    font-weight: 600;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .button_action {
-    background-color: var(--color-main);
-    border: none !important;
-    outline: none !important;
-    color: white;
-    font-weight: 700;
-    font-size: 20px;
-    padding: 4px 20px !important;
-    border-radius: 4px;
+  background-color: var(--color-main);
+  border: none !important;
+  outline: none !important;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 4px 20px !important;
+  border-radius: 4px;
 }
 
 .button_action:hover {
-    color: rgb(251, 207, 207) !important;
-    cursor: pointer;
+  color: rgb(251, 207, 207) !important;
+  cursor: pointer;
 }
