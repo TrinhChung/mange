@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TranslateRequireForm;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -93,6 +94,46 @@ class UserController extends Controller
             'data' => $user,
         ], 200);
 
+    }
+
+    public function acceptForm(Request $request)
+    {
+        $request->merge(['form_id' => $request->id]);
+
+        $fields = $this->validate($request, [
+            'form_id' => 'required|integer|min:1',
+        ]);
+
+        $form = TranslateRequireForm::findOrFail($fields['form_id']);
+        $this->authorize('accessOrRefuseForm', $form);
+
+        $form->update(['approved' => true]);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $form,
+            'message' => 'form approved',
+        ], 200);
+    }
+
+    public function refuseForm(Request $request)
+    {
+        $request->merge(['form_id' => $request->id]);
+
+        $fields = $this->validate($request, [
+            'form_id' => 'required|integer|min:1',
+        ]);
+
+        $form = TranslateRequireForm::findOrFail($fields['form_id']);
+        $this->authorize('accessOrRefuseForm', $form);
+
+        $form->update(['approved' => false]);
+
+        return response()->json([
+            'success' => 1,
+            'data' => $form,
+            'message' => 'form refused',
+        ], 200);
     }
 
     /*
@@ -200,6 +241,60 @@ class UserController extends Controller
                 'user' => $user,
             ], 200);
         }
+    }
+
+    public function createForm(Request $request)
+    {
+        $user = $request->user();
+        if ($user->role !== 'user') {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Không có quyền tạo form',
+            ], 403);
+        }
+
+        $fields = $this->validate($request, [
+            'content' => 'required|string',
+        ]);
+
+        $form = $user->translate_require_forms()->create([
+            'content' => $fields['content'],
+        ]);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Đã tạo form',
+            'data' => $form,
+        ], 200);
+    }
+
+    public function editForm(Request $request)
+    {
+        $request->merge(['form_id' => $request->id]);
+
+        $fields = $this->validate($request, [
+            'form_id' => 'required|integer|min:1',
+            'content' => 'required|string',
+        ]);
+
+        $form = TranslateRequireForm::findOrFail($fields['form_id']);
+        $this->authorize('updateForm', $form);
+
+        if ($form->approved !== null) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Không thể edit một form đã được duyệt',
+                'data' => $form,
+            ], 200);
+        }
+
+        $form->update(['content' => $fields['content']]);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Đã cập nhật form',
+            'data' => $form,
+        ], 200);
     }
 
     /*

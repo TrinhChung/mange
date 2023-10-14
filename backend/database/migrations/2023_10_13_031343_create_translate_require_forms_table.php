@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->longText('content');
-            $table->boolean('approved');
+            $table->boolean('approved')->nullable();
             $table->timestamps();
         });
     }

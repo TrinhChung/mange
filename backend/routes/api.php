@@ -67,6 +67,15 @@ Route::prefix('user')->group(function () {
     Route::post('/request_reset_password', [UserController::class, 'requestResetPassword']);
 });
 
+Route::prefix('forms')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/', [UserController::class, 'createForm']);
+        Route::put('{id}', [UserController::class, 'editForm']);
+        Route::put('{id}/accept', [UserController::class, 'acceptForm']);
+        Route::put('{id}/refuse', [UserController::class, 'refuseForm']);
+    });
+});
+
 Route::prefix('comments')->middleware('auth:sanctum')->group(function () {
     Route::post('{id}/react', [CommentController::class, 'react']);
     Route::get('reported', [CommentController::class, 'getReportedComments']);
