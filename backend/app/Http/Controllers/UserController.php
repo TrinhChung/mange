@@ -68,6 +68,9 @@ class UserController extends Controller
         if (isset($fields['password'])) {
             $fields['password'] = md5($fields['password']);
         }
+        if ($fields['active'] === 1) {
+            $fields['activated_at'] = now();
+        }
         $user->update($fields);
 
         return response()->json([
