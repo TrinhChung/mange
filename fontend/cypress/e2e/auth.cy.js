@@ -5,11 +5,12 @@ describe('Spec đăng nhập', () => {
     cy.intercept('GET', 'http://localhost:6001/socket.io/*', {
       body: 'socket.io',
     }).as('socket.io');
+    cy.intercept('GET', 'http://localhost:8000/api/mangas*', {})
 
     cy.visit('http://localhost:3000/auth/login');
   });
 
-  it('Vào được trang đăng nhập', () => {});
+  it('Vào được trang đăng nhập', () => { });
 
   it('Có trường Tên đăng nhập và mật khẩu', () => {
     cy.contains('Tên đăng nhập').get('input');

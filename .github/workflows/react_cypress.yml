@@ -1,15 +1,12 @@
 name: Test React Cypress
 
 on:
-  push:
-    paths:
-      - "fontend/**"
-    branches: [main]
   pull_request:
     paths:
       - "fontend/**"
     branches: [main]
-  
+  workflow_call:
+
 jobs:
   cypress-run:
     name: Cypress Run
