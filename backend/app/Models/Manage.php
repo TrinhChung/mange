@@ -9,6 +9,8 @@ class Manage extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'manages';
+
     protected $fillable = [
         'manga_id',
         'user_id',

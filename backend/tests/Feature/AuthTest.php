@@ -129,6 +129,24 @@ class AuthTest extends TestCase
         ]);
     }
 
+    public function test_login_not_activated_yet(): void
+    {
+        $user = User::factory()->create([
+            'username' => 'testuser',
+            'password' => md5('111111'),
+        ]);
+
+        $response = $this->post('/api/auth/login', [
+            'username' => 'testuser',
+            'password' => '111111',
+        ]);
+
+        $response->assertStatus(401);
+        $response->assertJsonStructure([
+            'message',
+        ]);
+    }
+
     public function test_logout_success(): void
     {
         $user = User::factory()->create([
