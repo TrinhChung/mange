@@ -17,15 +17,11 @@ class ChapterZipRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $zip = new ZipArchive();
-        if ($zip->open($value->path()) !== true) {
-            $fail('File không phải là file zip');
-
-            return;
-        }
+        $zip->open($value->path());
 
         for ($i = 0; $i < $zip->numFiles; $i++) {
             $mime = mime_content_type('zip://'.$value->path().'#'.$zip->getNameIndex($i));
-            if (! in_array($mime, ['image/jpeg', 'image/png'])) {
+            if (! in_array($mime, ['image/jpeg', 'image/jpg', 'image/png'])) {
                 $fail('Zip chứa file không phải là ảnh');
 
                 return;
