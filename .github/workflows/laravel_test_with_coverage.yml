@@ -30,11 +30,11 @@ jobs:
         run: |
           touch database/database.testing.sqlite
           php artisan config:clear
-          php artisan test --coverage-html coverage
+          php artisan test --path-coverage --coverage-html coverage
       - name: Upload coverage to vps
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: '167.71.197.242'
+          host: "167.71.197.242"
           username: coverage
           password: ${{ secrets.COVERAGE_PASSWORD }}
           source: ./backend/coverage/*

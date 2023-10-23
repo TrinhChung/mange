@@ -45,6 +45,6 @@ Chạy test, cần cài xdebug dll (windows) hoặc so (linux) để chạy cove
 # Chạy laravel test và coverage trong console
 php artisan test --coverage
 
-# Html coverage, mở thư mục reports/index.html để xem
-php artisan test --coverage-html=reports
+# Html coverage, mở thư mục reports/index.html để xem, có branch coverage
+php artisan test --path-coverage --coverage-html=reports
 ```
