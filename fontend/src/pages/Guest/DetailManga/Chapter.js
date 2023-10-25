@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
-import { Col, Row } from 'antd';
+import { Col, Row, Skeleton } from 'antd';
 import TitleChildren from '../../../components/layout/TitleChildren';
 import { UnorderedListOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-const Chapter = ({ chapters = [], nameManga = 'name' }) => {
+const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
   const navigate = useNavigate();
   const handleViewChapter = (chapter) => {
     navigate(`/live-manga/${nameManga}/${chapter.id}`);
@@ -84,8 +84,7 @@ const Chapter = ({ chapters = [], nameManga = 'name' }) => {
               }}
             >
               <Col span={24}>
-                {chapters &&
-                  chapters.length > 0 &&
+                {chapters && chapters.length > 0 && !loading ? (
                   chapters.map((chapter) => {
                     return (
                       <RowChapter
@@ -94,7 +93,15 @@ const Chapter = ({ chapters = [], nameManga = 'name' }) => {
                         action={handleViewChapter}
                       />
                     );
-                  })}
+                  })
+                ) : (
+                  <Skeleton
+                    active={true}
+                    paragraph={{
+                      rows: 100,
+                    }}
+                  />
+                )}
               </Col>
             </Row>
           </Col>

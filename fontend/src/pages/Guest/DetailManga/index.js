@@ -11,13 +11,16 @@ import { getMangaDetail } from '../../../services/Guest/index';
 
 const DetailManga = () => {
   const [manga, setManga] = useState({});
+  const [loading, setLoading] = useState(true);
   const { name } = useParams();
 
   const fetchDetailManga = async (id) => {
+    setLoading(true);
     const data = await getMangaDetail(id);
     if (data && data.status === 200) {
       setManga(data.data);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -31,9 +34,13 @@ const DetailManga = () => {
       <Col span={18}>
         <Row>
           <Col span={16}>
-            <Overview manga={manga} />
-            <Content content={manga?.description} />
-            <Chapter chapters={manga?.chapters} nameManga={manga?.slug} />
+            <Overview manga={manga} loading={loading} />
+            <Content content={manga?.description} loading={loading} />
+            <Chapter
+              chapters={manga?.chapters}
+              nameManga={manga?.slug}
+              loading={loading}
+            />
           </Col>
           <Col span={8}>
             <ListMangaSide
