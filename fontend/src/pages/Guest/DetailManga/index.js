@@ -34,7 +34,6 @@ const DetailManga = () => {
             <Overview manga={manga} />
             <Content content={manga?.description} />
             <Chapter chapters={manga?.chapters} nameManga={manga?.slug} />
-            <Comment comments={manga?.comments} />
           </Col>
           <Col span={8}>
             <ListMangaSide

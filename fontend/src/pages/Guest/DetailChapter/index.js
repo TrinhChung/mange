@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getChapterDetail } from '../../../services/Guest/index';
 import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons';
 import Comment from '../DetailManga/Comment';
+import ImageCustom from '../../../components/manga/ImageCustom';
 const DetailChapter = () => {
   const [images, setImages] = useState([]);
   const [chapters, setChapters] = useState([]);
@@ -100,12 +101,7 @@ const DetailChapter = () => {
             images.length > 0 &&
             images.map((image, index) => {
               return (
-                <img
-                  key={index}
-                  src={`${image}?${Date.now()}}`}
-                  style={{ width: '100%', height: '100%' }}
-                  loading="lazy"
-                ></img>
+                <ImageCustom src={`${image}?${Date.now()}}`} index={index} />
               );
             })}
         </Row>

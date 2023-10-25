@@ -14,3 +14,5 @@ export const role = [
 ];
 
 export const hostImg = 'https://bachnguyencoder.id.vn/images/';
+
+export const listMangaSkeleton = new Array(25).fill(0);

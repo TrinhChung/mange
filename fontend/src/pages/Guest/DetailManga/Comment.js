@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Col, Row, Pagination } from 'antd';
 import TitleChildren from '../../../components/layout/TitleChildren';
 import { MessageOutlined, DownOutlined } from '@ant-design/icons';
@@ -45,4 +45,4 @@ const Comment = ({ comments = {} }) => {
   );
 };
 
-export default Comment;
+export default memo(Comment);

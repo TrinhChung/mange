@@ -4,8 +4,10 @@ import Title from '../../../components/layout/Title';
 import Manga from '../../../components/manga/Manga';
 import Slider from 'react-slick';
 import { useEffect } from 'react';
+import MangaSkeleton from '../../../components/manga/MangaSkeleton';
+import { listMangaSkeleton } from '../../../const/index';
 
-const Propose = ({ proposes = [] }) => {
+const Propose = ({ proposes = [], loading = true }) => {
   const [manga, setManga] = useState([]);
   const settings = {
     className: 'center',
@@ -36,7 +38,13 @@ const Propose = ({ proposes = [] }) => {
                   return <Manga manga={propose} />;
                 })}
               </Slider>
-            ) : null}
+            ) : (
+              <Slider {...settings}>
+                {listMangaSkeleton.map(() => {
+                  return <MangaSkeleton />;
+                })}
+              </Slider>
+            )}
           </Col>
         </Row>
       </Col>

@@ -1,25 +1,24 @@
-import { Col, Image, Row, Typography } from 'antd';
-import React from 'react';
+import { Col, Image, Row, Skeleton, Typography } from 'antd';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hostImg } from '../../const/index';
 
-const Manga = ({ manga = {} }) => {
+const Manga = ({ manga = null }) => {
   const navigate = useNavigate();
 
   return (
-    <Col key={manga?.id}>
+    <Col key={manga?.id} className="manga">
       <Row>
-        <Image
-          src={manga ? hostImg + manga.thumbnail : null}
-          preview={false}
-          width={150}
-          height={200}
-          style={{ cursor: 'pointer' }}
+        <img
+          key={manga.id}
+          src={manga?.thumbnail ? hostImg + manga.thumbnail : ''}
+          style={{ width: 150, height: 200, cursor: 'pointer' }}
           onClick={() => {
             if (manga && manga.slug) {
               navigate(`/detail-manga/${manga.id}`);
             }
           }}
+          loading="lazy"
         />
       </Row>
       <Row

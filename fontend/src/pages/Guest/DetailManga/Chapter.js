@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Col, Row } from 'antd';
 import TitleChildren from '../../../components/layout/TitleChildren';
 import { UnorderedListOutlined } from '@ant-design/icons';
@@ -9,6 +9,7 @@ const Chapter = ({ chapters = [], nameManga = 'name' }) => {
   const handleViewChapter = (chapter) => {
     navigate(`/live-manga/${nameManga}/${chapter.id}`);
   };
+
   const RowChapter = ({ chapter, date, action = () => {} }) => {
     return (
       <Row
@@ -103,4 +104,4 @@ const Chapter = ({ chapters = [], nameManga = 'name' }) => {
   );
 };
 
-export default Chapter;
+export default memo(Chapter);

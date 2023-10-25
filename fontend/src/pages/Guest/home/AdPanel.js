@@ -7,17 +7,6 @@ const AdPanel = () => {
   return (
     <Row className="box-content">
       <Col span={24}>
-        <Row
-          style={{
-            fontSize: 26,
-            color: '#FA383E',
-            fontWeight: 'bold',
-            paddingBottom: 20,
-          }}
-        >
-          Đoàn Thị Thu Thảo
-          <HeartFilled />
-        </Row>
         <Row>
           <Image src={srcAd} preview={false} />
         </Row>

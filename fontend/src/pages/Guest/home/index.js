@@ -221,8 +221,9 @@ export const histories = [
 ];
 
 const Home = () => {
-  const { newUpdates, proposes, fetchMangaNewUpdate } =
+  const { loadingNewUpdate, newUpdates, proposes, fetchMangaNewUpdate } =
     useContext(MangaContext);
+
   const manga = {
     chapter: 'Chapter 100',
     image: MangaBanner,
@@ -243,6 +244,7 @@ const Home = () => {
               manga={newUpdates?.manga}
               total={newUpdates?.total}
               setPage={fetchMangaNewUpdate}
+              loading={loadingNewUpdate}
             />
           </Col>
           <Col span={8}>
