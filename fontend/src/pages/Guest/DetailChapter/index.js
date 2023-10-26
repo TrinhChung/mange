@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Col, Image, Row, Select } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChapterDetail } from '../../../services/Guest/index';
@@ -10,6 +10,7 @@ const DetailChapter = () => {
   const [chapters, setChapters] = useState([]);
   const [index, setIndex] = useState(0);
   const { name, id } = useParams();
+  const chapterElement = useRef(null);
   const navigate = useNavigate();
 
   const fetchDetailChapter = async (id) => {
@@ -30,10 +31,33 @@ const DetailChapter = () => {
 
   useEffect(() => {
     fetchDetailChapter(id);
+    const histories =
+      localStorage.getItem('histories') !== null
+        ? JSON.parse(localStorage.getItem('histories'))
+        : [];
+    if (histories.length > 10) {
+      histories.shift();
+    }
+    if (histories.findIndex((history) => history === id) === -1) {
+      histories.push(id);
+      localStorage.setItem('histories', JSON.stringify(histories));
+    }
   }, [id]);
 
+  useEffect(() => {
+    const handleScroll = (event) => {
+      console.log(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <Row style={{ justifyContent: 'center' }}>
+    <Row style={{ justifyContent: 'center' }} ref={chapterElement}>
       <Col span={18}>
         <Row></Row>
         <Row>Breakcumb</Row>
@@ -53,7 +77,9 @@ const DetailChapter = () => {
                 color: `${index > 0 ? 'black' : 'gray'}`,
               }}
               onClick={() => {
-                navigate(`/live-manga/${name}/${chapters[index - 1].value}`);
+                if (index - 1 >= 0) {
+                  navigate(`/live-manga/${name}/${chapters[index - 1].value}`);
+                }
               }}
             />
           </Col>
@@ -91,7 +117,9 @@ const DetailChapter = () => {
                 }`,
               }}
               onClick={() => {
-                navigate(`/live-manga/${name}/${chapters[index + 1].value}`);
+                if (index + 1 < chapters.length) {
+                  navigate(`/live-manga/${name}/${chapters[index + 1].value}`);
+                }
               }}
             />
           </Col>
