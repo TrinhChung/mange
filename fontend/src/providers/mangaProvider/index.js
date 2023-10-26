@@ -8,9 +8,11 @@ export default function MangaProvider({ children }) {
   const [loadingNewUpdate, setLoadingNewUpdate] = useState(true);
   const [loadingPropose, setLoadingPropose] = useState(true);
   const [proposes, setProposes] = useState([]);
+  const [currentPageNewUpdate, setCurrentPageNewUpdate] = useState(1);
 
   const fetchMangaNewUpdate = async ({ page = 1 }) => {
     setLoadingNewUpdate(true);
+    setCurrentPageNewUpdate(page);
     const data = await getMangaNewUpdate({ page: page });
     if (data.status === 200 && data.data) {
       setNewUpdates({ total: data.total, manga: data.data });
@@ -36,6 +38,7 @@ export default function MangaProvider({ children }) {
         loadingPropose,
         loadingNewUpdate,
         proposes,
+        currentPageNewUpdate,
         newUpdates,
         fetchMangaNewUpdate,
       }}

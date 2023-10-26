@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row, Pagination } from 'antd';
 import Title from '../../../components/layout/Title';
 import Manga from '../../../components/manga/Manga';
@@ -10,6 +10,7 @@ const NewUp = ({
   setPage = () => {},
   total = 1,
   loading = true,
+  page = 1,
 }) => {
   return (
     <Row className="box-content" style={{ marginRight: 20 }}>
@@ -29,11 +30,12 @@ const NewUp = ({
               </Col>
             </Row>
             <Pagination
+              page={page}
               onChange={(page) => {
                 setPage({ page });
               }}
               style={{ paddingTop: 20 }}
-              defaultCurrent={1}
+              defaultCurrent={page}
               total={total * 30}
             />
           </>
