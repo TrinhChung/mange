@@ -18,7 +18,6 @@ const Manga = ({ manga = null }) => {
               navigate(`/detail-manga/${manga.id}`);
             }
           }}
-          loading="lazy"
         />
       </Row>
       <Row

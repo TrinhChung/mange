@@ -9,7 +9,7 @@ const ImageCustom = ({ src = '', index = 0 }) => {
       <img
         key={index}
         className={`${status ? 'show' : 'hide'}`}
-        onComplete={() => {
+        onLoad={() => {
           setStatus(true);
         }}
         src={src ? src : ''}

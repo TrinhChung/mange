@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { Col, Row, Rate, Image, Skeleton } from 'antd';
-import Manga from '../../../components/manga/Manga';
 import RowInfo from './RowInfo';
 import { hostImg } from '../../../const/index';
 import { useNavigate } from 'react-router-dom';
@@ -103,7 +102,7 @@ const Overview = ({ manga = null, loading = true }) => {
             <SkeletonOverview />
           ) : (
             <Row>
-              <Col>
+              <Col span={6}>
                 <Image
                   src={manga ? hostImg + manga.thumbnail : null}
                   width={180}
@@ -111,13 +110,15 @@ const Overview = ({ manga = null, loading = true }) => {
                   preview={false}
                 />
               </Col>
-              <Col style={{ paddingLeft: 40 }}>
+              <Col span={18} style={{ paddingLeft: 40 }}>
                 <Row
                   style={{
                     height: 32,
                     fontSize: 24,
                     fontWeight: 'bold',
                     paddingBottom: 50,
+                    wordWrap: 'break-word',
+                    marginBottom: 30,
                   }}
                 >
                   {manga?.name ? manga.name : 'Ten Truyen'}
