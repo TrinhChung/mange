@@ -11,6 +11,7 @@ use App\Rules\ChapterImageSortOderRule;
 use App\Rules\ChapterZipRule;
 use App\Traits\AuthTrait;
 use Exception;
+use File;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
@@ -39,8 +40,11 @@ class ChapterController extends Controller
             }])
             ->findOrFail($fields['id']);
         $chapter = new ChapterResources($chapter);
+        $checkCounted = false;
 
         if (! Redis::exists("{$request->ip()}_{$chapter['manga']['id']}")) {
+            $checkCounted = true;
+
             if ($user) {
                 View::create([
                     'user_id' => $user->id,
@@ -55,6 +59,7 @@ class ChapterController extends Controller
         return response()->json([
             'success' => 1,
             'data' => $chapter,
+            'is_counted' => $checkCounted,
             'message' => 'Lấy chapter thành công!',
         ], 200);
     }
@@ -204,7 +209,7 @@ class ChapterController extends Controller
                 ], 500);
             })->finally(function (Batch $batch) use ($manga, $chapter) {
                 // Clean up zip temp files
-                \File::deleteDirectory(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'));
+                File::deleteDirectory(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'));
             })->dispatch();
 
             // Server Sent Event
