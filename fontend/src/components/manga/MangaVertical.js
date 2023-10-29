@@ -44,7 +44,13 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
             preview={false}
           />
           <Col style={{ paddingLeft: 20 }}>
-            <Row style={{ fontSize: 16, fontWeight: 'bold', paddingBottom: 4 }}>
+            <Row
+              style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                maxWidth: 200,
+              }}
+            >
               {manga ? manga.name : 'Manga'}
             </Row>
             <Row
@@ -52,7 +58,7 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
                 color: 'var(--gray)',
                 fontWeight: 'bold',
                 fontSize: 12,
-                paddingBottom: 4,
+                maxWidth: 200,
               }}
             >
               {manga ? manga.chapter : '0'}
