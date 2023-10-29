@@ -9,6 +9,7 @@ export default function MangaProvider({ children }) {
   const [loadingPropose, setLoadingPropose] = useState(true);
   const [proposes, setProposes] = useState([]);
   const [currentPageNewUpdate, setCurrentPageNewUpdate] = useState(1);
+  const [histories, setHistories] = useState([]);
 
   const fetchMangaNewUpdate = async ({ page = 1 }) => {
     setLoadingNewUpdate(true);
@@ -27,9 +28,18 @@ export default function MangaProvider({ children }) {
     }
   };
 
+  const fetchMangaHistory = () => {
+    const histories =
+      localStorage.getItem('histories') !== null
+        ? JSON.parse(localStorage.getItem('histories'))
+        : [];
+    setHistories(histories);
+  };
+
   useEffect(() => {
     fetchMangaNewUpdate({ page: 1 });
     fetchMangaPropose({ page: 1 });
+    fetchMangaHistory();
   }, []);
 
   return (
@@ -40,7 +50,9 @@ export default function MangaProvider({ children }) {
         proposes,
         currentPageNewUpdate,
         newUpdates,
+        histories,
         fetchMangaNewUpdate,
+        setHistories,
       }}
     >
       {children}

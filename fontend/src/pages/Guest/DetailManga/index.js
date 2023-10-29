@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Col, Row } from 'antd';
-import { histories } from '../home/index';
 import Overview from './Overview';
 import Content from './Content';
 import Chapter from './Chapter';
-import Comment from './Comment';
 import ListMangaSide from '../../../components/manga/ListMangaSide';
 import { useParams } from 'react-router-dom';
 import { getMangaDetail } from '../../../services/Guest/index';
+import { MangaContext } from '../../../providers/mangaProvider/index';
 
 const DetailManga = () => {
+  const { histories } = useContext(MangaContext);
   const [manga, setManga] = useState({});
   const [loading, setLoading] = useState(true);
   const { name } = useParams();

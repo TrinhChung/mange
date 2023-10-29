@@ -1,10 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Col, Image, Row, Select } from 'antd';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { Col, Row, Select } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChapterDetail } from '../../../services/Guest/index';
 import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons';
 import Comment from '../DetailManga/Comment';
 import ImageCustom from '../../../components/manga/ImageCustom';
+import { MangaContext } from '../../../providers/mangaProvider/index';
+
 const DetailChapter = () => {
   const [images, setImages] = useState([]);
   const [chapters, setChapters] = useState([]);
@@ -12,6 +14,7 @@ const DetailChapter = () => {
   const { name, id } = useParams();
   const chapterElement = useRef(null);
   const navigate = useNavigate();
+  const { setHistories } = useContext(MangaContext);
 
   const fetchDetailChapter = async (id) => {
     const data = await getChapterDetail(id);
@@ -25,12 +28,25 @@ const DetailChapter = () => {
           })
         );
         setIndex(arr.findIndex((chapter) => chapter.id == id));
+
+        saveHistories({
+          id: id,
+          name: data?.data?.manga?.name,
+          thumbnail: data?.data?.manga?.thumbnail,
+          time: new Date(),
+          chapter: data?.data?.name,
+        });
       }
     }
   };
 
-  useEffect(() => {
-    fetchDetailChapter(id);
+  const saveHistories = ({
+    name = '',
+    time = null,
+    thumbnail = '',
+    id = 0,
+    chapter = 0,
+  }) => {
     const histories =
       localStorage.getItem('histories') !== null
         ? JSON.parse(localStorage.getItem('histories'))
@@ -38,10 +54,30 @@ const DetailChapter = () => {
     if (histories.length > 10) {
       histories.shift();
     }
-    if (histories.findIndex((history) => history === id) === -1) {
-      histories.push(id);
+    const manga = { name, time, thumbnail, id, chapter };
+    if (histories.findIndex((history) => history?.id === id) === -1) {
+      histories.unshift(manga);
       localStorage.setItem('histories', JSON.stringify(histories));
+      setHistories(histories);
+    } else {
+      let i = histories.findIndex((history) => history?.id === id);
+      histories[i].time = time;
+      let newHistories = histories.sort((a, b) => {
+        if (a.time.valueOf() < b.time.valueOf()) {
+          return 1;
+        }
+        if (a.time.valueOf() > b.time.valueOf()) {
+          return -1;
+        }
+        return 0;
+      });
+      localStorage.setItem('histories', JSON.stringify(newHistories));
+      setHistories(newHistories);
     }
+  };
+
+  useEffect(() => {
+    fetchDetailChapter(id);
   }, [id]);
 
   useEffect(() => {

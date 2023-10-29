@@ -1,8 +1,11 @@
 import { Col, Image, Row } from 'antd';
 import React from 'react';
 import { StarFilled } from '@ant-design/icons';
+import moment from 'moment';
+
 const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
   const colors = ['#F54558', '#9F73C1', '#45B3B4', '#8A8A8A', 'orange'];
+
   return (
     <Row
       style={{
@@ -37,11 +40,11 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
           <Image
             width={50}
             height={70}
-            src={manga ? manga.image : null}
+            src={manga ? manga?.thumbnail : null}
             preview={false}
           />
           <Col style={{ paddingLeft: 20 }}>
-            <Row style={{ fontSize: 16, fontWeight: 'bold' }}>
+            <Row style={{ fontSize: 16, fontWeight: 'bold', paddingBottom: 4 }}>
               {manga ? manga.name : 'Manga'}
             </Row>
             <Row
@@ -49,9 +52,10 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
                 color: 'var(--gray)',
                 fontWeight: 'bold',
                 fontSize: 12,
+                paddingBottom: 4,
               }}
             >
-              Chapter {manga ? manga.chapter : '0'}
+              {manga ? manga.chapter : '0'}
             </Row>
             <Row
               style={{
@@ -67,7 +71,7 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
       </Col>
       {isDate ? (
         <Col style={{ color: 'var(--gray)' }}>
-          {manga ? manga.time : '13 phut truoc'}
+          {manga ? moment(manga?.time).locale('vi').fromNow() : '13 phut truoc'}
         </Col>
       ) : null}
     </Row>

@@ -7,7 +7,6 @@ import NewUp from './NewUp';
 import TopManga from './TopManga';
 import ListMangaSide from '../../../components/manga/ListMangaSide';
 import { useContext } from 'react';
-import { AuthContext } from '../../../providers/authProvider';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import AdPanel from './AdPanel';
 
@@ -154,77 +153,12 @@ export const proposes = [
   },
 ];
 
-export const histories = [
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-  {
-    image:
-      'https://nettruyen.live/public/images/comics/jujutsu-kaisen-chu-thuat-hoi-chien.jpg',
-    chapter: 175,
-    name: 'One Piece',
-    slug: 'xxx',
-    rating: 4.9,
-    time: '13 phút trước',
-  },
-];
-
 const Home = () => {
   const {
     loadingNewUpdate,
     newUpdates,
     proposes,
+    histories,
     fetchMangaNewUpdate,
     currentPageNewUpdate,
   } = useContext(MangaContext);

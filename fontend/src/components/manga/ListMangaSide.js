@@ -13,9 +13,7 @@ const ListMangaSide = ({ listManga = [], title, isDate = true }) => {
         <Row>
           <Col span={24}>
             {listManga.map((manga, index) => {
-              if (index < 5) {
-                return <MangaVertical manga={manga} isDate={isDate} />;
-              }
+              return <MangaVertical manga={manga} isDate={isDate} />;
             })}
           </Col>
         </Row>
