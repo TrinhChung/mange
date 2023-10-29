@@ -300,6 +300,24 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function history(Request $request)
+    {
+        $mangas = $request->user()->viewed_chapters->load('manga')->groupBy('manga_id')->values();
+
+        $mangas = $mangas->map(function ($manga) {
+            $latest = $manga->last();
+            unset($latest->folder);
+
+            return $latest;
+        });
+
+        return response()->json([
+            'data' => array_values($mangas->sortByDesc('pivot.created_at')->toArray()),
+            'success' => 1,
+            'message' => 'Lịch sử đọc truyện đã được lấy',
+        ]);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | HELPER

@@ -89,6 +89,7 @@ Route::prefix('me')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [UserController::class, 'me']);
     Route::patch('/', [UserController::class, 'patchMe']);
     Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
+    Route::get('/history', [UserController::class, 'history']);
 });
 
 Route::prefix('users')->middleware('auth:sanctum')->group(function () {
