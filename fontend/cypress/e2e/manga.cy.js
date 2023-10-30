@@ -34,7 +34,15 @@ describe('Spec Xem chi tiết truyện', () => {
   });
 
   it('Hiện thông báo khi truy cập vào url xem chi tiết truyện của 1 truyện không tồn tại', () => {
+    cy.intercept('GET', 'http://localhost:8000/api/mangas/123456789', {
+      statusCode: 404,
+      body: {
+        success: 0,
+        message: 'Không tìm thấy dữ liệu',
+      },
+    }).as('manga-123456789');
     cy.visit('http://localhost:3000/detail-manga/123456789');
+    cy.wait('@manga-123456789');
     cy.contains('Không tìm thấy dữ liệu');
   });
 
