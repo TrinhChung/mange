@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class Chapter extends JsonResource
 {
@@ -22,7 +23,12 @@ class Chapter extends JsonResource
             'images' => $this->amount > 0 ? array_map(function ($value) {
                 return 'https://bachnguyencoder.id.vn/images/'.$this->folder.$value.'.jpg';
             }, range(0, $this->amount - 1)) : [],
-            'manga' => $this->manga,
+            'manga' => (function () {
+                $manga = $this->manga->toArray();
+                $manga['slug'] = Str::slug($manga['name']);
+
+                return $manga;
+            })(),
         ];
     }
 }

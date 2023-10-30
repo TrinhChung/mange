@@ -307,6 +307,7 @@ class UserController extends Controller
         $mangas = $mangas->map(function ($manga) {
             $latest = $manga->last();
             unset($latest->folder);
+            $latest['manga']['slug'] = Str::slug($latest['manga']['name']);
 
             return $latest;
         });
