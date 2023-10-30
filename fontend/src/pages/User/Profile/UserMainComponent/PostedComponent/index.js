@@ -25,8 +25,6 @@ const PostedComponent = () => {
     searchParams.get('userSearchBar') ? searchParams.get('userSearchBar') : ''
   );
 
-  console.log(key);
-
   return (
     <Row className="box-content">
       <Col

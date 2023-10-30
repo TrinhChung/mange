@@ -25,7 +25,6 @@ const Login = () => {
       const res = await loginService(data);
       if (res.data && res.data.user && res.data.token) {
         toast.success('Đăng nhập thành công!', 2);
-        console.log(res.data.token);
         localStorage.setItem('accessToken', JSON.stringify(res.data.token));
         localStorage.setItem('authUser', JSON.stringify(res.data.user));
         setAuthUser(res.data.user);

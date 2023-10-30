@@ -28,17 +28,17 @@ function App() {
     });
 
     window.Echo.connector.socket.on('connect', function () {
-      console.log('connect success');
+      // console.log('connect success');
     });
 
     window.Echo.connector.socket.on('disconnect', function () {
-      console.log('disconnected');
+      // console.log('disconnected');
     });
 
     window.Echo.channel('laravel_database_my-channel').listen(
       '.my-event',
       (e) => {
-        console.log(e);
+        // console.log(e);
       }
     );
   }, []);

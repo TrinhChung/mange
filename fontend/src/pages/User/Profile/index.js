@@ -41,7 +41,6 @@ const menu = [
 const Profile = () => {
   const location = useLocation();
   const pathname = location.pathname;
-  console.log(pathname);
 
   return (
     <Row style={{ justifyContent: 'center', marginTop: 20 }}>

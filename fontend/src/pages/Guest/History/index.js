@@ -4,8 +4,6 @@ import TopManga from '../home/TopManga';
 import { useContext, useState, useEffect } from 'react';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import Manga from '../../../components/manga/Manga';
-import { getHistories } from '../../../services/User/index';
-import { buildHistories } from '../../../utils/commonFunc';
 
 const History = () => {
   const { histories, historiesAccount } = useContext(MangaContext);

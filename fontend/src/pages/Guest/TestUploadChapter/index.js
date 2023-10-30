@@ -84,7 +84,6 @@ const TestUploadChapter = () => {
       setChapter(null);
       await getChapter();
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -100,7 +99,6 @@ const TestUploadChapter = () => {
       setChapter(null);
       await getChapter();
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -140,8 +138,6 @@ const TestUploadChapter = () => {
       }
     }
     setImageOrder(newImageOrder);
-
-    console.log(newImageOrder);
   };
 
   const revertChanges = () => {

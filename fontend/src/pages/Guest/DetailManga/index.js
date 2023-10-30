@@ -24,7 +24,6 @@ const DetailManga = () => {
         setManga(data.data);
       }
     } catch (error) {
-      console.log(error);
       toast.error('Không tìm thấy dữ liệu');
       navigate('/');
     } finally {

@@ -23,9 +23,6 @@ const FormChapter = () => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
-
-  console.log(uploadedImages, 'uploadedImages');
-
   return (
     <Form
       name="basic"

@@ -4,7 +4,7 @@ export const buildHistories = (histories) => {
       id: history?.id,
       chapter: history?.name,
       name: history?.manga?.name,
-      time: history?.created_at,
+      time: new Date(history?.created_at),
       thumbnail: history?.manga?.thumbnail,
       slug: history?.manga?.slug,
     };

@@ -44,7 +44,7 @@ const DetailChapter = () => {
 
   const saveHistories = ({
     name = '',
-    time = null,
+    time = new Date(),
     thumbnail = '',
     id = 0,
     chapter = 0,
@@ -53,18 +53,21 @@ const DetailChapter = () => {
       localStorage.getItem('histories') !== null
         ? JSON.parse(localStorage.getItem('histories'))
         : [];
-    if (histories.length > 10) {
-      histories.shift();
-    }
+
     const manga = { name, time, thumbnail, id, chapter };
-    if (histories.findIndex((history) => history?.id === id) === -1) {
+    const i = histories.findIndex((history) => history?.id == id);
+
+    if (i === -1) {
+      if (histories.length >= 10) {
+        histories.shift();
+      }
       histories.unshift(manga);
       localStorage.setItem('histories', JSON.stringify(histories));
       setHistories(histories);
     } else {
-      let i = histories.findIndex((history) => history?.id === id);
       histories[i].time = time;
       let newHistories = histories.sort((a, b) => {
+        console.log(a.time, b.time);
         if (a.time.valueOf() < b.time.valueOf()) {
           return 1;
         }
@@ -73,6 +76,7 @@ const DetailChapter = () => {
         }
         return 0;
       });
+      console.log(newHistories);
       localStorage.setItem('histories', JSON.stringify(newHistories));
       setHistories(newHistories);
     }
@@ -84,7 +88,7 @@ const DetailChapter = () => {
 
   useEffect(() => {
     const handleScroll = (event) => {
-      console.log(window.scrollY);
+      // console.log(window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll);

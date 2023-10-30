@@ -16,7 +16,7 @@ const TopManga = ({ manga = [] }) => {
   ];
 
   const onChange = () => {
-    console.log('change');
+    // console.log('change');
   };
 
   return (
