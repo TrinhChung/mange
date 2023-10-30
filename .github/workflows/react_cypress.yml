@@ -26,3 +26,12 @@ jobs:
           start: npm start
           wait-on: "http://localhost:3000"
           wait-on-timeout: 300
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload frontend coverage artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend_coverage
+          path: fontend/coverage/
