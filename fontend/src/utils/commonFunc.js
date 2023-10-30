@@ -6,6 +6,7 @@ export const buildHistories = (histories) => {
       name: history?.manga?.name,
       time: history?.created_at,
       thumbnail: history?.manga?.thumbnail,
+      slug: history?.manga?.slug,
     };
   });
 };

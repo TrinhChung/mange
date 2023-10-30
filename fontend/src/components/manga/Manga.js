@@ -18,6 +18,7 @@ const Manga = ({ manga = null }) => {
               navigate(`/detail-manga/${manga.id}`);
             }
           }}
+          className="box-hover"
         />
       </Row>
       <Row

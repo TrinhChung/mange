@@ -3,10 +3,11 @@ import React from 'react';
 import { StarFilled } from '@ant-design/icons';
 import moment from 'moment';
 import { hostImg } from '../../const/index';
+import { useNavigate } from 'react-router-dom';
 
 const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
   const colors = ['#F54558', '#9F73C1', '#45B3B4', '#8A8A8A', 'orange'];
-
+  const navigate = useNavigate();
   return (
     <Row
       style={{
@@ -43,6 +44,10 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
             height={70}
             src={manga ? hostImg + manga?.thumbnail : null}
             preview={false}
+            className="box-hover"
+            onClick={() => {
+              navigate(`/live-manga/${manga?.slug}/${manga?.id}`);
+            }}
           />
           <Col style={{ paddingLeft: 20 }}>
             <Row

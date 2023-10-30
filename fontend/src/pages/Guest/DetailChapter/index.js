@@ -34,6 +34,7 @@ const DetailChapter = () => {
           id: id,
           name: data?.data?.manga?.name,
           thumbnail: data?.data?.manga?.thumbnail,
+          slug: data?.data?.manga?.slug,
           time: new Date(),
           chapter: data?.data?.name,
         });
