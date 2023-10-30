@@ -22,12 +22,7 @@ class Chapter extends JsonResource
             'images' => $this->amount > 0 ? array_map(function ($value) {
                 return 'https://bachnguyencoder.id.vn/images/'.$this->folder.$value.'.jpg';
             }, range(0, $this->amount - 1)) : [],
-            'manga' => (function () {
-                $manga = $this->manga->toArray();
-                $manga['thumbnail'] = 'https://bachnguyencoder.id.vn/images/'.$manga['thumbnail'];
-
-                return $manga;
-            })(),
+            'manga' => $this->manga,
         ];
     }
 }
