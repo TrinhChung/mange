@@ -14,6 +14,7 @@ const DetailChapter = () => {
   const { name, id } = useParams();
   const chapterElement = useRef(null);
   const navigate = useNavigate();
+
   const { setHistories } = useContext(MangaContext);
 
   const fetchDetailChapter = async (id) => {

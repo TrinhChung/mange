@@ -1,4 +1,3 @@
-import { hostImg } from '../const/index';
 export const buildHistories = (histories) => {
   return histories.map((history) => {
     return {
@@ -6,7 +5,7 @@ export const buildHistories = (histories) => {
       chapter: history?.name,
       name: history?.manga?.name,
       time: history?.created_at,
-      thumbnail: hostImg + history?.manga?.thumbnail,
+      thumbnail: history?.manga?.thumbnail,
     };
   });
 };

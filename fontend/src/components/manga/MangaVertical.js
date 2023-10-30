@@ -2,6 +2,7 @@ import { Col, Image, Row } from 'antd';
 import React from 'react';
 import { StarFilled } from '@ant-design/icons';
 import moment from 'moment';
+import { hostImg } from '../../const/index';
 
 const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
   const colors = ['#F54558', '#9F73C1', '#45B3B4', '#8A8A8A', 'orange'];
@@ -40,7 +41,7 @@ const MangaVertical = ({ manga = {}, isDate = true, index = null }) => {
           <Image
             width={50}
             height={70}
-            src={manga ? manga?.thumbnail : null}
+            src={manga ? hostImg + manga?.thumbnail : null}
             preview={false}
           />
           <Col style={{ paddingLeft: 20 }}>

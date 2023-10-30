@@ -8,6 +8,7 @@ import DetailChapter from './DetailChapter';
 import Auth from '../Auth';
 import TestUploadChapter from './TestUploadChapter';
 import Profile from '../User/Profile';
+import History from './History';
 
 const Guest = () => {
   const items = [
@@ -16,8 +17,8 @@ const Guest = () => {
       key: 'home',
     },
     {
-      label: <LinkCustom to={'/job'} label="Mới ra mắt" />,
-      key: 'job',
+      label: <LinkCustom to={'/history'} label="Lịch sử" />,
+      key: 'history',
     },
     {
       label: <LinkCustom to={'/company'} label="Phổ biến" />,
@@ -50,7 +51,7 @@ const Guest = () => {
         element={wrapLayout(<TestUploadChapter />)}
       />
       <Route path="/auth/*" element={<Auth />} />
-      <Route path="/profile/*" element={wrapLayout(<Profile />)} />
+      <Route path="/history" element={wrapLayout(<History />)} />
       <Route path="/*" element={wrapLayout(<div>Chua dinh nghia</div>)} />
     </Routes>
   );
