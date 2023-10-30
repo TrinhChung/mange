@@ -12,7 +12,7 @@ describe('Spec màn hình chính', () => {
     cy.visit('http://localhost:3000');
   });
 
-  it('Vào được trang chủ', () => { });
+  it('Vào được trang chủ', () => {});
 
   it('Có title', () => {
     cy.title().should('equal', 'Mange');

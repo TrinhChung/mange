@@ -4,23 +4,32 @@ import Overview from './Overview';
 import Content from './Content';
 import Chapter from './Chapter';
 import ListMangaSide from '../../../components/manga/ListMangaSide';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getMangaDetail } from '../../../services/Guest/index';
 import { MangaContext } from '../../../providers/mangaProvider/index';
+import { toast } from 'react-toastify';
 
 const DetailManga = () => {
   const { histories } = useContext(MangaContext);
   const [manga, setManga] = useState({});
   const [loading, setLoading] = useState(true);
   const { name } = useParams();
+  const navigate = useNavigate();
 
   const fetchDetailManga = async (id) => {
-    setLoading(true);
-    const data = await getMangaDetail(id);
-    if (data && data.status === 200) {
-      setManga(data.data);
+    try {
+      setLoading(true);
+      const data = await getMangaDetail(id);
+      if (data && data.status === 200) {
+        setManga(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Không tìm thấy dữ liệu');
+      navigate('/');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
