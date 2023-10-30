@@ -1,0 +1,22 @@
+{
+    "success": 1,
+    "message": "Đăng nhập thành công",
+    "data": {
+        "user": {
+            "id": 1,
+            "username": "admin",
+            "email": "volkman.niko@example.com",
+            "avatar": "https:\/\/via.placeholder.com\/640x480.png\/000099?text=quas",
+            "email_verified_at": "2023-10-09T03:25:42.000000Z",
+            "role": "admin",
+            "active": 1,
+            "activated_at": "2023-10-09T03:25:42.000000Z",
+            "active_token": "5mha28fT6dJlvb93Nd3Y",
+            "reset_token": null,
+            "reset_sent_at": null,
+            "created_at": "2023-10-09T03:25:42.000000Z",
+            "updated_at": "2023-10-09T03:25:42.000000Z"
+        },
+        "token": "14|GbbMNI5Dh9T29qqdAlVvV9tVX5ce5azxGnScmgB9c419b0fd"
+    }
+}

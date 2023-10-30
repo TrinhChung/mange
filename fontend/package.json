@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://mange.uetvnu.id.vn/",
   "dependencies": {
+    "@cypress/instrument-cra": "^1.4.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -26,14 +27,16 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts -r @cypress/instrument-cra start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "format": "npx prettier . --write",
-    "cypress:open": "cypress open",
+    "cy:open": "cypress open",
+    "cy:open:e2e": "cypress open --e2e --browser=electron",
+    "cy:open:component": "cypress open --component --browser=electron",
     "cy:run": "cypress run"
   },
   "eslintConfig": {
@@ -56,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.0-placeholder-for-preset-env.2",
+    "@cypress/code-coverage": "^3.12.6",
     "cypress": "^13.3.0",
     "prettier": "^3.0.3"
   }

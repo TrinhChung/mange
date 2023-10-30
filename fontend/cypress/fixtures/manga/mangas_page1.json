@@ -1,0 +1,1498 @@
+{
+    "success": 1,
+    "message": "Lấy danh sách truyện thành công!",
+    "links": {
+        "first": "https://api.mange.uetvnu.id.vn/api/mangas?page=1",
+        "last": "https://api.mange.uetvnu.id.vn/api/mangas?page=3",
+        "prev": null,
+        "next": "https://api.mange.uetvnu.id.vn/api/mangas?page=2"
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 3,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://api.mange.uetvnu.id.vn/api/mangas?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": "https://api.mange.uetvnu.id.vn/api/mangas?page=2",
+                "label": "2",
+                "active": false
+            },
+            {
+                "url": "https://api.mange.uetvnu.id.vn/api/mangas?page=3",
+                "label": "3",
+                "active": false
+            },
+            {
+                "url": "https://api.mange.uetvnu.id.vn/api/mangas?page=2",
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "https://api.mange.uetvnu.id.vn/api/mangas",
+        "per_page": 30,
+        "to": 30,
+        "total": 82
+    },
+    "data": [
+        {
+            "id": 21,
+            "name": "Chú Thuật Hồi Chiến",
+            "status": 0,
+            "slug": "chu-thuat-hoi-chien",
+            "thumbnail": "chu-thuat-hoi-chien/thumbnail.jpg",
+            "vote_score": "2.8000",
+            "follow_count": 0,
+            "view_count": 43,
+            "comments_count": 0,
+            "authors": [
+                "Akutami Gege"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 18186,
+                    "name": "Chapter 900: truyen chappp 900",
+                    "folder": "chu-thuat-hoi-chien/900/",
+                    "amount": 13
+                },
+                {
+                    "id": 4135,
+                    "name": "Chapter 235",
+                    "folder": "chu-thuat-hoi-chien/235/",
+                    "amount": 21
+                },
+                {
+                    "id": 4134,
+                    "name": "Chapter 234",
+                    "folder": "chu-thuat-hoi-chien/234/",
+                    "amount": 22
+                }
+            ],
+            "categories": [
+                "Action",
+                "Fantasy",
+                "Manga",
+                "Shounen",
+                "Supernatural"
+            ],
+            "othernames": [
+                {
+                    "id": 19,
+                    "manga_id": 21,
+                    "name": "Vật Thể Bị Nguyền Rủa",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 67,
+            "name": "Gia Đình Điệp Viên",
+            "status": 0,
+            "slug": "gia-dinh-diep-vien",
+            "thumbnail": "gia-dinh-diep-vien/thumbnail.jpg",
+            "vote_score": "3.0600",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "Endou Tatsuya"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12693,
+                    "name": "Chapter 87",
+                    "folder": "gia-dinh-diep-vien/87/",
+                    "amount": 15
+                },
+                {
+                    "id": 12692,
+                    "name": "Chapter 86",
+                    "folder": "gia-dinh-diep-vien/86/",
+                    "amount": 25
+                },
+                {
+                    "id": 12691,
+                    "name": "Chapter 85",
+                    "folder": "gia-dinh-diep-vien/85/",
+                    "amount": 20
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Manga",
+                "Romance",
+                "Shounen"
+            ],
+            "othernames": [
+                {
+                    "id": 72,
+                    "manga_id": 67,
+                    "name": "Spy x Family",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 66,
+            "name": "Kimi wa Yakamashi Tojite yo Kuchi wo!",
+            "status": 0,
+            "slug": "kimi-wa-yakamashi-tojite-yo-kuchi-wo",
+            "thumbnail": "kimi-wa-yakamashi-tojite-yo-kuchi-wo/thumbnail.jpg",
+            "vote_score": "2.7400",
+            "follow_count": 0,
+            "view_count": 3,
+            "comments_count": 0,
+            "authors": [
+                "Aldehyde",
+                "Shunpei Morita"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12587,
+                    "name": "Chapter 33.5",
+                    "folder": "kimi-wa-yakamashi-tojite-yo-kuchi-wo/33.5/",
+                    "amount": 2
+                },
+                {
+                    "id": 12586,
+                    "name": "Chapter 33",
+                    "folder": "kimi-wa-yakamashi-tojite-yo-kuchi-wo/33/",
+                    "amount": 15
+                },
+                {
+                    "id": 12585,
+                    "name": "Chapter 32.5",
+                    "folder": "kimi-wa-yakamashi-tojite-yo-kuchi-wo/32.5/",
+                    "amount": 2
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Romance",
+                "School Life",
+                "Slice of Life"
+            ],
+            "othernames": [
+                {
+                    "id": 68,
+                    "manga_id": 66,
+                    "name": "You Talk Too Much",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 69,
+                    "manga_id": 66,
+                    "name": "So Just Shut It Already!",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 70,
+                    "manga_id": 66,
+                    "name": "You're Too Noisy",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 71,
+                    "manga_id": 66,
+                    "name": "So Just Shut It Already!",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 80,
+            "name": "Nhất quỷ nhì ma, thứ ba Takagi",
+            "status": 0,
+            "slug": "nhat-quy-nhi-ma-thu-ba-takagi",
+            "thumbnail": "nhat-quy-nhi-ma-thu-ba-takagi/thumbnail.jpg",
+            "vote_score": "2.7400",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "Yamamoto Souichirou"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 17883,
+                    "name": "Chapter 172",
+                    "folder": "nhat-quy-nhi-ma-thu-ba-takagi/172/",
+                    "amount": 15
+                },
+                {
+                    "id": 17882,
+                    "name": "Chapter 171",
+                    "folder": "nhat-quy-nhi-ma-thu-ba-takagi/171/",
+                    "amount": 16
+                },
+                {
+                    "id": 17881,
+                    "name": "Chapter 170",
+                    "folder": "nhat-quy-nhi-ma-thu-ba-takagi/170/",
+                    "amount": 17
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Romance",
+                "School Life",
+                "Shounen",
+                "Slice of Life"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 76,
+            "name": "Thiên Tài Bóng Đá Ashito",
+            "status": 0,
+            "slug": "thien-tai-bong-da-ashito",
+            "thumbnail": "thien-tai-bong-da-ashito/thumbnail.jpg",
+            "vote_score": "2.7300",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "Kobayashi Yuugo"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 16864,
+                    "name": "Chapter 336",
+                    "folder": "thien-tai-bong-da-ashito/336/",
+                    "amount": 19
+                },
+                {
+                    "id": 16863,
+                    "name": "Chapter 335",
+                    "folder": "thien-tai-bong-da-ashito/335/",
+                    "amount": 20
+                },
+                {
+                    "id": 16862,
+                    "name": "Chapter 334",
+                    "folder": "thien-tai-bong-da-ashito/334/",
+                    "amount": 18
+                }
+            ],
+            "categories": [
+                "Action",
+                "Manga",
+                "School Life",
+                "Seinen",
+                "Sports"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 61,
+            "name": "Inu Yashiki",
+            "status": 1,
+            "slug": "inu-yashiki",
+            "thumbnail": "inu-yashiki/thumbnail.jpg",
+            "vote_score": "2.7800",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "Oku Hiroya"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12075,
+                    "name": "Chapter 85.1",
+                    "folder": "inu-yashiki/85.1/",
+                    "amount": 32
+                },
+                {
+                    "id": 12074,
+                    "name": "Chapter 85",
+                    "folder": "inu-yashiki/85/",
+                    "amount": 19
+                },
+                {
+                    "id": 12073,
+                    "name": "Chapter 84",
+                    "folder": "inu-yashiki/84/",
+                    "amount": 17
+                }
+            ],
+            "categories": [
+                "Action",
+                "Drama",
+                "Horror",
+                "Psychological",
+                "Sci-fi",
+                "Seinen"
+            ],
+            "othernames": [
+                {
+                    "id": 63,
+                    "manga_id": 61,
+                    "name": "InuYashiki",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 64,
+                    "manga_id": 61,
+                    "name": "Lão già khốn khổ",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 79,
+            "name": "Dr.Stone - Hồi Sinh Thế Giới",
+            "status": 1,
+            "slug": "drstone-hoi-sinh-the-gioi",
+            "thumbnail": "drstone-hoi-sinh-the-gioi/thumbnail.jpg",
+            "vote_score": "2.9600",
+            "follow_count": 0,
+            "view_count": 2,
+            "comments_count": 0,
+            "authors": [
+                "Inagaki Riichiro"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 17699,
+                    "name": "Chapter 232.6: Ngoại Truyện 2",
+                    "folder": "drstone-hoi-sinh-the-gioi/232.6/",
+                    "amount": 48
+                },
+                {
+                    "id": 17698,
+                    "name": "Chapter 232.5: Ngoại Truyện 1",
+                    "folder": "drstone-hoi-sinh-the-gioi/232.5/",
+                    "amount": 13
+                },
+                {
+                    "id": 17697,
+                    "name": "Chapter 232: END",
+                    "folder": "drstone-hoi-sinh-the-gioi/232/",
+                    "amount": 31
+                }
+            ],
+            "categories": [
+                "Action",
+                "Manga",
+                "Shounen",
+                "Supernatural"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 82,
+            "name": "New Game!",
+            "status": 0,
+            "slug": "new-game",
+            "thumbnail": "new-game/thumbnail.jpg",
+            "vote_score": "2.9100",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "TOKUNOU Shoutarou"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 18185,
+                    "name": "Chapter 135",
+                    "folder": "new-game/135/",
+                    "amount": 10
+                },
+                {
+                    "id": 18184,
+                    "name": "Chapter 134",
+                    "folder": "new-game/134/",
+                    "amount": 10
+                },
+                {
+                    "id": 18183,
+                    "name": "Chapter 133",
+                    "folder": "new-game/133/",
+                    "amount": 10
+                }
+            ],
+            "categories": [
+                "Manga",
+                "Seinen",
+                "Slice of Life"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 35,
+            "name": "Khóa Chặt Cửa Nào Suzume",
+            "status": 0,
+            "slug": "khoa-chat-cua-nao-suzume",
+            "thumbnail": "khoa-chat-cua-nao-suzume/thumbnail.jpg",
+            "vote_score": "3.0200",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "Shinkai Makoto"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 9386,
+                    "name": "Chapter 10",
+                    "folder": "khoa-chat-cua-nao-suzume/10/",
+                    "amount": 28
+                },
+                {
+                    "id": 9385,
+                    "name": "Chapter 9",
+                    "folder": "khoa-chat-cua-nao-suzume/9/",
+                    "amount": 33
+                },
+                {
+                    "id": 9384,
+                    "name": "Chapter 8",
+                    "folder": "khoa-chat-cua-nao-suzume/8/",
+                    "amount": 38
+                }
+            ],
+            "categories": [
+                "Adventure",
+                "Comedy",
+                "Drama",
+                "Fantasy",
+                "Manga",
+                "Romance",
+                "Seinen"
+            ],
+            "othernames": [
+                {
+                    "id": 33,
+                    "manga_id": 35,
+                    "name": "Suzume no Tojimari",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 34,
+                    "manga_id": 35,
+                    "name": "Suzume's Locking Up",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 35,
+                    "manga_id": 35,
+                    "name": "Suzume’s Door-Locking",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 81,
+            "name": "Vùng Đất Ma Pháp",
+            "status": 0,
+            "slug": "vung-dat-ma-phap",
+            "thumbnail": "vung-dat-ma-phap/thumbnail.jpg",
+            "vote_score": "3.2400",
+            "follow_count": 0,
+            "view_count": 1,
+            "comments_count": 0,
+            "authors": [
+                "Kamachi Kazuma"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 18041,
+                    "name": "Chapter 143",
+                    "folder": "vung-dat-ma-phap/143/",
+                    "amount": 24
+                },
+                {
+                    "id": 18040,
+                    "name": "Chapter 142.5",
+                    "folder": "vung-dat-ma-phap/142.5/",
+                    "amount": 27
+                },
+                {
+                    "id": 18039,
+                    "name": "Chapter 142",
+                    "folder": "vung-dat-ma-phap/142/",
+                    "amount": 13
+                }
+            ],
+            "categories": [
+                "Action",
+                "Comedy",
+                "Manga"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 78,
+            "name": "Đối Phương Phải Tỏ Tình Trước",
+            "status": 1,
+            "slug": "doi-phuong-phai-to-tinh-truoc",
+            "thumbnail": "doi-phuong-phai-to-tinh-truoc/thumbnail.jpg",
+            "vote_score": "2.9400",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "AKASAKA Aka"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 17464,
+                    "name": "Chapter 281.7: Phụ lục Vol 26",
+                    "folder": "doi-phuong-phai-to-tinh-truoc/281.7/",
+                    "amount": 11
+                },
+                {
+                    "id": 17463,
+                    "name": "Chapter 281.6: Hồ sơ về Ai",
+                    "folder": "doi-phuong-phai-to-tinh-truoc/281.6/",
+                    "amount": 6
+                },
+                {
+                    "id": 17462,
+                    "name": "Chapter 281.5: Hồ sơ về Chika",
+                    "folder": "doi-phuong-phai-to-tinh-truoc/281.5/",
+                    "amount": 6
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Psychological",
+                "Romance",
+                "School Life",
+                "Seinen"
+            ],
+            "othernames": [
+                {
+                    "id": 78,
+                    "manga_id": 78,
+                    "name": "Kaguya Wants to be Confessed to",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 79,
+                    "manga_id": 78,
+                    "name": "Kaguya Wants to be Confessed To: The Geniuses' War of Love and Brains",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 77,
+            "name": "Biệt Đội Lính Cứu Hỏa",
+            "status": 1,
+            "slug": "biet-doi-linh-cuu-hoa",
+            "thumbnail": "biet-doi-linh-cuu-hoa/thumbnail.jpg",
+            "vote_score": "2.8300",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Ookubo Atsushi"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 17168,
+                    "name": "Chapter 304",
+                    "folder": "biet-doi-linh-cuu-hoa/304/",
+                    "amount": 24
+                },
+                {
+                    "id": 17167,
+                    "name": "Chapter 303",
+                    "folder": "biet-doi-linh-cuu-hoa/303/",
+                    "amount": 17
+                },
+                {
+                    "id": 17166,
+                    "name": "Chapter 302",
+                    "folder": "biet-doi-linh-cuu-hoa/302/",
+                    "amount": 15
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adult",
+                "Adventure",
+                "Fantasy",
+                "Manga",
+                "Mature",
+                "Supernatural"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 75,
+            "name": "Vua trò chơi Full Màu",
+            "status": 0,
+            "slug": "vua-tro-choi-full-mau",
+            "thumbnail": "vua-tro-choi-full-mau/thumbnail.jpg",
+            "vote_score": "2.9300",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 16528,
+                    "name": "Chapter 342: Canh bạc cuối cùng!!",
+                    "folder": "vua-tro-choi-full-mau/342/",
+                    "amount": 18
+                },
+                {
+                    "id": 16527,
+                    "name": "Chapter 341: VS người bạn mạnh nhất!!",
+                    "folder": "vua-tro-choi-full-mau/341/",
+                    "amount": 19
+                },
+                {
+                    "id": 16526,
+                    "name": "Chapter 340: Cảm xúc mạnh mẽ!!",
+                    "folder": "vua-tro-choi-full-mau/340/",
+                    "amount": 16
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adventure",
+                "Comedy",
+                "Fantasy",
+                "Manga",
+                "Shounen",
+                "Truyện Màu"
+            ],
+            "othernames": [
+                {
+                    "id": 77,
+                    "manga_id": 75,
+                    "name": "YuGi-Oh! Full Color Edition",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 74,
+            "name": "Vua Bóng Chuyền",
+            "status": 0,
+            "slug": "vua-bong-chuyen",
+            "thumbnail": "vua-bong-chuyen/thumbnail.jpg",
+            "vote_score": "2.9900",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Furudate Haruichi"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 16186,
+                    "name": "Chapter 373",
+                    "folder": "vua-bong-chuyen/373/",
+                    "amount": 21
+                },
+                {
+                    "id": 16185,
+                    "name": "Chapter 372",
+                    "folder": "vua-bong-chuyen/372/",
+                    "amount": 19
+                },
+                {
+                    "id": 16184,
+                    "name": "Chapter 371",
+                    "folder": "vua-bong-chuyen/371/",
+                    "amount": 21
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Drama",
+                "Manga",
+                "School Life",
+                "Shounen",
+                "Supernatural"
+            ],
+            "othernames": [
+                {
+                    "id": 75,
+                    "manga_id": 74,
+                    "name": "Haikyuu!!",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 76,
+                    "manga_id": 74,
+                    "name": "Furudate Haruichi",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 73,
+            "name": "Black Clover - Pháp sư không phép thuật",
+            "status": 0,
+            "slug": "black-clover-phap-su-khong-phep-thuat",
+            "thumbnail": "black-clover-phap-su-khong-phep-thuat/thumbnail.jpg",
+            "vote_score": "3.1600",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Tabata Yuuki"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 15823,
+                    "name": "Chapter 368",
+                    "folder": "black-clover-phap-su-khong-phep-thuat/368/",
+                    "amount": 14
+                },
+                {
+                    "id": 15822,
+                    "name": "Chapter 367",
+                    "folder": "black-clover-phap-su-khong-phep-thuat/367/",
+                    "amount": 12
+                },
+                {
+                    "id": 15821,
+                    "name": "Chapter 366",
+                    "folder": "black-clover-phap-su-khong-phep-thuat/366/",
+                    "amount": 13
+                }
+            ],
+            "categories": [
+                "Action",
+                "Fantasy",
+                "Manga",
+                "Shounen"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 72,
+            "name": "Clover",
+            "status": 0,
+            "slug": "clover",
+            "thumbnail": "clover/thumbnail.jpg",
+            "vote_score": "2.9400",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 15454,
+                    "name": "Chapter 402",
+                    "folder": "clover/402/",
+                    "amount": 46
+                },
+                {
+                    "id": 15453,
+                    "name": "Chapter 401",
+                    "folder": "clover/401/",
+                    "amount": 22
+                },
+                {
+                    "id": 15452,
+                    "name": "Chapter 400",
+                    "folder": "clover/400/",
+                    "amount": 19
+                }
+            ],
+            "categories": [
+                "Action",
+                "Comedy",
+                "Manga",
+                "School Life"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 71,
+            "name": "Gintama - Linh hồn bạc",
+            "status": 0,
+            "slug": "gintama-linh-hon-bac",
+            "thumbnail": "gintama-linh-hon-bac/thumbnail.jpg",
+            "vote_score": "2.7900",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Hideaki Sorachi"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 15052,
+                    "name": "Chapter 699",
+                    "folder": "gintama-linh-hon-bac/699/",
+                    "amount": 54
+                },
+                {
+                    "id": 15051,
+                    "name": "Chapter 698: Raw",
+                    "folder": "gintama-linh-hon-bac/698/",
+                    "amount": 23
+                },
+                {
+                    "id": 15050,
+                    "name": "Chapter 697: Raw",
+                    "folder": "gintama-linh-hon-bac/697/",
+                    "amount": 18
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adventure",
+                "Manga",
+                "Martial Arts"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 70,
+            "name": "Kingdom - Vương Giả Thiên Hạ",
+            "status": 0,
+            "slug": "kingdom-vuong-gia-thien-ha",
+            "thumbnail": "kingdom-vuong-gia-thien-ha/thumbnail.jpg",
+            "vote_score": "3.1100",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "HARA Yasuhisa"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 14366,
+                    "name": "Chapter 769",
+                    "folder": "kingdom-vuong-gia-thien-ha/769/",
+                    "amount": 21
+                },
+                {
+                    "id": 14365,
+                    "name": "Chapter 768",
+                    "folder": "kingdom-vuong-gia-thien-ha/768/",
+                    "amount": 23
+                },
+                {
+                    "id": 14364,
+                    "name": "Chapter 767",
+                    "folder": "kingdom-vuong-gia-thien-ha/767/",
+                    "amount": 22
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adventure",
+                "Drama",
+                "Historical",
+                "Manga",
+                "Seinen"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 69,
+            "name": "Chú mèo kỳ diệu Kyuu-chan",
+            "status": 0,
+            "slug": "chu-meo-ky-dieu-kyuu-chan",
+            "thumbnail": "chu-meo-ky-dieu-kyuu-chan/thumbnail.jpg",
+            "vote_score": "2.8500",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 13595,
+                    "name": "Chapter 800.5",
+                    "folder": "chu-meo-ky-dieu-kyuu-chan/800.5/",
+                    "amount": 16
+                },
+                {
+                    "id": 13594,
+                    "name": "Chapter 800",
+                    "folder": "chu-meo-ky-dieu-kyuu-chan/800/",
+                    "amount": 22
+                },
+                {
+                    "id": 13593,
+                    "name": "Chapter 799",
+                    "folder": "chu-meo-ky-dieu-kyuu-chan/799/",
+                    "amount": 3
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Romance"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 68,
+            "name": "Truy Tìm Ngọc Rồng Siêu Cấp",
+            "status": 0,
+            "slug": "truy-tim-ngoc-rong-sieu-cap",
+            "thumbnail": "truy-tim-ngoc-rong-sieu-cap/thumbnail.jpg",
+            "vote_score": "3.0200",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12789,
+                    "name": "Chapter 96",
+                    "folder": "truy-tim-ngoc-rong-sieu-cap/96/",
+                    "amount": 48
+                },
+                {
+                    "id": 12788,
+                    "name": "Chapter 95",
+                    "folder": "truy-tim-ngoc-rong-sieu-cap/95/",
+                    "amount": 51
+                },
+                {
+                    "id": 12787,
+                    "name": "Chapter 94",
+                    "folder": "truy-tim-ngoc-rong-sieu-cap/94/",
+                    "amount": 48
+                }
+            ],
+            "categories": [
+                "Action",
+                "Manga",
+                "Martial Arts",
+                "Shounen",
+                "Supernatural"
+            ],
+            "othernames": [
+                {
+                    "id": 73,
+                    "manga_id": 68,
+                    "name": "7 ( Bảy ) Viên Ngọc Rồng",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 74,
+                    "manga_id": 68,
+                    "name": "Dragon ball Super",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 64,
+            "name": "The New Gate",
+            "status": 0,
+            "slug": "the-new-gate",
+            "thumbnail": "the-new-gate/thumbnail.jpg",
+            "vote_score": "2.8400",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12509,
+                    "name": "Chapter 92",
+                    "folder": "the-new-gate/92/",
+                    "amount": 31
+                },
+                {
+                    "id": 12508,
+                    "name": "Chapter 91",
+                    "folder": "the-new-gate/91/",
+                    "amount": 27
+                },
+                {
+                    "id": 12507,
+                    "name": "Chapter 90",
+                    "folder": "the-new-gate/90/",
+                    "amount": 23
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adventure",
+                "Chuyển Sinh",
+                "Fantasy",
+                "Manga"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 65,
+            "name": "Ochikazuki Ni Naritai",
+            "status": 0,
+            "slug": "ochikazuki-ni-naritai",
+            "thumbnail": "ochikazuki-ni-naritai/thumbnail.jpg",
+            "vote_score": "3.0000",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Akitaka"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12521,
+                    "name": "Chapter 12",
+                    "folder": "ochikazuki-ni-naritai/12/",
+                    "amount": 5
+                },
+                {
+                    "id": 12520,
+                    "name": "Chapter 11",
+                    "folder": "ochikazuki-ni-naritai/11/",
+                    "amount": 5
+                },
+                {
+                    "id": 12519,
+                    "name": "Chapter 10",
+                    "folder": "ochikazuki-ni-naritai/10/",
+                    "amount": 5
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Romance",
+                "School Life",
+                "Slice of Life"
+            ],
+            "othernames": [
+                {
+                    "id": 67,
+                    "manga_id": 65,
+                    "name": "I Would Love To Get Closer To You",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 60,
+            "name": "Cô Gái Thích Lặn - Grand blue",
+            "status": 0,
+            "slug": "co-gai-thich-lan-grand-blue",
+            "thumbnail": "co-gai-thich-lan-grand-blue/thumbnail.jpg",
+            "vote_score": "2.9900",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "INOUE Kenji"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 11988,
+                    "name": "Chapter 87.3",
+                    "folder": "co-gai-thich-lan-grand-blue/87.3/",
+                    "amount": 50
+                },
+                {
+                    "id": 11987,
+                    "name": "Chapter 87",
+                    "folder": "co-gai-thich-lan-grand-blue/87/",
+                    "amount": 43
+                },
+                {
+                    "id": 11986,
+                    "name": "Chapter 86",
+                    "folder": "co-gai-thich-lan-grand-blue/86/",
+                    "amount": 36
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Ecchi",
+                "Manga",
+                "School Life",
+                "Seinen",
+                "Slice of Life"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 63,
+            "name": "Chainsaw man - Thợ Săn Quỷ",
+            "status": 0,
+            "slug": "chainsaw-man-tho-san-quy",
+            "thumbnail": "chainsaw-man-tho-san-quy/thumbnail.jpg",
+            "vote_score": "2.8800",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Fujimoto Tatsuki"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12417,
+                    "name": "Chapter 139",
+                    "folder": "chainsaw-man-tho-san-quy/139/",
+                    "amount": 18
+                },
+                {
+                    "id": 12416,
+                    "name": "Chapter 138",
+                    "folder": "chainsaw-man-tho-san-quy/138/",
+                    "amount": 20
+                },
+                {
+                    "id": 12415,
+                    "name": "Chapter 137",
+                    "folder": "chainsaw-man-tho-san-quy/137/",
+                    "amount": 18
+                }
+            ],
+            "categories": [
+                "Action",
+                "Manga",
+                "Shounen",
+                "Supernatural"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 62,
+            "name": "GTO - Great Teacher Onizuka",
+            "status": 1,
+            "slug": "gto-great-teacher-onizuka",
+            "thumbnail": "gto-great-teacher-onizuka/thumbnail.jpg",
+            "vote_score": "2.9900",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Fujisawa Tohru"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 12275,
+                    "name": "Chapter 200",
+                    "folder": "gto-great-teacher-onizuka/200/",
+                    "amount": 38
+                },
+                {
+                    "id": 12274,
+                    "name": "Chapter 199",
+                    "folder": "gto-great-teacher-onizuka/199/",
+                    "amount": 37
+                },
+                {
+                    "id": 12273,
+                    "name": "Chapter 198",
+                    "folder": "gto-great-teacher-onizuka/198/",
+                    "amount": 26
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adult",
+                "Comedy",
+                "Manga",
+                "School Life"
+            ],
+            "othernames": [
+                {
+                    "id": 65,
+                    "manga_id": 62,
+                    "name": "Great Teacher Onizuka",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 66,
+                    "manga_id": 62,
+                    "name": "Tôi đi Tìm Tôi",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 59,
+            "name": "Boku No Kokoro Yabai Yatsu",
+            "status": 0,
+            "slug": "boku-no-kokoro-yabai-yatsu",
+            "thumbnail": "boku-no-kokoro-yabai-yatsu/thumbnail.jpg",
+            "vote_score": "3.0100",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Goru",
+                "Sakurai Norio"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 11878,
+                    "name": "Chapter 121: Tôi Không Có Đủ Nhận Thức Về Bản Thân Mình",
+                    "folder": "boku-no-kokoro-yabai-yatsu/121/",
+                    "amount": 14
+                },
+                {
+                    "id": 11877,
+                    "name": "Chapter 120: Chúng Tôi Đã Say Mất Rồi",
+                    "folder": "boku-no-kokoro-yabai-yatsu/120/",
+                    "amount": 16
+                },
+                {
+                    "id": 11876,
+                    "name": "Chapter 119: Chúng Tôi Đã Đến Một Buổi LiveShow",
+                    "folder": "boku-no-kokoro-yabai-yatsu/119/",
+                    "amount": 13
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Romance",
+                "School Life",
+                "Shounen",
+                "Slice of Life"
+            ],
+            "othernames": [
+                {
+                    "id": 61,
+                    "manga_id": 59,
+                    "name": "The Bad Part of My Heart",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 62,
+                    "manga_id": 59,
+                    "name": "Boku No Kokoro No Yabai Yatsu",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 57,
+            "name": "Cô bạn gái mà mình thích lại quên mang kính mất rồi",
+            "status": 0,
+            "slug": "co-ban-gai-ma-minh-thich-lai-quen-mang-kinh-mat-roi",
+            "thumbnail": "co-ban-gai-ma-minh-thich-lai-quen-mang-kinh-mat-roi/thumbnail.jpg",
+            "vote_score": "3.1000",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 11212,
+                    "name": "Chapter 105: - Hồi đáp",
+                    "folder": "co-ban-gai-ma-minh-thich-lai-quen-mang-kinh-mat-roi/105/",
+                    "amount": 20
+                },
+                {
+                    "id": 11211,
+                    "name": "Chapter 104: - Gọi tên",
+                    "folder": "co-ban-gai-ma-minh-thich-lai-quen-mang-kinh-mat-roi/104/",
+                    "amount": 22
+                },
+                {
+                    "id": 11210,
+                    "name": "Chapter 103",
+                    "folder": "co-ban-gai-ma-minh-thich-lai-quen-mang-kinh-mat-roi/103/",
+                    "amount": 24
+                }
+            ],
+            "categories": [
+                "Comedy",
+                "Manga",
+                "Romance",
+                "School Life",
+                "Slice of Life"
+            ],
+            "othernames": [
+                {
+                    "id": 58,
+                    "manga_id": 57,
+                    "name": "Suki na Ko ga Megane wo Wasureta",
+                    "created_at": null,
+                    "updated_at": null
+                },
+                {
+                    "id": 59,
+                    "manga_id": 57,
+                    "name": "Sukinako ga Megane wo Wasureta,The girl I like forgot her glasses",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        },
+        {
+            "id": 54,
+            "name": "Tắt Đèn",
+            "status": 0,
+            "slug": "tat-den",
+            "thumbnail": "tat-den/thumbnail.jpg",
+            "vote_score": "2.8100",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Đang cập nhật"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 10647,
+                    "name": "Chapter 2",
+                    "folder": "tat-den/2/",
+                    "amount": 199
+                },
+                {
+                    "id": 10646,
+                    "name": "Chapter 1",
+                    "folder": "tat-den/1/",
+                    "amount": 199
+                }
+            ],
+            "categories": [
+                "Historical",
+                "Việt Nam"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 55,
+            "name": "Truyền Thuyết Miền Đất Hứa",
+            "status": 0,
+            "slug": "truyen-thuyet-mien-dat-hua",
+            "thumbnail": "truyen-thuyet-mien-dat-hua/thumbnail.jpg",
+            "vote_score": "3.0700",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Yukimura Makoto"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 10853,
+                    "name": "Chapter 204",
+                    "folder": "truyen-thuyet-mien-dat-hua/204/",
+                    "amount": 29
+                },
+                {
+                    "id": 10852,
+                    "name": "Chapter 203",
+                    "folder": "truyen-thuyet-mien-dat-hua/203/",
+                    "amount": 28
+                },
+                {
+                    "id": 10851,
+                    "name": "Chapter 202",
+                    "folder": "truyen-thuyet-mien-dat-hua/202/",
+                    "amount": 24
+                }
+            ],
+            "categories": [
+                "Adventure",
+                "Fantasy",
+                "Manga",
+                "Shounen"
+            ],
+            "othernames": []
+        },
+        {
+            "id": 58,
+            "name": "Berserk",
+            "status": 0,
+            "slug": "berserk",
+            "thumbnail": "berserk/thumbnail.jpg",
+            "vote_score": "3.1200",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "authors": [
+                "Kentarō Miura"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 11592,
+                    "name": "Chapter 373",
+                    "folder": "berserk/373/",
+                    "amount": 22
+                },
+                {
+                    "id": 11591,
+                    "name": "Chapter 372: Quạ son ngủ thiếp trong lồng",
+                    "folder": "berserk/372/",
+                    "amount": 24
+                },
+                {
+                    "id": 11590,
+                    "name": "Chapter 371: Ngọn đèn tàn trong đêm tối chật hẹp",
+                    "folder": "berserk/371/",
+                    "amount": 18
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adult",
+                "Adventure",
+                "Manga"
+            ],
+            "othernames": [
+                {
+                    "id": 60,
+                    "manga_id": 58,
+                    "name": "Kiếm Sĩ Đen",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        }
+    ]
+}
