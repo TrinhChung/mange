@@ -39,78 +39,89 @@ const Login = () => {
   };
 
   return (
-    <Row className="auth-container">
-      <Col className={'wrap-box'}>
-        <Row style={{ paddingBottom: 20 }}>
-          {/* <Image height={80} preview={false} src={logoLogin} /> */}
-        </Row>
-        <Row>
-          <Col span={24} style={{ paddingRight: 40 }}>
-            <Row>
-              <Col span={24}>
-                <RowVertical title={'Tên đăng nhập'}>
-                  <Input
-                    style={{
-                      marginBottom: 20,
-                      width: '100%',
-                    }}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </RowVertical>
+    <Col span={24}>
+      <Row className="auth-container">
+        <Col className={'wrap-box'}>
+          <Row
+            style={{
+              paddingTop: 20,
+              paddingBottom: 40,
+              fontSize: 40,
+              width: '100%',
+              fontWeight: 'bold',
+              color: 'var(--color-main)',
+              textJustify: 'center',
+              textAlign: 'center',
+            }}
+          >
+            MANGE.COM
+          </Row>
+          <Row>
+            <Col span={24} style={{ paddingRight: 40 }}>
+              <Row>
+                <Col span={24}>
+                  <RowVertical title={'Tên đăng nhập'}>
+                    <Input
+                      style={{
+                        marginBottom: 20,
+                        width: '100%',
+                        minWidth: 300,
+                      }}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </RowVertical>
 
-                <RowVertical title={'Mật khẩu'}>
-                  <Input
-                    style={{ marginBottom: 20 }}
-                    type={'password'}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
+                  <RowVertical title={'Mật khẩu'}>
+                    <Input
+                      style={{ marginBottom: 20, minWidth: 300 }}
+                      type={'password'}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
+                  </RowVertical>
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  paddingBottom: 15,
+                  color: 'red',
+                  cursor: 'pointer',
+                }}
+                onClick={() => {
+                  navigate('/auth/forgot-password');
+                }}
+              >
+                Quên mật khẩu
+              </Row>
+              <Row>
+                <Col>
+                  <button className="button-job" onClick={() => handlerLogin()}>
+                    Đăng nhập
+                  </button>
+                </Col>
+              </Row>
+              <Row style={{ paddingTop: 40 }}>
+                <Col>
+                  <Row className="fs-20">Bạn chưa có tài khoản?</Row>
+                  <Row
+                    style={{
+                      cursor: 'pointer',
+                      color: 'var(--color-main)',
                     }}
-                  />
-                </RowVertical>
-              </Col>
-            </Row>
-            <Row
-              style={{
-                paddingBottom: 15,
-                color: 'red',
-                cursor: 'pointer',
-              }}
-              onClick={() => {
-                navigate('/auth/forgot-password');
-              }}
-            >
-              Quên mật khẩu
-            </Row>
-            <Row>
-              <Col>
-                <Button className="button-job" onClick={() => handlerLogin()}>
-                  Đăng nhập
-                </Button>
-              </Col>
-            </Row>
-            <Row style={{ paddingTop: 40 }}>
-              <Col>
-                <Row className="fs-20">Bạn chưa có tài khoản?</Row>
-                <Row
-                  style={{
-                    cursor: 'pointer',
-                    color: 'var(--color-main)',
-                  }}
-                  onClick={() => {
-                    navigate('/auth/signup');
-                  }}
-                >
-                  Đăng ký tài khoản tại đây
-                </Row>
-              </Col>
-            </Row>
-          </Col>
-          <Col span={12}>
-            {/* <Image src={imageLogin} preview={false} /> */}
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+                    onClick={() => {
+                      navigate('/auth/signup');
+                    }}
+                  >
+                    Đăng ký tài khoản tại đây
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Col>
   );
 };
 
