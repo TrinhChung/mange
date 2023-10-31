@@ -6,6 +6,7 @@ import DetailManga from '../Guest/DetailManga';
 import Profile from './Profile';
 import LinkCustom from '../../components/layout/LinkCustom';
 import DetailChapter from '../Guest/DetailChapter';
+import History from '../Guest/History';
 
 const User = () => {
   const items = [
@@ -33,6 +34,7 @@ const User = () => {
         <Route path="/detail-manga/:name" element={<DetailManga />} />
         <Route path="/live-manga/:name/:id" element={<DetailChapter />} />
         <Route path="/profile/*" element={<Profile />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </HomeLayout>
   );

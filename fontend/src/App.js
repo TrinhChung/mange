@@ -12,8 +12,6 @@ import 'slick-carousel/slick/slick.css';
 import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);
-  const [token, setToken] = useState(localStorage.getItem('accessToken'));
-  const [user, setUser] = useState({});
 
   useEffect(() => {
     window.io = require('socket.io-client');
@@ -43,19 +41,9 @@ function App() {
     );
   }, []);
 
-  useEffect(() => {
-    setToken(localStorage.getItem('accessToken'));
-  }, [authUser]);
-
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('auth-user')));
-  }, []);
-
-  const role = authUser && authUser.role ? authUser.role : null;
-
   return (
     <BrowserRouter>
-      {user && user.success == true ? <User /> : <Guest />}
+      {authUser ? authUser.role == 'user' ? <User /> : null : <Guest />}
 
       <ToastContainer
         position="top-right"

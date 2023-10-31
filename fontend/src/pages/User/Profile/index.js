@@ -15,6 +15,7 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import PostManga from './UserMainComponent/PostManga';
+import History from '../../Guest/History';
 
 const menu = [
   {
