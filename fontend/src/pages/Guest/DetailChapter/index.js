@@ -169,9 +169,7 @@ const DetailChapter = () => {
           {images &&
             images.length > 0 &&
             images.map((image, index) => {
-              return (
-                <ImageCustom src={`${image}?${Date.now()}}`} index={index} />
-              );
+              return <ImageCustom src={`${image}`} index={index} />;
             })}
         </Row>
         <Comment comments={null} />

@@ -7,6 +7,7 @@ import Profile from './Profile';
 import LinkCustom from '../../components/layout/LinkCustom';
 import DetailChapter from '../Guest/DetailChapter';
 import History from '../Guest/History';
+import Search from '../Guest/Search';
 
 const User = () => {
   const items = [
@@ -27,7 +28,7 @@ const User = () => {
       key: 'search',
     },
     {
-      label: <LinkCustom to={'/category/'} label="Thể loại" />,
+      label: <LinkCustom to={'/category'} label="Thể loại" />,
       key: 'category',
     },
   ];
@@ -39,6 +40,7 @@ const User = () => {
         <Route path="/live-manga/:name/:id" element={<DetailChapter />} />
         <Route path="/profile/*" element={<Profile />} />
         <Route path="/history" element={<History />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </HomeLayout>
   );

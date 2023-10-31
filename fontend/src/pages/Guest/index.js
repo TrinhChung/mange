@@ -9,6 +9,7 @@ import Auth from '../Auth';
 import TestUploadChapter from './TestUploadChapter';
 import Profile from '../User/Profile';
 import History from './History';
+import Search from './Search';
 
 const Guest = () => {
   const items = [
@@ -25,7 +26,7 @@ const Guest = () => {
       key: 'follow',
     },
     {
-      label: <LinkCustom to={'/category/'} label="Thể loại" />,
+      label: <LinkCustom to={'/category'} label="Thể loại" />,
       key: 'category',
     },
     {
@@ -57,6 +58,7 @@ const Guest = () => {
       <Route path="/auth/*" element={<Auth />} />
       <Route path="/history" element={wrapLayout(<History />)} />
       <Route path="/*" element={wrapLayout(<div>Chua dinh nghia</div>)} />
+      <Route path="/search" element={wrapLayout(<Search />)} />
     </Routes>
   );
 };

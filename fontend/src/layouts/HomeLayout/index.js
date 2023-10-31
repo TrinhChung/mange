@@ -7,7 +7,7 @@ const { Content } = Layout;
 const HomeLayout = ({ children, menu }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
 
   return (
     <Layout>

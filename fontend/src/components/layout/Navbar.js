@@ -147,7 +147,7 @@ const Navbar = ({ data }) => {
           >
             <Col span={20}>
               <Input
-                placeholder="Tìm kiếm"
+                placeholder="Tìm truyện"
                 className="input-custom"
                 defaultValue={searchParams.get('searchInput')}
                 size="large"
