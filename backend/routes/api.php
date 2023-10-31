@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\MangaController;
@@ -97,4 +98,8 @@ Route::prefix('users')->middleware('auth:sanctum')->group(function () {
     Route::get('/{user_id}', [UserController::class, 'show']);
     Route::patch('/{user_id}', [UserController::class, 'patch']);
     Route::post('/{user_id}/avatar', [UserController::class, 'updateUserAvatar']);
+});
+
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'index']);
 });
