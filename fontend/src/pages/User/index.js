@@ -19,8 +19,12 @@ const User = () => {
       key: 'history',
     },
     {
-      label: <LinkCustom to={'/company'} label="Phổ biến" />,
-      key: 'company',
+      label: <LinkCustom to={'/follow'} label="Theo dõi" />,
+      key: 'follow',
+    },
+    {
+      label: <LinkCustom to={'/search'} label="Tìm kiếm" />,
+      key: 'search',
     },
     {
       label: <LinkCustom to={'/category/'} label="Thể loại" />,

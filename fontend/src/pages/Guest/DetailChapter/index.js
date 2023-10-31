@@ -48,13 +48,14 @@ const DetailChapter = () => {
     thumbnail = '',
     id = 0,
     chapter = 0,
+    slug = 'name',
   }) => {
     const histories =
       localStorage.getItem('histories') !== null
         ? JSON.parse(localStorage.getItem('histories'))
         : [];
 
-    const manga = { name, time, thumbnail, id, chapter };
+    const manga = { name, time, thumbnail, id, chapter, slug };
     const i = histories.findIndex((history) => history?.id == id);
 
     if (i === -1) {
@@ -67,7 +68,6 @@ const DetailChapter = () => {
     } else {
       histories[i].time = time;
       let newHistories = histories.sort((a, b) => {
-        console.log(a.time, b.time);
         if (a.time.valueOf() < b.time.valueOf()) {
           return 1;
         }
@@ -76,7 +76,6 @@ const DetailChapter = () => {
         }
         return 0;
       });
-      console.log(newHistories);
       localStorage.setItem('histories', JSON.stringify(newHistories));
       setHistories(newHistories);
     }
