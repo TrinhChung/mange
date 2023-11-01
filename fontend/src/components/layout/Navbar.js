@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, memo } from 'react';
+import { useState, useEffect, useContext, memo, useRef } from 'react';
 import { Layout, Row, Col, Dropdown, Modal, Input } from 'antd';
 import {
   BellFilled,
@@ -11,15 +11,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../providers/authProvider';
 import { logoutService } from '../../services/Auth';
+import DropdownCustom from './DropdownCustom';
 
 const { Header } = Layout;
 const Navbar = ({ data }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [current, setCurrent] = useState('home');
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = useLocation();
+  const wrapperDropdown = useRef(null);
 
   const searchParams = new URLSearchParams(location.search);
 
@@ -143,7 +146,9 @@ const Navbar = ({ data }) => {
             style={{
               display: 'flex',
               alignItems: 'center',
+              position: 'relative',
             }}
+            ref={wrapperDropdown}
           >
             <Col span={20}>
               <Input
@@ -155,6 +160,10 @@ const Navbar = ({ data }) => {
                   setKey(e.target.value);
                 }}
                 allowClear={true}
+                onFocus={() => {
+                  console.log('Show dropdown');
+                  setIsOpenDropdown(true);
+                }}
               />
             </Col>
 
@@ -166,9 +175,16 @@ const Navbar = ({ data }) => {
                   justifyContent: 'center',
                 }}
               >
-                <SearchOutlined />
+                <SearchOutlined style={{ cursor: 'pointer' }} />
               </Row>
             </Col>
+            <DropdownCustom
+              open={isOpenDropdown}
+              setOpen={setIsOpenDropdown}
+              parent={wrapperDropdown}
+            >
+              Dropdown
+            </DropdownCustom>
           </Row>
         </Col>
         <Col span={5} style={{ paddingRight: 29 }}>

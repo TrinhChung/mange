@@ -8,6 +8,7 @@ import LinkCustom from '../../components/layout/LinkCustom';
 import DetailChapter from '../Guest/DetailChapter';
 import History from '../Guest/History';
 import Search from '../Guest/Search';
+import { useEffect } from 'react';
 
 const User = () => {
   const items = [
@@ -32,6 +33,7 @@ const User = () => {
       key: 'category',
     },
   ];
+
   return (
     <HomeLayout menu={items}>
       <Routes>
