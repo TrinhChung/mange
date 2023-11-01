@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Tabs } from 'antd';
 import TopManga from '../home/TopManga';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState } from 'react';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import Manga from '../../../components/manga/Manga';
 

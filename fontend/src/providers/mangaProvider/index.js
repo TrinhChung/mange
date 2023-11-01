@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { getMangaNewUpdate } from '../../services/Guest/index';
+import { getMangaNewUpdate, getCategories } from '../../services/Guest/index';
 import { AuthContext } from '../authProvider';
 import { getHistories } from '../../services/User/index';
 import { buildHistories } from '../../utils/commonFunc';
@@ -14,6 +14,7 @@ export default function MangaProvider({ children }) {
   const [currentPageNewUpdate, setCurrentPageNewUpdate] = useState(1);
   const [histories, setHistories] = useState([]);
   const [historiesAccount, setHistoriesAccount] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const fetchMangaNewUpdate = async ({ page = 1 }) => {
     setLoadingNewUpdate(true);
@@ -23,6 +24,13 @@ export default function MangaProvider({ children }) {
       setNewUpdates({ total: data.total, manga: data.data });
     }
     setLoadingNewUpdate(false);
+  };
+
+  const fetchCategories = async () => {
+    const data = await getCategories();
+    if (data.status === 200 && data.data) {
+      setCategories(data.data);
+    }
   };
 
   const fetchMangaPropose = async ({ page = 1 }) => {
@@ -59,6 +67,7 @@ export default function MangaProvider({ children }) {
   useEffect(() => {
     fetchMangaNewUpdate({ page: 1 });
     fetchMangaPropose({ page: 1 });
+    fetchCategories();
   }, []);
 
   return (
@@ -70,6 +79,7 @@ export default function MangaProvider({ children }) {
         currentPageNewUpdate,
         newUpdates,
         histories,
+        categories,
         historiesAccount,
         fetchMangaNewUpdate,
         setHistories,

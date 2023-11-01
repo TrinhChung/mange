@@ -1,8 +1,37 @@
 .button-filter {
   width: 100%;
   min-width: 160px;
+  outline: none !important;
+}
+
+.button-filter:hover {
+  color: white !important;
+  background-color: var(--jade) !important;
+}
+
+.button-selected {
+  color: white !important;
+  background-color: var(--jade) !important;
 }
 
 .label-filter {
   font-size: 16px;
+}
+
+.category {
+  cursor: pointer;
+  font-size: 14px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+}
+.category:hover {
+  color: var(--jade);
+  font-size: 16px;
+}
+
+.category-selected {
+  color: var(--jade);
+  font-size: 16px;
+  cursor: pointer;
 }

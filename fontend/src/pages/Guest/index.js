@@ -7,7 +7,6 @@ import DetailManga from './DetailManga';
 import DetailChapter from './DetailChapter';
 import Auth from '../Auth';
 import TestUploadChapter from './TestUploadChapter';
-import Profile from '../User/Profile';
 import History from './History';
 import Search from './Search';
 

@@ -34,6 +34,15 @@ const Navbar = ({ data }) => {
     setCurrent(e.key);
   };
 
+  const handleSearch = () => {
+    console.log(key);
+    console.log(searchParams);
+  };
+
+  const handleChangeInputSearch = (e) => {
+    setKey(e.target.value);
+  };
+
   useEffect(() => {
     if (pathname) {
       const pathArr = pathname.split('/');
@@ -156,9 +165,7 @@ const Navbar = ({ data }) => {
                 className="input-custom"
                 defaultValue={searchParams.get('searchInput')}
                 size="large"
-                onChange={(e) => {
-                  setKey(e.target.value);
-                }}
+                onChange={handleChangeInputSearch}
                 allowClear={true}
                 onFocus={() => {
                   console.log('Show dropdown');
@@ -175,7 +182,12 @@ const Navbar = ({ data }) => {
                   justifyContent: 'center',
                 }}
               >
-                <SearchOutlined style={{ cursor: 'pointer' }} />
+                <SearchOutlined
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    handleSearch();
+                  }}
+                />
               </Row>
             </Col>
             <DropdownCustom

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Row } from 'antd';
 import NewUp from '../home/NewUp';
-import ListMangaSide from '../../../components/manga/ListMangaSide';
 import { useContext } from 'react';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import Title from '../../../components/layout/Title';
@@ -11,10 +10,14 @@ const Search = () => {
   const {
     loadingNewUpdate,
     newUpdates,
-    histories,
     fetchMangaNewUpdate,
     currentPageNewUpdate,
+    categories,
   } = useContext(MangaContext);
+  const [category, setCategory] = useState(-1);
+  const [status, setStatus] = useState(0);
+  const [sortBy, setSortBy] = useState(0);
+
   const criteria = [
     { label: 'Ngày cập nhật', value: 'date-update' },
     { label: 'Truyện mới', value: 'new-manga' },
@@ -36,6 +39,14 @@ const Search = () => {
               <Col span={24}>
                 <Title title="Tìm kiếm truyện tranh" />
                 <Row>
+                  <Col className="label-filter" span={8}>
+                    Từ khóa
+                  </Col>
+                  <Col span={16}>
+                    <Row gutter={[8, 8]}>Từ khóa</Row>
+                  </Col>
+                </Row>
+                <Row style={{ paddingTop: 16 }}>
                   <Col className="label-filter" span={8}>
                     Trạng thái
                   </Col>
@@ -84,7 +95,29 @@ const Search = () => {
             />
           </Col>
           <Col span={8}>
-            <ListMangaSide listManga={histories} title={'Lịch sử'} />
+            <Row>
+              <Col span={24} className="box-content">
+                <Title title="Thể loại" />
+                <Row>
+                  {categories.length > 0 &&
+                    categories.map((item) => {
+                      return (
+                        <Col
+                          className={`category ${
+                            category === item.id ? 'category-selected' : ''
+                          }`}
+                          span={12}
+                          onClick={() => {
+                            setCategory(item.id);
+                          }}
+                        >
+                          <label>{item?.name}</label>
+                        </Col>
+                      );
+                    })}
+                </Row>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Col>
