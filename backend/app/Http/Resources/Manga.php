@@ -18,7 +18,7 @@ class Manga extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
-            'slug' => explode('/', $this->thumbnail)[0],
+            'slug' => $this->slug,
             'thumbnail' => $this->thumbnail,
             'vote_score' => $this->vote_score,
             'follow_count' => $this->follow_count,

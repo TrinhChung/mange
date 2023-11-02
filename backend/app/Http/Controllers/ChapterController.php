@@ -90,7 +90,7 @@ class ChapterController extends Controller
         $chapter = Chapter::create([
             'manga_id' => $fields['manga_id'],
             'name' => "Chapter {$fields['number']}: {$fields['name']}",
-            'folder' => explode('/', $manga->thumbnail)[0]."/{$fields['number']}/",
+            'folder' => $manga->slug."/{$fields['number']}/",
             'amount' => 0,
         ]);
 
@@ -127,7 +127,7 @@ class ChapterController extends Controller
         $name = $fields['name'] ? "Chapter {$fields['number']}: {$fields['name']}" : $chapter->name;
         $chapter->update([
             'name' => $name,
-            'folder' => explode('/', $manga->thumbnail)[0]."/{$fields['number']}/",
+            'folder' => $manga->slug."/{$fields['number']}/",
         ]);
 
         return response()->json([
@@ -175,7 +175,7 @@ class ChapterController extends Controller
 
                 for ($i = $old_amount; $i < count($images) + $old_amount; $i++) {
                     // Không cần tmp vì SSE xong mới xóa
-                    $batch[] = new UploadImage($images[$i - $old_amount]->getRealPath(), $manga->getSlug(),
+                    $batch[] = new UploadImage($images[$i - $old_amount]->getRealPath(), $manga->slug,
                         $chapter->getNumber(), $i.'.jpg');
                 }
 
@@ -183,7 +183,7 @@ class ChapterController extends Controller
             } elseif ($request->hasFile('zip')) {
                 $zip = new ZipArchive();
                 $zip->open($request->file('zip')->getRealPath());
-                $zip->extractTo(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'));
+                $zip->extractTo(storage_path('tmp/'.$manga->slug.'/'.$chapter->getNumber().'/'));
                 $file_count = $zip->numFiles;
 
                 // Natural Sort
@@ -194,8 +194,8 @@ class ChapterController extends Controller
                 natsort($extracted_file_names);
 
                 for ($i = $old_amount; $i < $file_count + $old_amount; $i++) {
-                    $batch[] = new UploadImage(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'.$extracted_file_names[$i - $old_amount]),
-                        $manga->getSlug(), $chapter->getNumber(), $i.'.jpg');
+                    $batch[] = new UploadImage(storage_path('tmp/'.$manga->slug.'/'.$chapter->getNumber().'/'.$extracted_file_names[$i - $old_amount]),
+                        $manga->slug, $chapter->getNumber(), $i.'.jpg');
                 }
 
                 $zip->close();
@@ -209,7 +209,7 @@ class ChapterController extends Controller
                 ], 500);
             })->finally(function (Batch $batch) use ($manga, $chapter) {
                 // Clean up zip temp files
-                File::deleteDirectory(storage_path('tmp/'.$manga->getSlug().'/'.$chapter->getNumber().'/'));
+                File::deleteDirectory(storage_path('tmp/'.$manga->slug.'/'.$chapter->getNumber().'/'));
             })->dispatch();
 
             // Server Sent Event
@@ -273,7 +273,7 @@ class ChapterController extends Controller
         }
 
         // Chuyển tất cả các file còn lại vào tmp của folder chapter
-        $chapter_path = "/{$manga->getSlug()}/{$chapter->getNumber()}/";
+        $chapter_path = "/{$manga->slug}/{$chapter->getNumber()}/";
         for ($i = $first_wrong_index; $i < count($order); $i++) {
             Storage::disk('ftp')->move("{$chapter_path}{$i}.jpg",
                 "{$chapter_path}/tmp/{$i}.jpg");

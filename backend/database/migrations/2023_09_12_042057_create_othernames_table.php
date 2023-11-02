@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('manga_id')->constrained('mangas');
             $table->string('name', 100);
             $table->timestamps();
+
+            $table->index(['name'], 'othernames_name_index');
         });
     }
 

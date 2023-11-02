@@ -18,6 +18,7 @@ class MangaFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->name(),
+            'slug' => $this->faker->unique()->slug(),
             'status' => $this->faker->randomElement([0, 1]),
             'description' => $this->faker->text(),
             'thumbnail' => $this->faker->imageUrl(),

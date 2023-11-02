@@ -38,20 +38,31 @@ class MangaController extends Controller
         $status = $fields['status'] ?? null;
         $sort = $fields['sort'] ?? '-updated_at';
 
-        $query = Manga::query()->select(['id', 'name', 'thumbnail', 'view as view_count', 'status'])
+        $query = Manga::query()->select(['id', 'name', 'slug', 'thumbnail', 'view as view_count', 'status'])
             ->with(['chapters', 'categories', 'othernames', 'authors'])
             ->withCount(['bookmarked_by as follow_count', 'comments as comment_count']);
 
-        // Tìm kiếm theo `tên` hoặc `tên khác` chứa
+        // Tìm kiếm theo `tên` hoặc `tên khác` hoặc slug chứa
+        $words = explode(' ', $search_query);
         if (! empty($search_query)) {
-            $query->where(function ($subQuery) use ($search_query) {
-                $subQuery->where('name', 'like', "%{$search_query}%")
-                    ->orWhereHas('othernames', function ($subQuery) use ($search_query) {
-                        $subQuery->where('name', 'like', "%{$search_query}%");
-                    })
-                    ->orWhereHas('authors', function ($subQuery) use ($search_query) {
-                        $subQuery->where('name', 'like', "%{$search_query}%");
+            $query->where(function ($subQuery) use ($search_query, $words) {
+                $subQuery->where(function ($subSubQuery) use ($words) {
+                    foreach ($words as $word) {
+                        $subSubQuery->where('name', 'like', "%{$word}%");
+                    }
+                })->orWhere(function ($subSubQuery) use ($words) {
+                    foreach ($words as $word) {
+                        $subSubQuery->where('slug', 'like', "%{$word}%");
+                    }
+                })->orWhereHas('othernames', function ($subSubQuery) use ($words) {
+                    $subSubQuery->where(function ($subSubSubQuery) use ($words) {
+                        foreach ($words as $word) {
+                            $subSubSubQuery->where('name', 'like', "%{$word}%");
+                        }
                     });
+                })->orWhereHas('authors', function ($subQuery) use ($search_query) {
+                    $subQuery->where('name', 'like', "%{$search_query}%");
+                });
             });
         }
 

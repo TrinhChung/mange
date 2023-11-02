@@ -22,6 +22,7 @@ class MangaSeeder extends Seeder
         foreach ($data as $element) {
             $manga = Manga::create([
                 'name' => $element->name,
+                'slug' => explode('/', $element->folder)[1],
                 'status' => $element->status === 'Đang tiến hành' ? 0 : 1,
                 'description' => $element->describtion,
                 'thumbnail' => explode('/', $element->folder)[1].'/'.'thumbnail.jpg',

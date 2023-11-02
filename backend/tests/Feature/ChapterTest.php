@@ -208,6 +208,7 @@ class ChapterTest extends TestCase
         $manga = Manga::factory()->create([
             'name' => 'Name Manga',
             'thumbnail' => 'name-manga/thumbnail.jpg',
+            'slug' => 'name-manga',
         ]);
         $chapter = Chapter::factory()->create([
             'manga_id' => $manga->id,
@@ -302,6 +303,7 @@ class ChapterTest extends TestCase
         $manga = Manga::factory()->create([
             'name' => 'Name Manga',
             'thumbnail' => 'name-manga/thumbnail.jpg',
+            'slug' => 'name-manga',
         ]);
         $chapter = Chapter::factory()->create([
             'manga_id' => $manga->id,
@@ -333,6 +335,7 @@ class ChapterTest extends TestCase
         $manga = Manga::factory()->create([
             'name' => 'Name Manga',
             'thumbnail' => 'name-manga/thumbnail.jpg',
+            'slug' => 'name-manga',
         ]);
         $chapter = Chapter::factory()->create([
             'manga_id' => $manga->id,
