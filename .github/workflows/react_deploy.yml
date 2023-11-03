@@ -7,34 +7,34 @@ on:
     branches: [main]
 
 jobs:
-  run-cypress:
-    uses: TrinhChung/mange/.github/workflows/react_cypress.yml@main
-    secrets: inherit
+  # run-cypress:
+  #   uses: TrinhChung/mange/.github/workflows/react_cypress.yml@main
+  #   secrets: inherit
 
-  upload-frontend-coverage:
-    needs: [run-cypress]
-    name: Upload frontend coverage to vps
-    runs-on: ubuntu-22.04
-    defaults:
-      run:
-        working-directory: ./fontend
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: frontend_coverage
-          path: ./frontend_coverage
-      - name: Upload coverage to vps
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: "167.71.197.242"
-          username: coverage
-          password: ${{ secrets.COVERAGE_PASSWORD }}
-          source: ./frontend_coverage/*
-          target: /mnt/volume_sgp1_01/react_coverage
+  # upload-frontend-coverage:
+  #   needs: [run-cypress]
+  #   name: Upload frontend coverage to vps
+  #   runs-on: ubuntu-22.04
+  #   defaults:
+  #     run:
+  #       working-directory: ./fontend
+  #   steps:
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: frontend_coverage
+  #         path: ./frontend_coverage
+  #     - name: Upload coverage to vps
+  #       uses: appleboy/scp-action@v0.1.4
+  #       with:
+  #         host: "167.71.197.242"
+  #         username: coverage
+  #         password: ${{ secrets.COVERAGE_PASSWORD }}
+  #         source: ./frontend_coverage/*
+  #         target: /mnt/volume_sgp1_01/react_coverage
 
   deploy:
-    needs: [run-cypress]
+    # needs: [run-cypress]
     name: Deploy
     runs-on: ubuntu-22.04
     defaults:
