@@ -24,6 +24,7 @@ class Manga extends JsonResource
             'follow_count' => $this->follow_count,
             'view_count' => $this->view_count,
             'comments_count' => $this->comment_count,
+            'top_view_count' => $this->top_view_count,
             'authors' => $this->authors->pluck('name'),
             'last_3_chapters' => $this->chapters->sortByDesc('id')->take(3)->values()->map(function ($chapter) {
                 return [

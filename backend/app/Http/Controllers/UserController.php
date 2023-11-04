@@ -302,7 +302,7 @@ class UserController extends Controller
 
     public function history(Request $request)
     {
-        $mangas = $request->user()->viewed_chapters->load('manga')->groupBy('manga_id')->values();
+        $mangas = $request->user()->viewed_chapters->load('manga')->groupBy('pivot.manga_id')->values();
 
         $mangas = $mangas->map(function ($manga) {
             $latest = $manga->last();

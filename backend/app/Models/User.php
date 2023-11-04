@@ -129,4 +129,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Chapter::class, 'views', 'user_id', 'chapter_id')
             ->using(View::class)->withPivot('id', 'user_id', 'chapter_id', 'manga_id')->withTimestamps();
     }
+
+    public function viewed_mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'views', 'user_id', 'manga_id')
+            ->using(View::class)->withPivot('id', 'user_id', 'chapter_id', 'manga_id')->withTimestamps();
+    }
 }

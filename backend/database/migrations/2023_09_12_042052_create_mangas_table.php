@@ -25,9 +25,9 @@ return new class extends Migration
             $table->index(['name'], 'mangas_name_index');
             $table->index(['slug'], 'mangas_slug_index');
 
-//            if (env('DB_CONNECTION') === 'mysql') {
-//                DB::statement('ALTER TABLE mangas ADD FULLTEXT INDEX mangas_name_fulltext_index (name)');
-//            }
+            //            if (env('DB_CONNECTION') === 'mysql') {
+            //                DB::statement('ALTER TABLE mangas ADD FULLTEXT INDEX mangas_name_fulltext_index (name)');
+            //            }
         });
     }
 
