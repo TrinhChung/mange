@@ -203,10 +203,12 @@ const Navbar = ({ data }) => {
               <Col style={{ maxHeight: 400, overflow: 'auto' }} span={24}>
                 {results && results.length > 0 ? (
                   results.map((result) => {
-                    return <div style={{ color: 'black' }}>{result.name}</div>;
+                    return <MangaSearch manga={result} />;
                   })
                 ) : (
-                  <Col>Nhập nhanh lên</Col>
+                  <Col style={{ color: 'black', paddingLeft: 20 }}>
+                    Không có kết quả
+                  </Col>
                 )}
               </Col>
             </DropdownCustom>

@@ -11,12 +11,15 @@ const NewUp = ({
   total = 1,
   loading = true,
   page = 1,
+  title = 'Mới cập nhật',
 }) => {
+  console.log(total);
+
   return (
     <Row className="box-content" style={{ marginRight: 20 }}>
       <Col>
         <Row>
-          <Title title="Mới cập nhật" />
+          <Title title={title} />
         </Row>
         {loading === false ? (
           <>
@@ -36,7 +39,7 @@ const NewUp = ({
               }}
               style={{ paddingTop: 20 }}
               defaultCurrent={page}
-              total={total * 30}
+              total={total * 10}
             />
           </>
         ) : (

@@ -23,7 +23,7 @@ export default function MangaProvider({ children }) {
     setCurrentPageNewUpdate(page);
     const data = await getMangaNewUpdate({ page: page });
     if (data.status === 200 && data.data) {
-      setNewUpdates({ total: data.total, manga: data.data });
+      setNewUpdates({ total: data.meta.last_page, manga: data.data });
     }
     setLoadingNewUpdate(false);
   };
