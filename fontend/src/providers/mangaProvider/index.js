@@ -15,6 +15,8 @@ export default function MangaProvider({ children }) {
   const [histories, setHistories] = useState([]);
   const [historiesAccount, setHistoriesAccount] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [topMangaWeek, setTopMangaWeek] = useState([]);
+  const [topMangaMonth, setTopMangaMonth] = useState([]);
 
   const fetchMangaNewUpdate = async ({ page = 1 }) => {
     setLoadingNewUpdate(true);
@@ -35,8 +37,34 @@ export default function MangaProvider({ children }) {
 
   const fetchMangaPropose = async ({ page = 1 }) => {
     const data = await getMangaNewUpdate({ page: page });
-    if (data.status === 200 && data.data) {
+    if (data.status === 200 && data?.data) {
       setProposes(data.data.slice(0, 15));
+    }
+  };
+
+  const fetchTopManga = async ({ page = 1, per_page = 10 }) => {
+    try {
+      const query = `&sort=-top_view_count&time=month`;
+      const data = await getMangaNewUpdate({
+        page: page,
+        per_page: per_page,
+        query: query,
+      });
+      if (data.status === 200 && data?.data) {
+        setTopMangaMonth(data.data);
+      }
+
+      const newQuery = `&sort=-top_view_count&time=week`;
+      const dataWeek = await getMangaNewUpdate({
+        page: page,
+        per_page: per_page,
+        query: newQuery,
+      });
+      if (dataWeek.status === 200 && dataWeek?.data) {
+        setTopMangaWeek(dataWeek.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -46,16 +74,21 @@ export default function MangaProvider({ children }) {
         ? JSON.parse(localStorage.getItem('histories'))
         : [];
     setHistories(histories);
+
     if (authUser) {
-      const data = await getHistories();
-      if (data.status === 200 && data.data) {
-        const historyData = buildHistories(data.data);
-        setHistoriesAccount([...historyData]);
-        const syncHistories = historyData.splice(0, 10);
-        if (histories.length === 0) {
-          setHistories(syncHistories);
-          localStorage.setItem('histories', JSON.stringify(syncHistories));
+      try {
+        const data = await getHistories();
+        if (data.status === 200 && data?.data) {
+          const historyData = buildHistories(data.data);
+          setHistoriesAccount([...historyData]);
+          const syncHistories = historyData.splice(0, 10);
+          if (histories.length === 0) {
+            setHistories(syncHistories);
+            localStorage.setItem('histories', JSON.stringify(syncHistories));
+          }
         }
+      } catch (e) {
+        console.log(e);
       }
     }
   };
@@ -68,6 +101,7 @@ export default function MangaProvider({ children }) {
     fetchMangaNewUpdate({ page: 1 });
     fetchMangaPropose({ page: 1 });
     fetchCategories();
+    fetchTopManga({ page: 1 });
   }, []);
 
   return (
@@ -80,9 +114,12 @@ export default function MangaProvider({ children }) {
         newUpdates,
         histories,
         categories,
+        topMangaWeek,
+        topMangaMonth,
         historiesAccount,
         fetchMangaNewUpdate,
         setHistories,
+        fetchTopManga,
       }}
     >
       {children}

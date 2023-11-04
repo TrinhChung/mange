@@ -12,6 +12,9 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../providers/authProvider';
 import { logoutService } from '../../services/Auth';
 import DropdownCustom from './DropdownCustom';
+import { getMangaNewUpdate } from '../../services/Guest/index';
+import MangaSearch from '../manga/MangaSearch';
+import './Navbar.scss';
 
 const { Header } = Layout;
 const Navbar = ({ data }) => {
@@ -23,6 +26,7 @@ const Navbar = ({ data }) => {
   const { pathname } = useLocation();
   const location = useLocation();
   const wrapperDropdown = useRef(null);
+  const [results, setResults] = useState([]);
 
   const searchParams = new URLSearchParams(location.search);
 
@@ -39,8 +43,24 @@ const Navbar = ({ data }) => {
     console.log(searchParams);
   };
 
-  const handleChangeInputSearch = (e) => {
+  const handleChangeInputSearch = async (e) => {
     setKey(e.target.value);
+    if (e.target.value === null) {
+      setResults([]);
+    } else {
+      try {
+        const data = await getMangaNewUpdate({
+          page: 1,
+          query: `&search=${e.target.value}`,
+        });
+        if (data && data.success === 1) {
+          setResults(data?.data);
+          console.log(data?.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -100,20 +120,7 @@ const Navbar = ({ data }) => {
   };
 
   return (
-    <Header
-      style={{
-        backgroundColor: 'var(--color-main)',
-        padding: 0,
-        margin: 0,
-        position: 'sticky',
-        top: 0,
-        width: '100%',
-        height: 'var(--height-navbar)',
-        zIndex: 1,
-        color: 'white',
-      }}
-      className="box-shadow-bottom"
-    >
+    <Header className="box-shadow-bottom navbar-home">
       <Row>
         <Col
           span={12}
@@ -148,7 +155,6 @@ const Navbar = ({ data }) => {
             fontSize: 50,
             fontWeight: 'bold',
             paddingLeft: 55,
-            color: 'var(--color-main)',
           }}
         >
           <Row
@@ -168,7 +174,6 @@ const Navbar = ({ data }) => {
                 onChange={handleChangeInputSearch}
                 allowClear={true}
                 onFocus={() => {
-                  console.log('Show dropdown');
                   setIsOpenDropdown(true);
                 }}
               />
@@ -183,7 +188,7 @@ const Navbar = ({ data }) => {
                 }}
               >
                 <SearchOutlined
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: 'pointer', color: 'var(--color-main)' }}
                   onClick={() => {
                     handleSearch();
                   }}
@@ -195,7 +200,15 @@ const Navbar = ({ data }) => {
               setOpen={setIsOpenDropdown}
               parent={wrapperDropdown}
             >
-              Dropdown
+              <Col style={{ maxHeight: 400, overflow: 'auto' }} span={24}>
+                {results && results.length > 0 ? (
+                  results.map((result) => {
+                    return <div style={{ color: 'black' }}>{result.name}</div>;
+                  })
+                ) : (
+                  <Col>Nhập nhanh lên</Col>
+                )}
+              </Col>
             </DropdownCustom>
           </Row>
         </Col>

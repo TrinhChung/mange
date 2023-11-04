@@ -161,6 +161,8 @@ const Home = () => {
     histories,
     fetchMangaNewUpdate,
     currentPageNewUpdate,
+    topMangaWeek,
+    topMangaMonth,
   } = useContext(MangaContext);
 
   const manga = {
@@ -189,7 +191,7 @@ const Home = () => {
           </Col>
           <Col span={8}>
             <ListMangaSide listManga={histories} title={'Lịch sử'} />
-            <TopManga manga={histories} />
+            <TopManga mangaWeek={topMangaWeek} mangaMonth={topMangaMonth} />
             <AdPanel />
           </Col>
         </Row>

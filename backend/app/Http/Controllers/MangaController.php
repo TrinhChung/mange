@@ -274,7 +274,6 @@ class MangaController extends Controller
                 $ratings[] = $manga['rate'];
             }
         }
-
         $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
         $mangas = Manga::whereIn('id', $recommendation)->get();
 

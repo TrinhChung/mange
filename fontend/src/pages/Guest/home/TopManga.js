@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row, Tabs } from 'antd';
-import Title from '../../../components/layout/Title';
 import MangaVertical from '../../../components/manga/MangaVertical';
 
-const TopManga = ({ manga = [] }) => {
+const TopManga = ({ mangaWeek = [], mangaMonth = [] }) => {
+  const [key, setKey] = useState('week');
   const items = [
     {
-      key: '1',
+      key: 'week',
       label: <div className="text_title">TOP TUẦN</div>,
     },
     {
-      key: '2',
+      key: 'month',
       label: <div className="text_title">TOP THÁNG</div>,
     },
   ];
 
-  const onChange = () => {
-    // console.log('change');
+  const onChange = (data) => {
+    setKey(data);
   };
 
   return (
@@ -32,13 +32,29 @@ const TopManga = ({ manga = [] }) => {
         </Row>
         <Row>
           <Col span={24}>
-            {manga.map((item, index) => {
-              if (index < 5) {
-                return (
-                  <MangaVertical index={index} manga={item} isDate={false} />
-                );
-              }
-            })}
+            {key === 'month'
+              ? mangaMonth.map((item, index) => {
+                  if (index < 5) {
+                    return (
+                      <MangaVertical
+                        index={index}
+                        manga={item}
+                        isDate={false}
+                      />
+                    );
+                  }
+                })
+              : mangaWeek.map((item, index) => {
+                  if (index < 5) {
+                    return (
+                      <MangaVertical
+                        index={index}
+                        manga={item}
+                        isDate={false}
+                      />
+                    );
+                  }
+                })}
           </Col>
         </Row>
       </Col>

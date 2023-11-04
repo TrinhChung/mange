@@ -31,7 +31,7 @@ const Search = () => {
   ];
 
   return (
-    <Row style={{ justifyContent: 'center' }}>
+    <Row className="search-wrap" style={{ justifyContent: 'center' }}>
       <Col span={18}>
         <Row>
           <Col span={16}>
