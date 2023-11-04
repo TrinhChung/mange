@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-table-tbody {
+  padding: 10px !important;
+}
+.ant-table-tbody > tr > td {
+  padding: 10px !important;
+}
