@@ -4,6 +4,7 @@ import TitleTopLeft from '../../../../components/layout/TitleTopLeft';
 import InputGroup from '../../../../components/management/InputGroup';
 import StoryItem from '../../../User/Profile/UserMainComponent/UserStory/StoryItem';
 import StoryRow from './StoryRow';
+import tableColumns from './TableColumns';
 
 const breadcrumbData = [
   {
@@ -15,34 +16,6 @@ const breadcrumbData = [
   {
     title: 'Quản lý bình luận',
     href: '/management/comment',
-  },
-];
-const columns = [
-  {
-    title: 'TÊN TRUYỆN',
-    dataIndex: 'title',
-    key: 'title',
-    render: (manga) => <StoryRow manga={manga} />,
-    width: '35%',
-  },
-  {
-    title: 'USERNAME',
-    dataIndex: 'username',
-    key: 'username',
-    align: 'center',
-  },
-  {
-    title: 'NỘI DUNG BÌNH LUẬN',
-    dataIndex: 'content',
-    key: 'content',
-    width: '35%',
-  },
-  {
-    title: 'ĐÁNH GIÁ',
-    dataIndex: 'evaluation',
-    render: (text) => <div style={{ fontSize: 22 }}>{text}</div>,
-    key: 'evaluation',
-    align: 'center',
   },
 ];
 const data = [
@@ -156,7 +129,7 @@ const CommentManagement = () => {
       </Col>
       <Table
         style={{ width: '100%' }}
-        columns={columns}
+        columns={tableColumns}
         dataSource={data}
         pagination={false}
       />

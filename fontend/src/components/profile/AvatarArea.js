@@ -26,7 +26,7 @@ const AvatarArea = () => {
           }}
           className="title-children"
         >
-          <Col style={{ fontSize: 32 }}>a Chung iu e K66</Col>
+          <Col style={{ fontSize: 32 }}>a Chung iu e K66J</Col>
         </Row>
         {authUser && authUser.role === 'user' ? (
           <>
