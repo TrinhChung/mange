@@ -10,6 +10,7 @@ import Socketio from 'socket.io-client';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Admin from './pages/Admin';
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);
 
@@ -43,8 +44,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      {authUser ? authUser.role == 'user' ? <User /> : null : <Guest />}
-
+      {authUser ? (authUser.role === 'user' ? <User /> : authUser.role === 'admin' ? <Admin /> : null) : <Guest />}
+      {/* <Admin /> */}
       <ToastContainer
         position="top-right"
         autoClose={2000}
