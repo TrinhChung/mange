@@ -35,7 +35,7 @@ const Propose = ({ proposes = [], loading = true }) => {
             {manga.length > 0 ? (
               <Slider {...settings}>
                 {manga.map((propose) => {
-                  return <Manga manga={propose} />;
+                  return <Manga manga={propose} isPropose={true} />;
                 })}
               </Slider>
             ) : (

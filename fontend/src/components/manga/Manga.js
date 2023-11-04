@@ -1,25 +1,41 @@
-import { Col, Row } from 'antd';
+import { Col, Row, Badge } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hostImg } from '../../const/index';
 
-const Manga = ({ manga = null }) => {
+const Manga = ({ manga = null, isPropose = false }) => {
   const navigate = useNavigate();
 
   return (
     <Col key={manga?.id} className="manga">
       <Row>
-        <img
-          key={manga.id}
-          src={manga?.thumbnail ? hostImg + manga.thumbnail : ''}
-          style={{ width: 150, height: 200, cursor: 'pointer' }}
-          onClick={() => {
-            if (manga?.id) {
-              navigate(`/detail-manga/${manga.id}`);
-            }
-          }}
-          className="box-hover"
-        />
+        {isPropose === true ? (
+          <Badge.Ribbon text="Hot" color="red">
+            <img
+              key={manga.id}
+              src={manga?.thumbnail ? hostImg + manga.thumbnail : ''}
+              style={{ width: 150, height: 200, cursor: 'pointer' }}
+              onClick={() => {
+                if (manga?.id) {
+                  navigate(`/detail-manga/${manga.id}`);
+                }
+              }}
+              className="box-hover"
+            />
+          </Badge.Ribbon>
+        ) : (
+          <img
+            key={manga.id}
+            src={manga?.thumbnail ? hostImg + manga.thumbnail : ''}
+            style={{ width: 150, height: 200, cursor: 'pointer' }}
+            onClick={() => {
+              if (manga?.id) {
+                navigate(`/detail-manga/${manga.id}`);
+              }
+            }}
+            className="box-hover"
+          />
+        )}
       </Row>
       <Row
         style={{

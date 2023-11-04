@@ -4,7 +4,7 @@ import TopManga from '../home/TopManga';
 import { useContext, useState } from 'react';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import Manga from '../../../components/manga/Manga';
-import { proposes } from '../home/index';
+import MangaHistory from '../../../components/manga/MangaHistory';
 
 const History = () => {
   const { histories, historiesAccount, topMangaWeek, topMangaMonth } =
@@ -47,11 +47,10 @@ const History = () => {
             <Row gutter={[16, 24]}>
               {key === '1'
                 ? histories.map((item) => {
-                    console.log(item);
-                    return <Manga manga={item} />;
+                    return <MangaHistory manga={item} />;
                   })
                 : historiesAccount.map((item) => {
-                    return <Manga manga={item} />;
+                    return <MangaHistory manga={item} />;
                   })}
             </Row>
           </Col>
