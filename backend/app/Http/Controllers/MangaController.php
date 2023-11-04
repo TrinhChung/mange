@@ -255,13 +255,25 @@ class MangaController extends Controller
         $votedMangas = $user->voted_mangas;
         $viewedMangas = $user->viewed_mangas()->selectRaw('views.manga_id, count(*) as views')->groupBy('views.manga_id')->get();
         $totalView = $user->viewed_mangas()->count();
-        $avgView = $this->roundUpToNextFive($totalView / count($viewedMangas));
-        $viewedMangas = $viewedMangas->map(function ($manga) use ($avgView) {
-            return [
-                'id' => $manga->manga_id - 1,
-                'rate' => ($manga->views / $avgView) * 2.5,
-            ];
-        });
+
+        if (count($viewedMangas) === 0 && count($votedMangas) === 0) {
+            return response()->json([
+                'success' => 1,
+                'data' => new MangaCollection(Manga::orderBy('view', 'desc')->orderBy('updated_at', 'desc')->limit(15)->get()),
+                'message' => 'Đề xuất thành công không sử dụng rating',
+            ]);
+        }
+
+        if (count($viewedMangas) > 0) {
+            $avgView = $this->roundUpToNextFive($totalView / count($viewedMangas));
+            $viewedMangas = $viewedMangas->map(function ($manga) use ($avgView) {
+                return [
+                    'id' => $manga->manga_id - 1,
+                    'rate' => ($manga->views / $avgView) * 2.5,
+                ];
+            });
+        }
+
         $items = [];
         $ratings = [];
         foreach ($votedMangas as $manga) {
