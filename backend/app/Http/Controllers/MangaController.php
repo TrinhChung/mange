@@ -19,7 +19,6 @@ class MangaController extends Controller
 
     private function roundUpToNextFive(float $number)
     {
-        printf("The number is %.2f \n", $number);
         $decimalPart = $number - floor($number);
         $result = $number;
         if ($decimalPart > 0.5) {
@@ -257,11 +256,7 @@ class MangaController extends Controller
         $totalView = $user->viewed_mangas()->count();
 
         if (count($viewedMangas) === 0 && count($votedMangas) === 0) {
-            return response()->json([
-                'success' => 1,
-                'data' => new MangaCollection(Manga::orderBy('view', 'desc')->orderBy('updated_at', 'desc')->limit(15)->get()),
-                'message' => 'Đề xuất thành công không sử dụng rating',
-            ]);
+            return new MangaCollection(Manga::orderBy('view', 'desc')->orderBy('updated_at', 'desc')->limit(15)->get());
         }
 
         if (count($viewedMangas) > 0) {
@@ -289,10 +284,6 @@ class MangaController extends Controller
         $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
         $mangas = Manga::whereIn('id', $recommendation)->get();
 
-        return response()->json([
-            'success' => 1,
-            'data' => new MangaCollection($mangas),
-            'message' => 'Đề xuất thành công',
-        ]);
+        return new MangaCollection($mangas);
     }
 }
