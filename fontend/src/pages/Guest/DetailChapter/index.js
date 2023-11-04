@@ -68,10 +68,10 @@ const DetailChapter = () => {
     } else {
       histories[i].time = time;
       let newHistories = histories.sort((a, b) => {
-        if (a.time.valueOf() < b.time.valueOf()) {
+        if (new Date(a.time.valueOf()) < new Date(b.time.valueOf())) {
           return 1;
         }
-        if (a.time.valueOf() > b.time.valueOf()) {
+        if (new Date(a.time.valueOf()) > new Date(b.time.valueOf())) {
           return -1;
         }
         return 0;

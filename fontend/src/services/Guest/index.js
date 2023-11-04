@@ -24,3 +24,7 @@ export const getChapterDetail = (id) => {
 export const getCategories = () => {
   return axios.get(`/api/categories`);
 };
+
+export const getRecommendation = () => {
+  return axios.get('/api/me/recommendation');
+};

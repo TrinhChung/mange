@@ -4,9 +4,12 @@ import TopManga from '../home/TopManga';
 import { useContext, useState } from 'react';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import Manga from '../../../components/manga/Manga';
+import { proposes } from '../home/index';
 
 const History = () => {
-  const { histories, historiesAccount } = useContext(MangaContext);
+  const { histories, historiesAccount, topMangaWeek, topMangaMonth } =
+    useContext(MangaContext);
+
   const [key, setKey] = useState('1');
 
   const items = [
@@ -44,6 +47,7 @@ const History = () => {
             <Row gutter={[16, 24]}>
               {key === '1'
                 ? histories.map((item) => {
+                    console.log(item);
                     return <Manga manga={item} />;
                   })
                 : historiesAccount.map((item) => {
@@ -52,7 +56,7 @@ const History = () => {
             </Row>
           </Col>
           <Col span={8}>
-            <TopManga manga={histories} />
+            <TopManga mangaWeek={topMangaWeek} mangaMonth={topMangaMonth} />
           </Col>
         </Row>
       </Col>

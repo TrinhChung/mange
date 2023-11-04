@@ -1,4 +1,4 @@
-import { Col, Image, Row, Skeleton, Typography } from 'antd';
+import { Col, Row } from 'antd';
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hostImg } from '../../const/index';
@@ -14,7 +14,7 @@ const Manga = ({ manga = null }) => {
           src={manga?.thumbnail ? hostImg + manga.thumbnail : ''}
           style={{ width: 150, height: 200, cursor: 'pointer' }}
           onClick={() => {
-            if (manga && manga.slug) {
+            if (manga?.id) {
               navigate(`/detail-manga/${manga.id}`);
             }
           }}

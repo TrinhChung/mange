@@ -1,5 +1,9 @@
 import { createContext, useState, useEffect, useContext } from 'react';
-import { getMangaNewUpdate, getCategories } from '../../services/Guest/index';
+import {
+  getMangaNewUpdate,
+  getCategories,
+  getRecommendation,
+} from '../../services/Guest/index';
 import { AuthContext } from '../authProvider';
 import { getHistories } from '../../services/User/index';
 import { buildHistories } from '../../utils/commonFunc';
@@ -35,10 +39,10 @@ export default function MangaProvider({ children }) {
     }
   };
 
-  const fetchMangaPropose = async ({ page = 1 }) => {
-    const data = await getMangaNewUpdate({ page: page });
-    if (data.status === 200 && data?.data) {
-      setProposes(data.data.slice(0, 15));
+  const fetchMangaPropose = async () => {
+    const data = await getRecommendation();
+    if (data.status === 200) {
+      setProposes(data?.data);
     }
   };
 
@@ -99,7 +103,7 @@ export default function MangaProvider({ children }) {
 
   useEffect(() => {
     fetchMangaNewUpdate({ page: 1 });
-    fetchMangaPropose({ page: 1 });
+    fetchMangaPropose();
     fetchCategories();
     fetchTopManga({ page: 1 });
   }, []);

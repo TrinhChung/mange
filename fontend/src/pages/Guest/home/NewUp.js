@@ -13,8 +13,6 @@ const NewUp = ({
   page = 1,
   title = 'Mới cập nhật',
 }) => {
-  console.log(total);
-
   return (
     <Row className="box-content" style={{ marginRight: 20 }}>
       <Col>
