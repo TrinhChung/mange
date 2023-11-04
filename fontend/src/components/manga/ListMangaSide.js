@@ -4,7 +4,6 @@ import Title from '../layout/Title';
 import MangaVertical from './MangaVertical';
 
 const ListMangaSide = ({ listManga = [], title, isDate = true }) => {
-  console.log(listManga);
   return (
     <Row className="box-content">
       <Col span={24}>

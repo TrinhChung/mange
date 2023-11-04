@@ -8,6 +8,7 @@ import LinkCustom from '../../components/layout/LinkCustom';
 import DetailChapter from '../Guest/DetailChapter';
 import History from '../Guest/History';
 import Search from '../Guest/Search';
+import Follow from '../Guest/Follow';
 
 const User = () => {
   const items = [
@@ -42,6 +43,7 @@ const User = () => {
         <Route path="/profile/*" element={<Profile />} />
         <Route path="/history" element={<History />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/follow" element={<Follow />} />
       </Routes>
     </HomeLayout>
   );

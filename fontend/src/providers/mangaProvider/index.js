@@ -40,9 +40,13 @@ export default function MangaProvider({ children }) {
   };
 
   const fetchMangaPropose = async () => {
-    const data = await getRecommendation();
-    if (data.status === 200) {
-      setProposes(data?.data);
+    try {
+      const data = await getRecommendation();
+      if (data.status === 200) {
+        setProposes(data?.data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

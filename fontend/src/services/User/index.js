@@ -7,3 +7,11 @@ export const getHistories = () => {
 export const getRecommendation = () => {
   return axios.get('/api/me/recommendation');
 };
+
+export const mangaBookmark = (id) => {
+  return axios.post(`/api/mangas/bookmark/${id}`);
+};
+
+export const getMangasBookmark = () => {
+  return axios.get('/api/mangas/bookmarked');
+};

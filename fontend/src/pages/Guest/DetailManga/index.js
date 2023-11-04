@@ -8,6 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getMangaDetail } from '../../../services/Guest/index';
 import { MangaContext } from '../../../providers/mangaProvider/index';
 import { toast } from 'react-toastify';
+import Comment from './Comment';
 
 const DetailManga = () => {
   const { histories } = useContext(MangaContext);
@@ -49,6 +50,7 @@ const DetailManga = () => {
               nameManga={manga?.slug}
               loading={loading}
             />
+            <Comment comments={null} />
           </Col>
           <Col span={8}>
             <ListMangaSide

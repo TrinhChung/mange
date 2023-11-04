@@ -9,6 +9,7 @@ import Auth from '../Auth';
 import TestUploadChapter from './TestUploadChapter';
 import History from './History';
 import Search from './Search';
+import Follow from './Follow';
 
 const Guest = () => {
   const items = [
@@ -56,8 +57,9 @@ const Guest = () => {
       />
       <Route path="/auth/*" element={<Auth />} />
       <Route path="/history" element={wrapLayout(<History />)} />
-      <Route path="/*" element={wrapLayout(<div>Chua dinh nghia</div>)} />
+      <Route path="/follow" element={wrapLayout(<Follow />)} />
       <Route path="/search" element={wrapLayout(<Search />)} />
+      <Route path="/*" element={wrapLayout(<div>Chua dinh nghia</div>)} />
     </Routes>
   );
 };
