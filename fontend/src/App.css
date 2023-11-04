@@ -146,6 +146,10 @@
   background-color: var(--jade);
 }
 
+.bg-color-gray {
+  background-color: var(--gray);
+}
+
 .color-main {
   color: var(--color-main);
 }
