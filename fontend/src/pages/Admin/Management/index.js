@@ -12,11 +12,12 @@ import { Col, Row } from 'antd';
 import AccountManagement from './AccountManagement';
 import StoryManagement from './StoryManagement';
 import CommentManagement from './CommentManagement';
+import General from './General';
 
 const menu = [
   {
     content: 'Thông tin chung',
-    path: null,
+    path: '/management',
     icon: <InfoCircleOutlined />,
   },
   {
@@ -52,6 +53,7 @@ const Management = () => {
           </Col>
           <Col span={16}>
             <Routes>
+              <Route path="/" element={<General/>} />
               <Route path="account" element={<AccountManagement />} />
               <Route path="comment" element={<CommentManagement />} />
               <Route path="story" element={<StoryManagement />} />
