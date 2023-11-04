@@ -5,15 +5,31 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MangaCollection;
 use App\Models\Manga;
 use App\Traits\AuthTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class MangaController extends Controller
 {
     use AuthTrait;
 
     const REPORT_LIMIT = 100;
+
+    private function roundUpToNextFive(float $number)
+    {
+        printf("The number is %.2f \n", $number);
+        $decimalPart = $number - floor($number);
+        $result = $number;
+        if ($decimalPart > 0.5) {
+            $result = $decimalPart - 0.50 > 0.20 ? ceil($decimalPart) + floor($number) : (ceil($decimalPart) / 2) + floor($number);
+        } elseif ($decimalPart < 0.5) {
+            $result = $decimalPart - 0.50 < -0.20 ? floor($decimalPart) + floor($number) : (ceil($decimalPart) / 2) + floor($number);
+        }
+
+        return $result;
+    }
 
     public function index(Request $request)
     {
@@ -22,10 +38,11 @@ class MangaController extends Controller
             'page' => 'integer|min:1',
             'category' => 'array',
             'search' => 'string',
+            'time' => 'string|in:day,month,week',
             'status' => 'integer|in:0,1',
             'sort' => [
                 'string',
-                'regex:/^([+-]?)(updated_at|follow_count|view_count|comment_count|vote_score|status)$/',
+                'regex:/^([+-]?)(updated_at|follow_count|view_count|comment_count|vote_score|status|top_view_count)$/',
             ],
         ], [
             'sort.regex' => 'The sort field must be one of: updated_at, follow_count, view_count, comment_count, vote_score, status',
@@ -37,6 +54,7 @@ class MangaController extends Controller
         $search_query = $fields['search'] ?? '';
         $status = $fields['status'] ?? null;
         $sort = $fields['sort'] ?? '-updated_at';
+        $time = $fields['time'] ?? null;
 
         $query = Manga::query()->select(['id', 'name', 'slug', 'thumbnail', 'view as view_count', 'status'])
             ->with(['chapters', 'categories', 'othernames', 'authors'])
@@ -64,6 +82,23 @@ class MangaController extends Controller
                     $subQuery->where('name', 'like', "%{$search_query}%");
                 });
             });
+        }
+
+        if (substr($sort, 1) === 'top_view_count' && $time) {
+            if ($time === 'day') {
+                $query->withCount(['views as top_view_count' => function ($subQuery) {
+                    $subQuery->whereDate('created_at', '>=', Carbon::now()->subDay());
+                }]);
+            } elseif ($time === 'month') {
+                $query->withCount(['views as top_view_count' => function ($subQuery) {
+                    $subQuery->whereMonth('created_at', '>=', Carbon::now()->subMonth());
+                }]);
+            } elseif ($time === 'week') {
+                $query->withCount(['views as top_view_count' => function ($subQuery) {
+                    $subQuery->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                }]);
+            }
+            $query->having('top_view_count', '>', 0);
         }
 
         // Filter theo status
@@ -212,5 +247,41 @@ class MangaController extends Controller
             'data' => new MangaCollection($reportedMangas),
             'message' => 'success',
         ], 200);
+    }
+
+    public function getRecommendation(Request $request)
+    {
+        $user = $request->user();
+        $votedMangas = $user->voted_mangas;
+        $viewedMangas = $user->viewed_mangas()->selectRaw('views.manga_id, count(*) as views')->groupBy('views.manga_id')->get();
+        $totalView = $user->viewed_mangas()->count();
+        $avgView = $this->roundUpToNextFive($totalView / count($viewedMangas));
+        $viewedMangas = $viewedMangas->map(function ($manga) use ($avgView) {
+            return [
+                'id' => $manga->manga_id - 1,
+                'rate' => ($manga->views / $avgView) * 2.5,
+            ];
+        });
+        $items = [];
+        $ratings = [];
+        foreach ($votedMangas as $manga) {
+            $items[] = $manga->id - 1;
+            $ratings[] = $manga->pivot->score;
+        }
+        foreach ($viewedMangas as $manga) {
+            if (! in_array($manga['id'], $items)) {
+                $items[] = $manga['id'];
+                $ratings[] = $manga['rate'];
+            }
+        }
+
+        $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
+        $mangas = Manga::whereIn('id', $recommendation)->get();
+
+        return response()->json([
+            'success' => 1,
+            'data' => new MangaCollection($mangas),
+            'message' => 'Đề xuất thành công',
+        ]);
     }
 }
