@@ -134,7 +134,7 @@ class MangaController extends Controller
             'id' => 'required|integer|min:1',
         ]);
 
-        $manga = Manga::query()->select(['mangas.*', 'view as view_count'])
+        $manga = Manga::query()->select(['mangas.*', 'view as view_count', 'slug'])
             ->with(['othernames', 'authors'])
             ->with(['chapters' => function ($subQuery) {
                 $subQuery->orderBy('id', 'desc');
@@ -183,7 +183,7 @@ class MangaController extends Controller
         $page = $fields['page'] ?? 1;
         $search_query = $fields['search'] ?? '';
 
-        $query = Manga::query()->select(['mangas.id', 'name', 'thumbnail'])
+        $query = Manga::query()->select(['mangas.id', 'name', 'thumbnail', 'slug'])
             ->join('bookmarks', 'mangas.id', '=', 'bookmarks.manga_id')
             ->where('bookmarks.user_id', $request->user()->id);
 
