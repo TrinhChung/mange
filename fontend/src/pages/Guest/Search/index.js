@@ -10,7 +10,6 @@ import { getMangaNewUpdate } from '../../../services/Guest/index';
 
 const Search = () => {
   const { newUpdates, categories } = useContext(MangaContext);
-  const location = useLocation();
   const [results, setResults] = useState(newUpdates);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);

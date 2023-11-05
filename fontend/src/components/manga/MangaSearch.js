@@ -1,6 +1,5 @@
 import React from 'react';
 import { Col, Image, Row } from 'antd';
-import { StarFilled } from '@ant-design/icons';
 import { hostImg } from '../../const/index';
 import { useNavigate } from 'react-router-dom';
 import './MangaSearch.scss';

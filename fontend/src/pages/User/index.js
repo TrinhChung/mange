@@ -9,6 +9,8 @@ import DetailChapter from '../Guest/DetailChapter';
 import History from '../Guest/History';
 import Search from '../Guest/Search';
 import Follow from '../Guest/Follow';
+import { DownOutlined } from '@ant-design/icons';
+import WrapCategory from '../../components/layout/WrapCategory';
 
 const User = () => {
   const items = [
@@ -29,7 +31,7 @@ const User = () => {
       key: 'search',
     },
     {
-      label: <LinkCustom to={'/category'} label="Thể loại" />,
+      label: <LinkCustom to={'/search'} label={<WrapCategory />} />,
       key: 'category',
     },
   ];

@@ -10,6 +10,7 @@ import TestUploadChapter from './TestUploadChapter';
 import History from './History';
 import Search from './Search';
 import Follow from './Follow';
+import WrapCategory from '../../components/layout/WrapCategory';
 
 const Guest = () => {
   const items = [
@@ -26,7 +27,7 @@ const Guest = () => {
       key: 'follow',
     },
     {
-      label: <LinkCustom to={'/category'} label="Thể loại" />,
+      label: <LinkCustom to={'/category'} label={<WrapCategory />} />,
       key: 'category',
     },
     {

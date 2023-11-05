@@ -8,6 +8,7 @@ const DropdownCustom = ({
   top = 55,
   parent,
   children,
+  width = '100%',
 }) => {
   useEffect(() => {
     function handleClickOutside(event) {
@@ -26,7 +27,10 @@ const DropdownCustom = ({
       className={`dropdown-custom box-shadow ${
         open === false ? 'hidden-dropdown' : ''
       }`}
-      style={{ top: top }}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+      style={{ top: top, width: width }}
     >
       {children}
     </Row>
