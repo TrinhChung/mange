@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GetCommentSentimentAndModeration;
 use App\Models\Comment;
 use App\Rules\Reaction;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -42,6 +43,13 @@ class CommentController extends Controller
 
         $comment->user;
         $comment->childs;
+
+        // Tạo job tính sentiment và moderate comment
+        // @codeCoverageIgnoreStart
+        if (env('APP_ENV') !== 'testing' && env('GOOGLE_API_KEY')) {
+            dispatch(new GetCommentSentimentAndModeration($comment->id));
+        }
+        // @codeCoverageIgnoreEnd
 
         return response()->json([
             'success' => 1,
