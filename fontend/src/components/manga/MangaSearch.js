@@ -3,22 +3,16 @@ import { Col, Image, Row } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 import { hostImg } from '../../const/index';
 import { useNavigate } from 'react-router-dom';
+import './MangaSearch.scss';
 
 const MangaSearch = ({ manga = {} }) => {
   const navigate = useNavigate();
 
   return (
-    <Row
-      style={{
-        paddingTop: 10,
-        justifyContent: 'space-between',
-        color: 'black',
-      }}
-      className="manga-search"
-    >
+    <Row className="manga-search">
       <Col span={24}>
         <Row>
-          <Col span={4}>
+          <Col style={{ paddingLeft: 10 }}>
             <Image
               width={50}
               height={70}
@@ -35,11 +29,16 @@ const MangaSearch = ({ manga = {} }) => {
               style={{
                 fontSize: 15,
                 fontWeight: 'bold',
+                color: 'black',
+                paddingBottom: 4,
               }}
             >
               {manga ? manga?.name : 'Manga'}
             </Row>
-            <Row>{manga ? manga?.last_3_chapters[0]?.name : '0'}</Row>
+            <Row style={{ color: 'var(--gray)' }}>
+              {manga ? manga?.last_3_chapters[0]?.name : '0'}
+            </Row>
+
             <Row
               style={{
                 color: 'var(--color-main)',
@@ -47,8 +46,13 @@ const MangaSearch = ({ manga = {} }) => {
               }}
               className="name"
             >
-              {manga ? manga?.rating : '4.9'}
-              <StarFilled style={{ paddingLeft: 5 }} />
+              {manga?.authors && manga?.authors.length > 0 ? (
+                manga?.authors.map((author) => (
+                  <label className="text-author">{author}</label>
+                ))
+              ) : (
+                <label className="text-author">Đang cập nhật</label>
+              )}
             </Row>
           </Col>
         </Row>
