@@ -50,7 +50,9 @@ class MangaController extends Controller
 
         $per_page = $fields['per_page'] ?? 10;
         $page = $fields['page'] ?? 1;
-        $category_ids = $fields['category'] ?? [];
+        $category_ids = array_filter($fields['category'], function ($category_id) {
+            return $category_id !== null;
+        }) ?? [];
         $search_query = $fields['search'] ?? '';
         $status = $fields['status'] ?? null;
         $sort = $fields['sort'] ?? '-updated_at';
