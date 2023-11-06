@@ -33,15 +33,16 @@ class MangaController extends Controller
     public function index(Request $request)
     {
         $fields = $this->validate($request, [
-            'per_page' => 'integer|min:1',
-            'page' => 'integer|min:1',
+            'per_page' => 'integer|min:1|nullable',
+            'page' => 'integer|min:1|nullable',
             'category' => 'array',
-            'search' => 'string',
+            'search' => 'string|nullable',
             'time' => 'string|in:day,month,week',
-            'status' => 'integer|in:0,1',
+            'status' => 'integer|in:0,1|nullable',
             'sort' => [
                 'string',
                 'regex:/^([+-]?)(updated_at|follow_count|view_count|comment_count|vote_score|status|top_view_count)$/',
+                'nullable',
             ],
         ], [
             'sort.regex' => 'The sort field must be one of: updated_at, follow_count, view_count, comment_count, vote_score, status',
