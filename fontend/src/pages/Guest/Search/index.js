@@ -9,6 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getMangaNewUpdate } from '../../../services/Guest/index';
 
 const Search = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const { newUpdates, categories } = useContext(MangaContext);
   const [results, setResults] = useState(newUpdates);
   const [page, setPage] = useState(1);
@@ -16,6 +19,7 @@ const Search = () => {
   const [category, setCategory] = useState([]);
   const [status, setStatus] = useState(-1);
   const [sortBy, setSortBy] = useState('0');
+  const [search, setSearch] = useState('');
 
   const criteria = [
     { label: 'Ngày cập nhật', value: 'updated_at' },
@@ -33,6 +37,20 @@ const Search = () => {
     setResults(newUpdates);
     setLoading(false);
   }, [newUpdates]);
+
+  useEffect(() => {
+    setSearch(searchParams.get('search') ? searchParams.get('search') : '');
+    const queryCategories = searchParams.get('category')
+      ? searchParams.get('category')
+      : '';
+
+    const category = queryCategories.split(',');
+    if (category.length > 0) {
+      setCategory(category);
+    } else {
+      setCategory(null);
+    }
+  }, [searchParams.toString()]);
 
   const setPageNewUp = ({ page }) => {
     setPage(page);
@@ -74,13 +92,16 @@ const Search = () => {
         params['sort'] = sortBy;
       }
     }
+
+    params['search'] = search;
+
     searchManga(params);
-  }, [category, status, page, sortBy]);
+  }, [category, status, page, sortBy, search]);
 
   const findCategory = (key) => {
     if (!category || !key) return -1;
     for (let i = 0; i < category.length; i++) {
-      if (category[i] === key) {
+      if (category[i] == key) {
         return i;
       }
     }
@@ -111,7 +132,7 @@ const Search = () => {
                     Từ khóa
                   </Col>
                   <Col span={16}>
-                    <Row gutter={[8, 8]}>Từ khóa</Row>
+                    <Row gutter={[8, 8]}>{search}</Row>
                   </Col>
                 </Row>
                 <Row style={{ paddingTop: 16 }}>
@@ -209,11 +230,15 @@ const Search = () => {
                           onClick={() => {
                             const check = findCategory(item.id);
                             if (check === -1) {
-                              setCategory([...category, item.id]);
+                              const newCategory = [...category, item.id];
+                              setCategory(newCategory);
+                              searchParams.set('category', newCategory);
                             } else {
                               const newCategory = removeCategoryByIndex(check);
                               setCategory(newCategory);
+                              searchParams.set('category', newCategory);
                             }
+                            navigate('/search/?' + searchParams.toString());
                           }}
                         >
                           <label style={{ cursor: 'pointer' }}>

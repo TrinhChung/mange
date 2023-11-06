@@ -25,10 +25,15 @@ export default function MangaProvider({ children }) {
   const fetchMangaNewUpdate = async ({ page = 1 }) => {
     setLoadingNewUpdate(true);
     setCurrentPageNewUpdate(page);
-    const data = await getMangaNewUpdate({ page: page });
-    if (data.status === 200 && data.data) {
-      setNewUpdates({ total: data.meta.last_page, manga: data.data });
+    try {
+      const data = await getMangaNewUpdate({ page: page });
+      if (data.status === 200 && data.data) {
+        setNewUpdates({ total: data.meta.last_page, manga: data.data });
+      }
+    } catch (error) {
+      console.log(error);
     }
+
     setLoadingNewUpdate(false);
   };
 

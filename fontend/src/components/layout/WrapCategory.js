@@ -3,8 +3,12 @@ import { DownOutlined } from '@ant-design/icons';
 import DropdownCustom from './DropdownCustom';
 import { Col, Row } from 'antd';
 import { MangaContext } from '../../providers/mangaProvider/index';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './WrapCategory.scss';
 const WrapCategory = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const { categories } = useContext(MangaContext);
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const wrapperDropdown = useRef(null);
@@ -29,7 +33,17 @@ const WrapCategory = () => {
           <Row>
             {categories &&
               categories.map((category) => {
-                return <Col className="category-label">{category?.name}</Col>;
+                return (
+                  <Col
+                    className="category-label"
+                    onClick={() => {
+                      searchParams.set('category', category.id);
+                      navigate('/search?' + searchParams.toString());
+                    }}
+                  >
+                    {category?.name}
+                  </Col>
+                );
               })}
           </Row>
         </Col>

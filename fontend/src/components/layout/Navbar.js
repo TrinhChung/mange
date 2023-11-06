@@ -24,14 +24,12 @@ const Navbar = ({ data }) => {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const location = useLocation();
   const wrapperDropdown = useRef(null);
-  const [results, setResults] = useState([]);
-
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-
+  const [results, setResults] = useState([]);
   const [key, setKey] = useState(
-    searchParams.get('searchInput') ? searchParams.get('searchInput') : ''
+    searchParams.get('search') ? searchParams.get('search') : ''
   );
 
   const onClick = (e) => {
@@ -39,15 +37,20 @@ const Navbar = ({ data }) => {
   };
 
   const handleSearch = () => {
-    console.log(key);
-    console.log(searchParams);
+    if (key && key.length > 0) {
+      searchParams.set('search', key);
+      navigate('/search/?' + searchParams.toString());
+    }
   };
 
   const handleChangeInputSearch = async (e) => {
     setKey(e.target.value);
-    if (e.target.value === null) {
+    if (e.target.value === null && e.target.value.length === 0) {
+      navigate(window.location.pathname);
       setResults([]);
     } else {
+      searchParams.set('search', e.target.value);
+      navigate(window.location.pathname + `?search=${e.target.value}`);
       try {
         const data = await getMangaNewUpdate({
           page: 1,
@@ -55,7 +58,6 @@ const Navbar = ({ data }) => {
         });
         if (data && data.success === 1) {
           setResults(data?.data);
-          console.log(data?.data);
         }
       } catch (error) {
         console.log(error);
@@ -169,7 +171,7 @@ const Navbar = ({ data }) => {
               <Input
                 placeholder="Tìm truyện"
                 className="input-custom"
-                defaultValue={searchParams.get('searchInput')}
+                defaultValue={key}
                 size="large"
                 onChange={handleChangeInputSearch}
                 allowClear={true}
