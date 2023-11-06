@@ -2,11 +2,6 @@
 
 describe('Spec đăng nhập', () => {
   beforeEach(() => {
-    cy.intercept('GET', 'http://localhost:6001/socket.io/*', {
-      body: 'socket.io',
-    }).as('socket.io');
-    cy.intercept('GET', 'http://localhost:8000/api/mangas*', {});
-
     cy.visit('http://localhost:3000/auth/login');
   });
 

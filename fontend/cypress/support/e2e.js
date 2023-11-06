@@ -20,3 +20,15 @@ import './commands';
 // require('./commands')
 
 import '@cypress/code-coverage/support';
+
+beforeEach(() => {
+  cy.intercept('GET', 'http://localhost:6001/socket.io/*', {
+    body: 'socket.io',
+  }).as('socket.io');
+  cy.intercept('GET', 'http://localhost:8000/api/mangas*', {});
+  cy.intercept('GET', 'http://localhost:8000/api/me/recommendation', {});
+  cy.intercept('GET', 'http://localhost:8000/api/categories', {
+    statusCode: 200,
+    fixture: 'categories.json',
+  }).as('categories');
+});

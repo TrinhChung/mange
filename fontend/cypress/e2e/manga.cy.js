@@ -2,10 +2,6 @@
 
 describe('Spec Xem chi tiết truyện', () => {
   beforeEach(() => {
-    // Stub network request cho socket.io hết đỏ
-    cy.intercept('GET', 'http://localhost:6001/socket.io/*', {
-      body: 'socket.io',
-    }).as('socket.io');
     cy.intercept('GET', '/api/mangas?page=1&per_page=30', {
       statusCode: 200,
       fixture: 'manga/mangas_page1.json',

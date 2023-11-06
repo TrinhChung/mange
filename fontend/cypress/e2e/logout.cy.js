@@ -2,11 +2,6 @@
 
 describe('Spec Đăng xuất', () => {
   beforeEach(() => {
-    // Stub network request cho socket.io hết đỏ
-    cy.intercept('GET', 'http://localhost:6001/socket.io/*', {
-      body: 'socket.io',
-    }).as('socket.io');
-
     cy.visit('http://localhost:3000/auth/login');
 
     cy.intercept('POST', '/api/auth/login', {
