@@ -76,7 +76,7 @@ class CommentController extends Controller
             $comments->where('chapter_id', $request->chapter_id);
         }
 
-        $data = $comments->with('childs', 'user')->get();
+        $data = $comments->with('childs', 'user')->paginate(10);
 
         if ($data->isEmpty()) {
             throw new ModelNotFoundException();
