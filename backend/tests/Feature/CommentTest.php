@@ -96,7 +96,7 @@ class CommentTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'data' => [
+            'data' => ['data' => [
                 '*' => [
                     'id',
                     'manga_id',
@@ -124,7 +124,7 @@ class CommentTest extends TestCase
                                     'user',
                                 ]],
                             'user']],
-                    'user']]]);
+                    'user']]]]);
     }
 
     public function test_get_comments_success_on_manga()

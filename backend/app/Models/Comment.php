@@ -26,6 +26,16 @@ class Comment extends Pivot
         'parent_id',
     ];
 
+    public function getCreatedAtAttribute($value)
+    {
+        return $this->asDateTime($value)->format('j/n/Y');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return $this->asDateTime($value)->format('j/n/Y');
+    }
+
     protected $table = 'comments';
 
     public function reported_by(): MorphToMany
