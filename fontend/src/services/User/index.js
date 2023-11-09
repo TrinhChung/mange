@@ -15,3 +15,15 @@ export const mangaBookmark = (id) => {
 export const getMangasBookmark = () => {
   return axios.get('/api/mangas/bookmarked');
 };
+
+export const createCommentChapter = ({
+  id = 1,
+  comment = {},
+  type = 'chapters',
+}) => {
+  return axios.post(`/api/${type}/${id}/comment`, comment);
+};
+
+export const getCommentChapter = ({ id = 1, type = 'chapters', page = 1 }) => {
+  return axios.get(`/api/${type}/${id}/comments?page=${page}`);
+};

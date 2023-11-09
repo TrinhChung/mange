@@ -5,7 +5,11 @@ import { UserOutlined } from '@ant-design/icons';
 import './Manga.scss';
 import TextArea from 'antd/es/input/TextArea';
 
-const CommentComponent = ({ comment = {} }) => {
+const CommentComponent = ({
+  comment = {},
+  id = { id },
+  handleComment = () => {},
+}) => {
   const [reply, setReply] = useState(false);
 
   return (
@@ -14,15 +18,15 @@ const CommentComponent = ({ comment = {} }) => {
         <Avatar
           size={60}
           icon={!comment ? <UserOutlined /> : null}
-          src={comment?.user?.image ? comment?.user?.image : null}
+          src={comment?.user?.avatar ? comment?.user?.avatar : null}
         />
       </Col>
       <Col span={22}>
         <Row style={{ fontWeight: 'bold', fontSize: 16 }}>
-          {comment?.user?.name ? comment.user.name : 'User'}
+          {comment?.user?.username ? comment.user.username : 'User'}
         </Row>
         <Row style={{ fontSize: 16 }}>
-          {comment ? comment.content : 'Content'}
+          {comment ? comment.comment : 'Content'}
         </Row>
         <Row style={{ gap: 8 }}>
           <Col
@@ -42,7 +46,7 @@ const CommentComponent = ({ comment = {} }) => {
             Trả lời
           </Col>
           <Col style={{ color: 'var(--gray)', fontWeight: 'bold' }}>
-            {comment?.date ? comment.date : 'Date'}
+            {comment?.created_at ? comment.created_at : 'Date'}
           </Col>
         </Row>
         {reply && (
@@ -50,8 +54,18 @@ const CommentComponent = ({ comment = {} }) => {
             <TextArea
               rows={4}
               placeholder="VIết bình luận"
-              maxLength={6}
+              maxLength={1000}
               autoFocus={true}
+              onBlur={() => {
+                setReply(false);
+              }}
+              onPressEnter={(e) => {
+                handleComment({
+                  id: id,
+                  comment: { comment: e.target.value, parent_id: comment.id },
+                });
+                e.target.value = '';
+              }}
             />
           </Row>
         )}

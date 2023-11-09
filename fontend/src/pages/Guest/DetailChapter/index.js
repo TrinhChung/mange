@@ -6,12 +6,14 @@ import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons';
 import Comment from '../DetailManga/Comment';
 import ImageCustom from '../../../components/manga/ImageCustom';
 import { MangaContext } from '../../../providers/mangaProvider/index';
+import { getCommentChapter } from '../../../services/User/index';
 
 const DetailChapter = () => {
   const [images, setImages] = useState([]);
   const [chapters, setChapters] = useState([]);
   const [index, setIndex] = useState(0);
   const { name, id } = useParams();
+  const [comments, setComments] = useState([]);
   const chapterElement = useRef(null);
   const navigate = useNavigate();
 
@@ -172,7 +174,7 @@ const DetailChapter = () => {
               return <ImageCustom src={`${image}`} index={index} />;
             })}
         </Row>
-        <Comment comments={null} />
+        <Comment id={id} />
       </Col>
     </Row>
   );

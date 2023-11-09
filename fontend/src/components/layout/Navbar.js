@@ -39,8 +39,10 @@ const Navbar = ({ data }) => {
   const handleSearch = () => {
     if (key && key.length > 0) {
       searchParams.set('search', key);
-      navigate('/search/?' + searchParams.toString());
+    } else {
+      searchParams.removeItem('search');
     }
+    navigate('/search/?' + searchParams.toString());
   };
 
   const handleChangeInputSearch = async (e) => {
