@@ -21,7 +21,7 @@ const CommentComponent = ({
           src={comment?.user?.avatar ? comment?.user?.avatar : null}
         />
       </Col>
-      <Col span={22}>
+      <Col span={22} style={{ paddingLeft: 10 }}>
         <Row style={{ fontWeight: 'bold', fontSize: 16 }}>
           {comment?.user?.username ? comment.user.username : 'User'}
         </Row>

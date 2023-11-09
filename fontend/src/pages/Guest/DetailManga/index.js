@@ -50,7 +50,7 @@ const DetailManga = () => {
               nameManga={manga?.slug}
               loading={loading}
             />
-            <Comment comments={null} />
+            <Comment isChapter={false} id={name} />
           </Col>
           <Col span={8}>
             <ListMangaSide
