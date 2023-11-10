@@ -108,11 +108,11 @@ export default function MangaProvider({ children }) {
 
   useEffect(() => {
     fetchMangaHistory();
+    fetchMangaPropose();
   }, [authUser]);
 
   useEffect(() => {
     fetchMangaNewUpdate({ page: 1 });
-    fetchMangaPropose();
     fetchCategories();
     fetchTopManga({ page: 1 });
   }, []);
