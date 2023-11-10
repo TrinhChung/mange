@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
 import { Col, Row, Rate, Image, Skeleton } from 'antd';
 import RowInfo from './RowInfo';
 import { hostImg } from '../../../const/index';
@@ -7,10 +7,12 @@ import ConfirmModal from '../../../components/layout/ConfirmModal';
 import { AuthContext } from '../../../providers/authProvider';
 import { mangaBookmark } from '../../../services/User/index';
 import { toast } from 'react-toastify';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
 
 const Overview = ({ manga = null, loading = true }) => {
   const { authUser } = useContext(AuthContext);
+  const [change, setChange] = useState(false);
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -106,6 +108,7 @@ const Overview = ({ manga = null, loading = true }) => {
       const data = await mangaBookmark(id);
       if (data.status === 200 && data.success == 1) {
         toast.success(data?.message, 2);
+        setChange(!change);
       } else {
         toast.error('Theo dõi thất bại', 2);
       }
@@ -114,6 +117,14 @@ const Overview = ({ manga = null, loading = true }) => {
       toast.error('Theo dõi thất bại', 2);
     }
   };
+
+  const followElement = useMemo(() => {
+    return manga?.user_bookmarked === true ? (
+      <CheckOutlined />
+    ) : (
+      <PlusOutlined />
+    );
+  }, [change]);
 
   return (
     <Row className="box-content" style={{ marginRight: 20 }}>
@@ -134,7 +145,7 @@ const Overview = ({ manga = null, loading = true }) => {
           <Row>
             <Col span={6}>
               <Image
-                src={manga ? hostImg + manga.thumbnail : null}
+                src={manga?.thumbnail ? hostImg + manga?.thumbnail : null}
                 width={180}
                 height={240}
                 preview={false}
@@ -229,10 +240,11 @@ const Overview = ({ manga = null, loading = true }) => {
                       setIsModalOpen(true);
                     } else {
                       fetchMangaBookmark(manga?.id);
+                      manga.user_bookmarked = !manga.user_bookmarked;
                     }
                   }}
                 >
-                  <PlusOutlined />
+                  {followElement}
                   Theo dõi
                 </Col>
               </Row>

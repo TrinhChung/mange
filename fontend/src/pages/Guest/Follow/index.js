@@ -18,7 +18,7 @@ const Follow = () => {
       const data = await getMangasBookmark();
 
       if (data.status === 200) {
-        setFollows(data?.data);
+        setFollows(data?.data?.data);
       }
     } catch (error) {
       console.log(error);
