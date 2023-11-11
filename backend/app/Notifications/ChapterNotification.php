@@ -2,21 +2,24 @@
 
 namespace App\Notifications;
 
+use App\Models\Chapter;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class MyNotification extends Notification
+class ChapterNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    protected $chapter;
+
+    public function __construct(Chapter $chapter)
     {
         //
+        $this->chapter = $chapter->load('manga');
     }
 
     /**
@@ -26,7 +29,7 @@ class MyNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -47,15 +50,12 @@ class MyNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        $manga = $this->chapter->manga;
+
         return [
             //
+            'content' => "Bộ truyện {$manga->name} đã cập nhật {$this->chapter->name}. Đến xem ngay!",
+            'chapter_id' => $this->chapter->id,
         ];
-    }
-
-    public function toBroadcast(object $notifiable): BroadcastMessage
-    {
-        return new BroadcastMessage([
-            'message' => 'notified',
-        ]);
     }
 }

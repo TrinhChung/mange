@@ -5,42 +5,49 @@ import { AuthContext } from './providers/authProvider';
 import { BrowserRouter } from 'react-router-dom';
 import Guest from './pages/Guest';
 import User from './pages/User';
-import Echo from 'laravel-echo';
-import Socketio from 'socket.io-client';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Admin from './pages/Admin';
+import Echo from 'laravel-echo';
+import Socketio from 'socket.io-client';
+import { notification } from 'antd';
 function App() {
   const { authUser, setAuthUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    window.io = require('socket.io-client');
+  window.io = require('socket.io-client');
 
-    window.Echo = new Echo({
-      client: Socketio,
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken')?.slice(1, localStorage.getItem('accessToken').length - 1);
+
+    window.echo = new Echo({
       broadcaster: 'socket.io',
+      auth: {
+        headers:
+        {
+            Authorization: `Bearer ${token}`
+        }
+      },
       host:
         process.env.NODE_ENV === 'production'
           ? 'https://api.mange.uetvnu.id.vn:6001'
           : 'http://localhost:6001',
     });
 
-    window.Echo.connector.socket.on('connect', function () {
+    window.echo.connector.socket.on('connect', function () {
       // console.log('connect success');
     });
 
-    window.Echo.connector.socket.on('disconnect', function () {
+    window.echo.connector.socket.on('disconnect', function () {
       // console.log('disconnected');
     });
 
-    window.Echo.channel('laravel_database_my-channel').listen(
-      '.my-event',
-      (e) => {
-        // console.log(e);
-      }
-    );
-  }, []);
+    if(authUser) {
+      window.echo.channel(`laravel_database_private-App.Models.User.${authUser.id}`).notification((notification) => {
+        console.log(notification);
+      })
+    }
+  }, [authUser]);
 
   return (
     <BrowserRouter>
