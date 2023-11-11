@@ -7,7 +7,7 @@ const EchoServer = require('laravel-echo-server');
 const NODE_ENV = process.env.NODE_ENV;
 
 const options = {
-	"authHost": process.env.LARAVEL_ECHO_AUTH_HOST,
+	"authHost": process.env.NODE_ENV === 'production' ? process.env.LARAVEL_ECHO_AUTH_HOST : 'http://localhost:8000',
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -33,7 +33,7 @@ const options = {
 	"sslCertChainPath": process.env.LARAVEL_ECHO_SSL_CERT_CHAIN_PATH,
 	"sslPassphrase": "",
 	"apiOriginAllow": {
-		"allowCors": false,
+		"allowCors": true,
     "allowOrigin": "*",
     "allowMethods": "",
     "allowHeaders": ""

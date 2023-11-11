@@ -7,6 +7,7 @@ use App\Jobs\UploadImage;
 use App\Models\Chapter;
 use App\Models\Manga;
 use App\Models\View;
+use App\Notifications\ChapterNotification;
 use App\Rules\ChapterImageSortOderRule;
 use App\Rules\ChapterZipRule;
 use App\Traits\AuthTrait;
@@ -15,6 +16,7 @@ use File;
 use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -154,7 +156,7 @@ class ChapterController extends Controller
             ], 422);
         }
 
-        $chapter = Chapter::findOrFail($fields['chapter_id']);
+        $chapter = Chapter::findOrFail($fields['chapter_id'])->load('manga');
         $manga = $chapter->manga;
         $this->authorize('updateManga', $manga);
 
@@ -227,11 +229,14 @@ class ChapterController extends Controller
                         echo 'data: Thành công';
                         ob_flush();
                         flush();
-                    }
 
-                    $chapter->update([
-                        'amount' => $chapter->amount + $added_amount,
-                    ]);
+                        $chapter->update([
+                            'amount' => $chapter->amount + $added_amount,
+                        ]);
+
+                        $bookmarkedUsers = $chapter->manga->bookmarked_by;
+                        Notification::send($bookmarkedUsers, new ChapterNotification($chapter));
+                    }
                 }, 200, [
                     'Content-Type' => 'text/event-stream',
                     'Cache-Control' => 'no-cache',
@@ -254,7 +259,7 @@ class ChapterController extends Controller
             'order.*' => 'integer|min:-1',
         ]);
 
-        $chapter = Chapter::findOrFail($fields['chapter_id']);
+        $chapter = Chapter::findOrFail($fields['chapter_id'])->load('manga');
         $manga = $chapter->manga;
         $order = $fields['order'];
         $this->authorize('updateManga', $manga);
@@ -297,6 +302,9 @@ class ChapterController extends Controller
         $chapter->update([
             'amount' => count($files),
         ]);
+
+        $bookmarkedUsers = $manga->bookmarked_by;
+        Notification::send($bookmarkedUsers, new ChapterNotification($chapter));
 
         return response()->json([
             'success' => 1,
