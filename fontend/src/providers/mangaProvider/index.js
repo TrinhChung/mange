@@ -133,6 +133,7 @@ export default function MangaProvider({ children }) {
         fetchMangaNewUpdate,
         setHistories,
         fetchTopManga,
+        setHistoriesAccount,
       }}
     >
       {children}

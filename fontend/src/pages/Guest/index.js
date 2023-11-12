@@ -56,7 +56,7 @@ const Guest = () => {
         path="/test-upload-chapter"
         element={wrapLayout(<TestUploadChapter />)}
       />
-      <Route path="/auth/*" element={<Auth />} />
+      <Route path="/auth/*" element={wrapLayout(<Auth />)} />
       <Route path="/history" element={wrapLayout(<History />)} />
       <Route path="/follow" element={wrapLayout(<Follow />)} />
       <Route path="/search" element={wrapLayout(<Search />)} />

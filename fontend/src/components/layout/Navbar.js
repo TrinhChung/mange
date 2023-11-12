@@ -14,11 +14,13 @@ import { logoutService } from '../../services/Auth';
 import DropdownCustom from './DropdownCustom';
 import { getMangaNewUpdate } from '../../services/Guest/index';
 import MangaSearch from '../manga/MangaSearch';
+import { MangaContext } from '../../providers/mangaProvider/index';
 import './Navbar.scss';
 
 const { Header } = Layout;
 const Navbar = ({ data }) => {
   const { authUser, setAuthUser } = useContext(AuthContext);
+  const { setHistoriesAccount } = useContext(MangaContext);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [current, setCurrent] = useState('home');
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
@@ -92,7 +94,7 @@ const Navbar = ({ data }) => {
     localStorage.removeItem('authUser');
     setAuthUser(null);
     setIsOpenModal(false);
-
+    setHistoriesAccount([]);
     navigate('/');
   };
 

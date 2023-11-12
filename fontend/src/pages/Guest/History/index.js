@@ -1,12 +1,13 @@
 import React from 'react';
-import { Col, Row, Tabs } from 'antd';
+import { Col, Row, Tabs, Empty } from 'antd';
 import TopManga from '../home/TopManga';
 import { useContext, useState } from 'react';
 import { MangaContext } from '../../../providers/mangaProvider/index';
-import Manga from '../../../components/manga/Manga';
 import MangaHistory from '../../../components/manga/MangaHistory';
+import { AuthContext } from '../../../providers/authProvider';
 
 const History = () => {
+  const { authUser } = useContext(AuthContext);
   const { histories, historiesAccount, topMangaWeek, topMangaMonth } =
     useContext(MangaContext);
 
@@ -45,13 +46,41 @@ const History = () => {
               />
             </Row>
             <Row gutter={[16, 24]}>
-              {key === '1'
-                ? histories.map((item) => {
+              {key === '1' ? (
+                histories.length > 0 ? (
+                  histories.map((item) => {
                     return <MangaHistory manga={item} />;
                   })
-                : historiesAccount.map((item) => {
+                ) : (
+                  <Col span={24} style={{ justifyContent: 'center' }}>
+                    <Empty />
+                  </Col>
+                )
+              ) : authUser ? (
+                historiesAccount.length > 0 ? (
+                  historiesAccount.map((item) => {
                     return <MangaHistory manga={item} />;
-                  })}
+                  })
+                ) : (
+                  <Col span={24} style={{ justifyContent: 'center' }}>
+                    <Empty />
+                  </Col>
+                )
+              ) : (
+                <Col
+                  span={24}
+                  style={{ display: 'flex', justifyContent: 'center' }}
+                >
+                  <Empty
+                    description={
+                      <span>
+                        Bạn chưa đăng nhập vui lòng đăng nhập{' '}
+                        <a href="/auth/login">Tại đây</a>
+                      </span>
+                    }
+                  />
+                </Col>
+              )}
             </Row>
           </Col>
           <Col span={8}>

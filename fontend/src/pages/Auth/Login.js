@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <Col span={24}>
+    <Col span={24} className="wrap-auth">
       <Row className="auth-container">
         <Col className={'wrap-box'}>
           <Row

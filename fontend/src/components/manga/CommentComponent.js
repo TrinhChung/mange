@@ -1,16 +1,43 @@
-import { Col, Row } from 'antd';
-import React, { useState } from 'react';
+import { useState, useContext } from 'react';
+import { Col, Row, Dropdown } from 'antd';
 import { Avatar } from 'antd';
-import { UserOutlined, MoreOutlined } from '@ant-design/icons';
+import { UserOutlined, MoreOutlined, FlagOutlined } from '@ant-design/icons';
 import './Manga.scss';
 import TextArea from 'antd/es/input/TextArea';
+import { reportComment } from '../../services/User';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../../providers/authProvider';
 
 const CommentComponent = ({
   comment = {},
   id = { id },
   handleComment = () => {},
 }) => {
+  const { authUser } = useContext(AuthContext);
   const [reply, setReply] = useState(false);
+  const items = [
+    {
+      label: (
+        <Row
+          style={{ cursor: 'pointer' }}
+          onClick={async () => {
+            try {
+              const data = await reportComment({ id: comment?.id });
+              if (data.status === 200) {
+                toast.success(data?.message);
+              }
+            } catch (error) {
+              toast.error(error?.message);
+            }
+          }}
+        >
+          <FlagOutlined />
+          <label style={{ paddingLeft: 4 }}>Báo cáo</label>
+        </Row>
+      ),
+      key: '0',
+    },
+  ];
 
   return (
     <Row style={{ width: '100%', padding: '10px 10px 4px 10px' }}>
@@ -78,7 +105,14 @@ const CommentComponent = ({
         </Row>
       </Col>
       <Col style={{ display: 'flex', alignItems: 'center' }}>
-        <MoreOutlined className="color-jade-hover" />
+        <Dropdown
+          menu={{
+            items,
+          }}
+          trigger={['click']}
+        >
+          <MoreOutlined className="color-jade-hover" />
+        </Dropdown>
       </Col>
     </Row>
   );

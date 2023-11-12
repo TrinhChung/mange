@@ -27,3 +27,7 @@ export const createCommentChapter = ({
 export const getCommentChapter = ({ id = 1, type = 'chapters', page = 1 }) => {
   return axios.get(`/api/${type}/${id}/comments?page=${page}`);
 };
+
+export const reportComment = ({ id: id }) => {
+  return axios.post(`/api/report/comment/${id}`);
+};
