@@ -10,3 +10,12 @@ export const buildHistories = (histories) => {
     };
   });
 };
+
+export const checkInputVote = (score) => {
+  score = 100 * score;
+  score = Math.round(score / 50);
+  score = (score * 50) / 100;
+  if (score < 0) return 0;
+  if (score > 5) return 5;
+  return score;
+};

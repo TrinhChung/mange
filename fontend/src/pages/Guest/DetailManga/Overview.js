@@ -1,20 +1,34 @@
-import { useState, useContext, useMemo } from 'react';
+import { useState, useContext, useMemo, useEffect } from 'react';
 import { Col, Row, Rate, Image, Skeleton } from 'antd';
 import RowInfo from './RowInfo';
 import { hostImg } from '../../../const/index';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../../../components/layout/ConfirmModal';
 import { AuthContext } from '../../../providers/authProvider';
-import { mangaBookmark } from '../../../services/User/index';
+import { mangaBookmark, voteManga } from '../../../services/User/index';
 import { toast } from 'react-toastify';
 import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import { checkInputVote } from '../../../utils/commonFunc';
 
 const Overview = ({ manga = null, loading = true }) => {
   const { authUser } = useContext(AuthContext);
   const [change, setChange] = useState(false);
+  const [score, setScore] = useState(
+    checkInputVote(Number(manga?.vote_score ? manga.vote_score : 0))
+  );
+  const [userScore, setUserScore] = useState(0);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (manga?.vote_score) {
+      setScore(
+        checkInputVote(Number(manga?.vote_score ? manga.vote_score : 0))
+      );
+      setUserScore(manga?.user_vote ? manga.user_vote : 0);
+    }
+  }, [manga]);
 
   const infos = [
     // { children: 'Dịch giả', content: 'translator' },
@@ -190,7 +204,60 @@ const Overview = ({ manga = null, loading = true }) => {
                   }
                 />
               ))}
-              <Rate allowHalf defaultValue={2.5} />
+              <RowInfo
+                children={`Đánh giá:`}
+                content={`${manga?.vote_score}/5 - (${
+                  manga?.vote_count ? manga.vote_count : 0
+                }) Lượt đánh giá`}
+              />
+              <Row style={{ color: 'var(--gray)', height: 30, fontSize: 16 }}>
+                <Col
+                  style={{
+                    minWidth: 110,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  <label>Đánh giá chung:</label>
+                </Col>
+                <Col>
+                  <Rate allowHalf value={score} disabled={true} />
+                </Col>
+              </Row>
+              {authUser ? (
+                <Row style={{ color: 'var(--gray)', height: 30, fontSize: 16 }}>
+                  <Col
+                    style={{
+                      minWidth: 110,
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <label>Đánh giá của bạn</label>
+                  </Col>
+                  <Col>
+                    <Rate
+                      allowHalf
+                      value={userScore}
+                      onChange={async (score) => {
+                        try {
+                          setUserScore(score);
+                          const data = await voteManga({
+                            id: manga?.id,
+                            score: score,
+                          });
+                          if (data.success === 200) {
+                            toast.success('Đánh giá thành công');
+                          }
+                        } catch (error) {
+                          toast.error(error.message);
+                        }
+                      }}
+                    />
+                  </Col>
+                </Row>
+              ) : null}
+
               <Row
                 style={{
                   gap: 8,

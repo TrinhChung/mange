@@ -31,3 +31,7 @@ export const getCommentChapter = ({ id = 1, type = 'chapters', page = 1 }) => {
 export const reportComment = ({ id: id }) => {
   return axios.post(`/api/report/comment/${id}`);
 };
+
+export const voteManga = ({ id: id, score: score }) => {
+  return axios.post(`/api/mangas/${id}/vote`, { score: score });
+};
