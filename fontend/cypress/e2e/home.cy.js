@@ -16,13 +16,23 @@ describe('Spec màn hình chính', () => {
   });
 
   it('Có nút "Đăng nhập"', () => {
-    cy.contains('Đăng nhập');
+    cy.contains('Đăng nhập', { matchCase: false });
   });
 
   it('Có các mục Đề xuất, Mới cập nhật và Lịch sử', () => {
-    cy.contains('Đề xuất');
-    cy.contains('Mới cập nhật');
-    cy.contains('Lịch sử');
+    cy.contains('Đề xuất', { matchCase: false });
+    cy.contains('Mới cập nhật', { matchCase: false });
+    cy.contains('Lịch sử', { matchCase: false });
+  });
+
+  it('Có các mục top tuần, top tháng', () => {
+    cy.contains('Top tuần', { matchCase: false });
+    cy.contains('Top tháng', { matchCase: false });
+  });
+
+  it('Hiển thị các category khi hover vào mục Thể loại', () => {
+    cy.contains('Thể loại', { matchCase: false }).trigger('mouseover');
+    cy.contains('Action');
   });
 
   it('Chuyển hướng tới trang đăng nhập khi ấn nút', () => {

@@ -51,7 +51,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      {authUser ? (authUser.role === 'user' ? <User /> : authUser.role === 'admin' ? <Admin /> : null) : <Guest />}
+      {authUser ? (
+        authUser.role === 'user' ? (
+          <User />
+        ) : authUser.role === 'admin' ? (
+          <Admin />
+        ) : null
+      ) : (
+        <Guest />
+      )}
       {/* <Admin /> */}
       <ToastContainer
         position="top-right"
