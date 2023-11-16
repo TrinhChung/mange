@@ -7,17 +7,18 @@ describe('Spec đăng nhập', () => {
   });
 
   //TC_Login_001
-  it('Vào được trang đăng nhập', () => {});
+  it('Vào được trang đăng nhập', () => { });
 
   it('Có trường Tên đăng nhập và mật khẩu', () => {
     cy.contains('Tên đăng nhập').get('input');
     cy.contains('Mật khẩu').get('input');
   });
 
-  it('Có nút Quên mật khẩu', () => {
-    cy.contains('Quên mật khẩu');
-  });
 
+  it('chuyển trang khi nhấn nút quên mật khẩu', () => {
+    cy.contains('Quên mật khẩu').click()
+    cy.url().should('include', 'auth/forgot-password')
+  })
   /*
     it('Có nút Ghi nhớ mật khẩu', () => {
         cy.contains('Ghi nhớ mật khẩu');

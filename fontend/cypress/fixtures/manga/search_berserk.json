@@ -1,0 +1,89 @@
+{
+    "success": 1,
+    "message": "Lấy danh sách truyện thành công!",
+    "links": {
+        "first": "https://api.mange.uetvnu.id.vn/api/mangas?page=1",
+        "last": "https://api.mange.uetvnu.id.vn/api/mangas?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "https://api.mange.uetvnu.id.vn/api/mangas?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "https://api.mange.uetvnu.id.vn/api/mangas",
+        "per_page": 30,
+        "to": 1,
+        "total": 1
+    },
+    "data": [
+        {
+            "id": 58,
+            "name": "Berserk",
+            "status": 0,
+            "slug": "berserk",
+            "thumbnail": "berserk/thumbnail.jpg",
+            "vote_score": "2.6700",
+            "follow_count": 0,
+            "view_count": 0,
+            "comments_count": 0,
+            "top_view_count": null,
+            "is_hot": false,
+            "authors": [
+                "Kentarō Miura"
+            ],
+            "last_3_chapters": [
+                {
+                    "id": 11592,
+                    "name": "Chapter 373",
+                    "folder": "berserk/373/",
+                    "amount": 22
+                },
+                {
+                    "id": 11591,
+                    "name": "Chapter 372: Quạ son ngủ thiếp trong lồng",
+                    "folder": "berserk/372/",
+                    "amount": 24
+                },
+                {
+                    "id": 11590,
+                    "name": "Chapter 371: Ngọn đèn tàn trong đêm tối chật hẹp",
+                    "folder": "berserk/371/",
+                    "amount": 18
+                }
+            ],
+            "categories": [
+                "Action",
+                "Adult",
+                "Adventure",
+                "Manga"
+            ],
+            "othernames": [
+                {
+                    "id": 60,
+                    "manga_id": 58,
+                    "name": "Kiếm Sĩ Đen",
+                    "created_at": null,
+                    "updated_at": null
+                }
+            ]
+        }
+    ]
+}

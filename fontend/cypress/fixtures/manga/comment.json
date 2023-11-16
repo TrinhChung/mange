@@ -1,0 +1,30 @@
+{
+    "success": 1,
+    "data": {
+        "user_id": 1,
+        "manga_id": "58",
+        "chapter_id": null,
+        "parent_id": null,
+        "comment": "hay",
+        "updated_at": "16/11/2023",
+        "created_at": "16/11/2023",
+        "id": 4,
+        "user": {
+            "id": 1,
+            "username": "admin",
+            "email": "rachael.huel@example.org",
+            "avatar": "https://via.placeholder.com/640x480.png/001111?text=sit",
+            "email_verified_at": "2023-11-10T02:19:26.000000Z",
+            "role": "admin",
+            "active": 1,
+            "activated_at": "2023-11-10T02:19:26.000000Z",
+            "active_token": "v0qdKBcL15rzKFBf4928",
+            "reset_token": null,
+            "reset_sent_at": null,
+            "created_at": "2023-11-10T02:19:26.000000Z",
+            "updated_at": "2023-11-10T02:19:26.000000Z"
+        },
+        "childs": []
+    },
+    "message": "commented"
+}

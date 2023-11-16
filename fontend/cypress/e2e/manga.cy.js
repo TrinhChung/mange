@@ -2,6 +2,10 @@
 
 describe('Spec Xem chi tiết truyện', () => {
   beforeEach(() => {
+    // Stub network request cho socket.io hết đỏ
+    cy.intercept('GET', 'http://localhost:6001/socket.io/*', {
+      body: 'socket.io',
+    }).as('socket.io');
     cy.intercept('GET', '/api/mangas?page=1&per_page=30', {
       statusCode: 200,
       fixture: 'manga/mangas_page1.json',
@@ -12,7 +16,7 @@ describe('Spec Xem chi tiết truyện', () => {
       fixture: 'manga/manga_id_58.json',
     }).as('manga');
     cy.visit('http://localhost:3000');
-    cy.reload();
+    // cy.reload();
   });
 
   it('Hiển thị danh sách truyện', () => {

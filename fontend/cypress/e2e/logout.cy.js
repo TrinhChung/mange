@@ -11,7 +11,6 @@ describe('Spec Đăng xuất', () => {
 
     cy.get('button').contains('Đăng nhập').click();
     cy.url().should('eq', 'http://localhost:3000/');
-    cy.wait(3000);
   });
 
   it('Test chức năng đăng xuất', () => {
@@ -20,7 +19,7 @@ describe('Spec Đăng xuất', () => {
       fixture: 'logout/logout_success.json',
     }).as('logout');
 
-    cy.contains('div', 'admin').click();
+    cy.contains('div', 'admin').click({ force: true });
     cy.contains('Đăng xuất').click();
     cy.contains('span', 'OK').click();
     cy.contains('Đã đăng xuất');

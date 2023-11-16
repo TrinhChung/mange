@@ -29,6 +29,6 @@ beforeEach(() => {
   cy.intercept('GET', 'http://localhost:8000/api/me/recommendation', {});
   cy.intercept('GET', 'http://localhost:8000/api/categories', {
     statusCode: 200,
-    fixture: 'categories.json',
+    fixture: 'manga/categories.json',
   }).as('categories');
 });

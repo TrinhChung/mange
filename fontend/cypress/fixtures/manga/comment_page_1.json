@@ -1,0 +1,80 @@
+{
+    "success": 1,
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 7,
+                "manga_id": 58,
+                "chapter_id": null,
+                "user_id": 1,
+                "comment": "hay",
+                "parent_id": null,
+                "sentiment_score": null,
+                "sentiment_magnitude": null,
+                "toxic": null,
+                "insult": null,
+                "profanity": null,
+                "derogatory": null,
+                "sexual": null,
+                "death_harm_tragedy": null,
+                "violent": null,
+                "firearms_weapons": null,
+                "public_safety": null,
+                "health": null,
+                "religion_belief": null,
+                "illicit_drugs": null,
+                "war_conflict": null,
+                "politics": null,
+                "finance": null,
+                "legal": null,
+                "created_at": "16/11/2023",
+                "updated_at": "16/11/2023",
+                "childs": [],
+                "user": {
+                    "id": 1,
+                    "username": "admin",
+                    "email": "garfield.christiansen@example.net",
+                    "avatar": "https://via.placeholder.com/640x480.png/00ff99?text=sunt",
+                    "email_verified_at": "2023-11-10T06:15:44.000000Z",
+                    "role": "admin",
+                    "active": 1,
+                    "activated_at": "2023-11-10T06:15:44.000000Z",
+                    "active_token": "NmeebfYSpzkh5Lg5RZ6H",
+                    "reset_token": null,
+                    "reset_sent_at": null,
+                    "created_at": "2023-11-10T06:15:44.000000Z",
+                    "updated_at": "2023-11-10T06:15:44.000000Z"
+                }
+            }
+        ],
+        "first_page_url": "http://localhost:8000/api/mangas/58/comments?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://localhost:8000/api/mangas/58/comments?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://localhost:8000/api/mangas/58/comments?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "http://localhost:8000/api/mangas/58/comments",
+        "per_page": 10,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 1
+    },
+    "message": "Lấy comment thành công"
+}
