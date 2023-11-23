@@ -9,24 +9,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->float('sentiment_score', 12, 9)->nullable()->change();
-            $table->float('sentiment_magnitude', 12, 9)->nullable()->change();
-            $table->float('toxic', 12, 9)->nullable()->change();
-            $table->float('insult', 12, 9)->nullable()->change();
-            $table->float('profanity', 12, 9)->nullable()->change();
-            $table->float('derogatory', 12, 9)->nullable()->change();
-            $table->float('sexual', 12, 9)->nullable()->change();
-            $table->float('death_harm_tragedy', 12, 9)->nullable()->change();
-            $table->float('violent', 12, 9)->nullable()->change();
-            $table->float('firearms_weapons', 12, 9)->nullable()->change();
-            $table->float('public_safety', 12, 9)->nullable()->change();
-            $table->float('health', 12, 9)->nullable()->change();
-            $table->float('religion_belief', 12, 9)->nullable()->change();
-            $table->float('illicit_drugs', 12, 9)->nullable()->change();
-            $table->float('war_conflict', 12, 9)->nullable()->change();
-            $table->float('politics', 12, 9)->nullable()->change();
-            $table->float('finance', 12, 9)->nullable()->change();
-            $table->float('legal', 12, 9)->nullable()->change();
+            $table->double('sentiment_score', 15, 8)->nullable()->change();
+            $table->double('sentiment_magnitude', 15, 8)->nullable()->change();
+            $table->double('toxic', 15, 8)->nullable()->change();
+            $table->double('insult', 15, 8)->nullable()->change();
+            $table->double('profanity', 15, 8)->nullable()->change();
+            $table->double('derogatory', 15, 8)->nullable()->change();
+            $table->double('sexual', 15, 8)->nullable()->change();
+            $table->double('death_harm_tragedy', 15, 8)->nullable()->change();
+            $table->double('violent', 15, 8)->nullable()->change();
+            $table->double('firearms_weapons', 15, 8)->nullable()->change();
+            $table->double('public_safety', 15, 8)->nullable()->change();
+            $table->double('health', 15, 8)->nullable()->change();
+            $table->double('religion_belief', 15, 8)->nullable()->change();
+            $table->double('illicit_drugs', 15, 8)->nullable()->change();
+            $table->double('war_conflict', 15, 8)->nullable()->change();
+            $table->double('politics', 15, 8)->nullable()->change();
+            $table->double('finance', 15, 8)->nullable()->change();
+            $table->double('legal', 15, 8)->nullable()->change();
         });
     }
 
