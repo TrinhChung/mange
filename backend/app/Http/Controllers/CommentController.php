@@ -46,7 +46,7 @@ class CommentController extends Controller
 
         // Tạo job tính sentiment và moderate comment
         // @codeCoverageIgnoreStart
-        if (env('APP_ENV') !== 'testing' && env('GOOGLE_API_KEY')) {
+        if (config('app.env') !== 'testing' && config('google.api_key')) {
             dispatch(new GetCommentSentimentAndModeration($comment->id));
         }
         // @codeCoverageIgnoreEnd
