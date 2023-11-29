@@ -1,0 +1,80 @@
+version: "3"
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mange_mysql
+    environment:
+      MYSQL_USER: sample_app_user
+      MYSQL_ROOT_PASSWORD: 1111
+      MYSQL_DATABASE: mange
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mange
+
+  redis:
+    image: redis:latest
+    container_name: mange_redis
+    networks:
+      - mange
+
+  nginx:
+    container_name: mange_nginx
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    depends_on:
+      - laravel-backend
+    networks:
+      - mange
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - backend_code:/var/www/html/
+
+  laravel-backend:
+    container_name: mange_laravel
+    build:
+      dockerfile: Dockerfile
+      context: "./backend"
+    depends_on:
+      - mysql-db
+    networks:
+      - mange
+    env_file:
+      - ./backend/.env
+    environment:
+      - APP_ENV=production
+      # - APP_DEBUG=false
+      - DB_HOST=mysql-db
+      - DB_PORT=3306
+      - DB_DATABASE=mange
+      - DB_USERNAME=sample_app_user
+      - DB_PASSWORD=1111
+      - REDIS_HOST=redis
+      - CACHE_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - SESSION_DRIVER=redis
+    volumes:
+      - backend_code:/var/www/html/
+    command: sh -c "cp -r /app/. /var/www/html/ && chown -R www-data:www-data /var/www/html/ && php-fpm" # Copy sang shared volume
+
+  react-frontend:
+    container_name: mange_react
+    build:
+      dockerfile: Dockerfile
+      context: "./fontend"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - laravel-backend
+    networks:
+      - mange
+
+volumes:
+  mysql_data:
+  backend_code:
+
+networks:
+  mange:

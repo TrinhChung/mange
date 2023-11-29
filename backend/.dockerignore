@@ -1,0 +1,5 @@
+reports/
+vendor/
+node_modules/
+.idea/
+.env
