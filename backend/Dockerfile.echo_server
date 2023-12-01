@@ -1,0 +1,7 @@
+FROM node:18.18-alpine
+WORKDIR /app
+COPY ./package*.json ./
+COPY ./laravel-echo-server.js ./
+RUN npm install
+EXPOSE 6001
+CMD ["node", "laravel-echo-server.js"]

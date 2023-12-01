@@ -7,7 +7,7 @@ const EchoServer = require('laravel-echo-server');
 const NODE_ENV = process.env.NODE_ENV;
 
 const options = {
-	"authHost": process.env.NODE_ENV === 'production' ? process.env.LARAVEL_ECHO_AUTH_HOST : 'http://localhost:8000',
+	"authHost": process.env.LARAVEL_ECHO_AUTH_HOST || 'http://localhost:8000',
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
@@ -19,7 +19,7 @@ const options = {
 	"databaseConfig": {
 		"redis": {
 			"port": "6379",
-      "host": "localhost"
+			"host": process.env.REDIS_HOST || 'localhost'
 		}
 	},
 	"devMode": NODE_ENV === 'development',
@@ -34,9 +34,9 @@ const options = {
 	"sslPassphrase": "",
 	"apiOriginAllow": {
 		"allowCors": true,
-    "allowOrigin": "*",
-    "allowMethods": "",
-    "allowHeaders": ""
+		"allowOrigin": "*",
+		"allowMethods": "",
+		"allowHeaders": ""
 	}
 }
 

@@ -46,6 +46,7 @@ services:
     environment:
       - APP_ENV=production
       # - APP_DEBUG=false
+      - DB_CONNECTION=mysql
       - DB_HOST=mysql-db
       - DB_PORT=3306
       - DB_DATABASE=mange
@@ -58,6 +59,53 @@ services:
     volumes:
       - backend_code:/var/www/html/
     command: sh -c "cp -r /app/. /var/www/html/ && chown -R www-data:www-data /var/www/html/ && php-fpm" # Copy sang shared volume
+
+  laravel-worker:
+    container_name: mange_laravel_worker
+    build:
+      dockerfile: Dockerfile
+      context: "./backend"
+    depends_on:
+      - mysql-db
+    networks:
+      - mange
+    env_file:
+      - ./backend/.env
+    environment:
+      - APP_ENV=production
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql-db
+      - DB_PORT=3306
+      - DB_DATABASE=mange
+      - DB_USERNAME=root
+      - DB_PASSWORD=1111
+      - REDIS_HOST=redis
+      - CACHE_DRIVER=redis
+      - QUEUE_CONNECTION=redis
+      - SESSION_DRIVER=redis
+    volumes:
+      - backend_code:/var/www/html/
+    restart: always
+    command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3", "--sleep=3"]
+
+  laravel-echo-server:
+    container_name: mange_laravel_echo_server
+    build:
+      dockerfile: Dockerfile.echo_server
+      context: "./backend"
+    depends_on:
+      - mysql-db
+      - redis
+      - laravel-backend
+    networks:
+      - mange
+    ports:
+      - "6001:6001"
+    restart: always
+    environment:
+      - NODE_ENV=development
+      - REDIS_HOST=redis
+      - LARAVEL_ECHO_AUTH_HOST=http://nginx:80
 
   react-frontend:
     container_name: mange_react
