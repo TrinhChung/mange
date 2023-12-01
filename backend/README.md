@@ -1,6 +1,6 @@
 # Backend API
 
-Chạy app:
+Chạy app: Cần PHP 8.1, Redis, Node 18
 
 ```bash
 # 1. Tạo file .env theo mẫu .env.example
@@ -30,6 +30,7 @@ php artisan queue:work --queue=sendingMail
 nohup php artisan queue:work --daemon >> storage/logs/laravel.log &
 
 # Laravel Echo Server (tab riêng, development)
+npm install
 npm run echo
 
 # hoặc chạy background (production)
@@ -37,7 +38,7 @@ npm i -g pm2
 pm2 start laravel-echo-server
 ```
 
-Chạy test, cần cài xdebug dll (windows) hoặc so (linux) để chạy coverage:
+Chạy test, cần cài xdebug .dll (windows) hoặc .so (linux) để chạy coverage:
 
 ```bash
 # Tạo file database/database.testing.sqlite

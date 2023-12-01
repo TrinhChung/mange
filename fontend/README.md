@@ -1,5 +1,12 @@
 ## Frontend web mange
 
+Chạy app: Cần Node 18
+
+```bash
+npm install
+npm run dev
+```
+
 Chạy test Cypress
 
 ```bash
