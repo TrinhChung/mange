@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\GetCommentSentimentAndModeration;
 use App\Models\Comment;
+use App\Models\React;
 use App\Rules\Reaction;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -77,6 +78,8 @@ class CommentController extends Controller
         }
 
         $data = $comments->with('childs', 'user')->paginate(10);
+        // $data->like_count = React::where('like' === Comment::LIKE)->where('')->count();
+        // $data->dislike_count = React::where('like' === Comment::DISLIKE)->count();
 
         if ($data->isEmpty()) {
             throw new ModelNotFoundException();
@@ -105,13 +108,13 @@ class CommentController extends Controller
             $user->reacted_comments()->detach($fields['comment_id']);
         } else {
             $user->reacted_comments()->syncWithoutDetaching([
-                $fields['comment_id'] => ['like' => $reaction, 'created_at' => now()],
+                $fields['comment_id'] => ['like' => $reaction, 'updated_at' => now()],
             ]);
         }
 
         return response()->json([
             'success' => 1,
-            'message' => 'Đã'.($reaction === 0 ? ' hủy' : '').' react thành công',
+            'message' => 'Đã'.($reaction === Comment::NORMAL ? ' hủy' : '').' react thành công',
             'data' => [
                 'reaction' => $user->reacted_comments()->where('comment_id', $fields['comment_id'])->value('like'),
             ],
@@ -133,7 +136,7 @@ class CommentController extends Controller
 
         return response()->json([
             'success' => 1,
-            'data' => new $reportedComments,
+            'data' => $reportedComments,
             'message' => 'success',
         ], 200);
     }

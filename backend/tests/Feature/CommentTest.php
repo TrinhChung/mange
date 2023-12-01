@@ -103,6 +103,8 @@ class CommentTest extends TestCase
                     'chapter_id',
                     'user_id',
                     'comment',
+                    'like_count',
+                    'dislike_count',
                     'parent_id',
                     'childs' => [
                         '*' => [
@@ -111,6 +113,8 @@ class CommentTest extends TestCase
                             'chapter_id',
                             'user_id',
                             'comment',
+                            'like_count',
+                            'dislike_count',
                             'parent_id',
                             'childs' => [
                                 '*' => [
@@ -119,6 +123,8 @@ class CommentTest extends TestCase
                                     'chapter_id',
                                     'user_id',
                                     'comment',
+                                    'like_count',
+                                    'dislike_count',
                                     'parent_id',
                                     'childs',
                                     'user',
