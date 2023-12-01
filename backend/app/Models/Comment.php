@@ -26,6 +26,18 @@ class Comment extends Pivot
         'parent_id',
     ];
 
+    protected static function booted()
+    {
+        static::retrieved(function ($comment) {
+            $likeCount = $comment->reacted_by->where('pivot.like', Comment::LIKE)->count();
+            $dislikeCount = $comment->reacted_by->where('pivot.like', Comment::DISLIKE)->count();
+
+            $comment->like_count = $likeCount;
+            $comment->dislike_count = $dislikeCount;
+            unset($comment->reacted_by);
+        });
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return $this->asDateTime($value)->format('j/n/Y');
