@@ -253,39 +253,42 @@ class MangaController extends Controller
 
     public function getRecommendation(Request $request)
     {
-        $user = $request->user();
-        $votedMangas = $user->voted_mangas;
-        $viewedMangas = $user->viewed_mangas()->selectRaw('views.manga_id, count(*) as views')->groupBy('views.manga_id')->get();
-        $totalView = $user->viewed_mangas()->count();
+        $user = Auth::guard('sanctum')->user();
+        $mangas = Manga::orderBy('view', 'DESC')->orderBy('created_at', 'DESC')->get();
+        if ($user) {
+            $votedMangas = $user->voted_mangas;
+            $viewedMangas = $user->viewed_mangas()->selectRaw('views.manga_id, count(*) as views')->groupBy('views.manga_id')->get();
+            $totalView = $user->viewed_mangas()->count();
 
-        if (count($viewedMangas) === 0 && count($votedMangas) === 0) {
-            return new MangaCollection(Manga::orderBy('view', 'desc')->orderBy('updated_at', 'desc')->limit(15)->get());
-        }
-
-        if (count($viewedMangas) > 0) {
-            $avgView = $this->roundUpToNextFive($totalView / count($viewedMangas));
-            $viewedMangas = $viewedMangas->map(function ($manga) use ($avgView) {
-                return [
-                    'id' => $manga->manga_id - 1,
-                    'rate' => ($manga->views / $avgView) * 2.5,
-                ];
-            });
-        }
-
-        $items = [];
-        $ratings = [];
-        foreach ($votedMangas as $manga) {
-            $items[] = $manga->id - 1;
-            $ratings[] = $manga->pivot->score;
-        }
-        foreach ($viewedMangas as $manga) {
-            if (! in_array($manga['id'], $items)) {
-                $items[] = $manga['id'];
-                $ratings[] = $manga['rate'];
+            if (count($viewedMangas) === 0 && count($votedMangas) === 0) {
+                return new MangaCollection(Manga::orderBy('view', 'desc')->orderBy('updated_at', 'desc')->limit(15)->get());
             }
+
+            if (count($viewedMangas) > 0) {
+                $avgView = $this->roundUpToNextFive($totalView / count($viewedMangas));
+                $viewedMangas = $viewedMangas->map(function ($manga) use ($avgView) {
+                    return [
+                        'id' => $manga->manga_id - 1,
+                        'rate' => ($manga->views / $avgView) * 2.5,
+                    ];
+                });
+            }
+
+            $items = [];
+            $ratings = [];
+            foreach ($votedMangas as $manga) {
+                $items[] = $manga->id - 1;
+                $ratings[] = $manga->pivot->score;
+            }
+            foreach ($viewedMangas as $manga) {
+                if (! in_array($manga['id'], $items)) {
+                    $items[] = $manga['id'];
+                    $ratings[] = $manga['rate'];
+                }
+            }
+            $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
+            $mangas = Manga::whereIn('id', $recommendation)->get();
         }
-        $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
-        $mangas = Manga::whereIn('id', $recommendation)->get();
 
         return new MangaCollection($mangas);
     }
