@@ -53,6 +53,11 @@ class ChapterController extends Controller
                     'manga_id' => $chapter['manga']['id'],
                     'chapter_id' => $chapter['id'],
                 ]);
+            } else {
+                View::create([
+                    'manga_id' => $chapter['manga']['id'],
+                    'chapter_id' => $chapter['id'],
+                ]);
             }
             Redis::setex($request->ip()."_{$chapter['manga']['id']}", 120, 1);
             Manga::where('id', $chapter['manga']['id'])->update(['view' => $chapter['manga']['view'] + 1]);

@@ -86,11 +86,13 @@ Route::prefix('report')->middleware('auth:sanctum')->group(function () {
     Route::post('{reportable}/{id}', [ReportController::class, 'create']);
 });
 
-Route::prefix('me')->middleware('auth:sanctum')->group(function () {
-    Route::get('/', [UserController::class, 'me']);
-    Route::patch('/', [UserController::class, 'patchMe']);
-    Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
-    Route::get('/history', [UserController::class, 'history']);
+Route::prefix('me')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/', [UserController::class, 'me']);
+        Route::patch('/', [UserController::class, 'patchMe']);
+        Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
+        Route::get('/history', [UserController::class, 'history']);
+    });
     Route::get('/recommendation', [MangaController::class, 'getRecommendation']);
 });
 
