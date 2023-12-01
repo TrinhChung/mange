@@ -39,6 +39,7 @@ const DetailChapter = () => {
           slug: data?.data?.manga?.slug,
           time: new Date(),
           chapter: data?.data?.name,
+          mangaId: data?.data?.manga?.id,
         });
       }
     }
@@ -51,14 +52,15 @@ const DetailChapter = () => {
     id = 0,
     chapter = 0,
     slug = 'name',
+    mangaId = 0,
   }) => {
     const histories =
       localStorage.getItem('histories') !== null
         ? JSON.parse(localStorage.getItem('histories'))
         : [];
 
-    const manga = { name, time, thumbnail, id, chapter, slug };
-    const i = histories.findIndex((history) => history?.id == id);
+    const manga = { name, time, thumbnail, id, chapter, slug, mangaId };
+    const i = histories.findIndex((history) => history?.mangaId == mangaId);
 
     if (i === -1) {
       if (histories.length >= 10) {
