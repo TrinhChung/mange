@@ -27,16 +27,12 @@ const Guest = () => {
       key: 'follow',
     },
     {
-      label: <LinkCustom to={'/category'} label={<WrapCategory />} />,
+      label: <LinkCustom to={'/history'} label={<WrapCategory />} />,
       key: 'category',
     },
     {
       label: <LinkCustom to={'/search'} label="Tìm kiếm" />,
       key: 'search',
-    },
-    {
-      label: <LinkCustom to={'/test-upload-chapter'} label="Tét úp ảnh" />,
-      key: 'test-upload-chapter',
     },
   ];
 
