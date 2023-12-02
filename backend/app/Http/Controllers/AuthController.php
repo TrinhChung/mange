@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -56,6 +57,70 @@ class AuthController extends Controller
                 'token' => $token,
             ],
         ], 201);
+    }
+
+    public function reset_password(Request $request)
+    {
+        $fields = $this->validate($request, [
+            'email' => 'required|string',
+        ]);
+
+        $user = User::where('email', $fields['email'])->where('active', 1)->first();
+        if (! $user) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'user not found',
+            ]);
+        }
+        DB::beginTransaction();
+        $user->update([
+            'reset_sent_at' => Carbon::now(),
+            'reset_token' => hash_hmac('sha256', Str::random(15), config('app.key')),
+        ]);
+        $user->send_reset_password_email();
+        DB::commit();
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Yêu cầu tạo mới mật khẩu thành công',
+        ], 200);
+    }
+
+    public function update_password(Request $request)
+    {
+        $fields = $this->validate($request, [
+            'reset_token' => 'required|string',
+            'password' => 'required|string|min:6',
+            'password_confirm' => 'required|string|min:6',
+        ]);
+
+        $user = User::where('reset_token', $fields['reset_token'])->where('active', 1)->first();
+        if ($user->reset_sent_at && Carbon::now()->diffInMinutes(Carbon::parse($user->reset_sent_at)) > 10) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Token quá hạn',
+            ]);
+        }
+        if (! $user) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'user not found',
+            ]);
+        }
+        if ($fields['password'] !== $fields['password_confirm']) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Mật khẩu mới không trùng khớp',
+            ]);
+        }
+        $user->update([
+            'password' => md5($fields['password']),
+        ]);
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Mật khẩu đã được tạo mới',
+        ], 200);
     }
 
     public function logout(Request $request): JsonResponse
