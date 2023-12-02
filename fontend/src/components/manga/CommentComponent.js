@@ -1,19 +1,22 @@
 import { useState, useContext } from 'react';
 import { Col, Row, Dropdown } from 'antd';
 import { Avatar } from 'antd';
-import { UserOutlined, MoreOutlined, FlagOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  MoreOutlined,
+  FlagOutlined,
+  HeartOutlined,
+} from '@ant-design/icons';
 import './Manga.scss';
 import TextArea from 'antd/es/input/TextArea';
 import { reportComment } from '../../services/User';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../providers/authProvider';
 
 const CommentComponent = ({
   comment = {},
   id = { id },
   handleComment = () => {},
 }) => {
-  const { authUser } = useContext(AuthContext);
   const [reply, setReply] = useState(false);
   const items = [
     {
@@ -59,12 +62,12 @@ const CommentComponent = ({
             </Row>
             <Row style={{ gap: 8 }}>
               <Col
-                className="action-comment"
+                className="action-comment hover-like"
                 onClick={() => {
                   console.log('like');
                 }}
               >
-                Thích
+                <HeartOutlined />
               </Col>
               <Col
                 className="action-comment"
