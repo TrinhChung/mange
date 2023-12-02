@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Row, Col, Input, Spin, Form } from 'antd';
 import FormItemVertical from '../../components/form/FormItemVertical';
 import { useState } from 'react';
@@ -7,18 +7,21 @@ import { resetPasswordService } from '../../services/Auth/index';
 import { toast } from 'react-toastify';
 
 const ResetPassword = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const res = await resetPasswordService(values);
-      if (res.data && res.data.user && res.data.token) {
-        toast.success(
-          'Đã gửi yêu cầu!Sử dụng mail nhận được để thay đổi mật khẩu'
-        );
-        navigate('/');
+      const res = await resetPasswordService({
+        ...values,
+        reset_token: searchParams.get('token'),
+      });
+      if (res.success === 1) {
+        toast.success('Đổi mật khẩu thành công!');
+        navigate('/auth/login');
       } else {
         toast.error('Đã có lỗi xảy ra');
       }

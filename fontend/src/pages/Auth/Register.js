@@ -21,12 +21,9 @@ const Register = () => {
     setLoading(true);
     try {
       const res = await signupService(values);
-      if (res.data && res.data.user && res.data.token) {
+      if (res.success === 1) {
         toast.success('Đăng ký thành công!', 2);
-        localStorage.setItem('accessToken', JSON.stringify(res.data.token));
-        localStorage.setItem('authUser', JSON.stringify(res.data.user));
-        setAuthUser(res.data.user);
-        navigate('/');
+        navigate('/auth/login');
       } else {
         toast.error('Tài khoản hoặc mật khẩu không chính xác');
       }

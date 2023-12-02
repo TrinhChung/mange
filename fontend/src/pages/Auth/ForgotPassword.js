@@ -1,12 +1,8 @@
 import React from 'react';
 import { Row, Col, Input, Spin, Form } from 'antd';
-import RowVertical from '../../components/layout/RowVertical';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import {
-  forgotPasswordService,
-  signupService,
-} from '../../services/Auth/index';
+import { forgotPasswordService } from '../../services/Auth/index';
 import FormItemVertical from '../../components/form/FormItemVertical';
 import { toast } from 'react-toastify';
 
@@ -18,11 +14,10 @@ const ForgotPassword = () => {
     setLoading(true);
     try {
       const res = await forgotPasswordService(values);
-      if (res.data && res.data.user && res.data.token) {
+      if (res.success === 1) {
         toast.success(
           'Đã gửi yêu cầu!Sử dụng mail nhận được để thay đổi mật khẩu'
         );
-        navigate('/');
       } else {
         toast.error('Đã có lỗi xảy ra');
       }
