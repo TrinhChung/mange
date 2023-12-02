@@ -54,7 +54,7 @@ class AuthController extends Controller
             'message' => 'Đăng ký tài khoản thành công!',
             'data' => [
                 'user' => $user,
-                'token' => $token,
+                'token' => null,
             ],
         ], 201);
     }
