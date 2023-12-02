@@ -4,6 +4,8 @@ import Register from './Register';
 import Login from './Login';
 import { useContext } from 'react';
 import { AuthContext } from '../../providers/authProvider/index';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ const Auth = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/new-password" element={<ResetPassword />} />
     </Routes>
   );
 };

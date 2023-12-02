@@ -62,12 +62,19 @@ const CommentComponent = ({
             </Row>
             <Row style={{ gap: 8 }}>
               <Col
-                className="action-comment hover-like"
                 onClick={() => {
                   console.log('like');
                 }}
               >
-                <HeartOutlined />
+                <Row>
+                  <Col style={{ color: 'var(--jade)' }}>
+                    {comment?.like_count}
+                  </Col>
+                  <HeartOutlined
+                    style={{ paddingLeft: 2 }}
+                    className="action-comment hover-like"
+                  />
+                </Row>
               </Col>
               <Col
                 className="action-comment"

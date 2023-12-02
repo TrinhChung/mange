@@ -1,19 +1,23 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Row, Col, Input, Spin, Form } from 'antd';
-import FormItemVertical from '../../components/form/FormItemVertical';
+import RowVertical from '../../components/layout/RowVertical';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { resetPasswordService } from '../../services/Auth/index';
+import {
+  forgotPasswordService,
+  signupService,
+} from '../../services/Auth/index';
+import FormItemVertical from '../../components/form/FormItemVertical';
 import { toast } from 'react-toastify';
 
-const ResetPassword = () => {
+const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const res = await resetPasswordService(values);
+      const res = await forgotPasswordService(values);
       if (res.data && res.data.user && res.data.token) {
         toast.success(
           'Đã gửi yêu cầu!Sử dụng mail nhận được để thay đổi mật khẩu'
@@ -51,44 +55,31 @@ const ResetPassword = () => {
               <Col span={24} style={{ paddingRight: 40 }}>
                 <Form onFinish={onFinish}>
                   <FormItemVertical
-                    name={'password'}
-                    label={'Mật khẩu'}
+                    name={'email'}
+                    label={'Email đăng ký'}
                     rules={[
                       {
+                        type: 'email',
+                        message: 'Nhập mail cẩn thận vào!',
+                      },
+                      {
                         required: true,
-                        message: 'Nhập password vào!',
+                        message: 'Nhập cái mail vào!',
                       },
                     ]}
                   >
-                    <Input style={{ minWidth: 300 }} type={'password'} />
-                  </FormItemVertical>
-                  <FormItemVertical
-                    name={'password_confirm'}
-                    label={'Nhập lại mật khẩu'}
-                    dependencies={['password']}
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Nhập lại password vào!',
-                      },
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          if (!value || getFieldValue('password') === value) {
-                            return Promise.resolve();
-                          }
-                          return Promise.reject(
-                            new Error('Password không giống Nhập lại!')
-                          );
-                        },
-                      }),
-                    ]}
-                  >
-                    <Input style={{ minWidth: 300 }} type={'password'} />
+                    <Input
+                      style={{
+                        width: '100%',
+                        minWidth: 300,
+                      }}
+                      placeholder="Nhập email đăng ký tài khoản tại đây"
+                    />
                   </FormItemVertical>
                   <Row>
                     <Col>
                       <button className="button-job" htmlType="submit">
-                        Thay đổi mật khẩu
+                        Gửi yêu cầu
                       </button>
                     </Col>
                   </Row>
@@ -103,7 +94,7 @@ const ResetPassword = () => {
                         color: 'var(--color-main)',
                       }}
                       onClick={() => {
-                        navigate('/auth/logiin');
+                        navigate('/auth/login');
                       }}
                     >
                       Quay lại trang đăng nhập
@@ -119,4 +110,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ForgotPassword;

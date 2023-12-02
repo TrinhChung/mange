@@ -16,6 +16,10 @@ export const signupService = (data) => {
   return axios.post('/api/auth/signup', data);
 };
 
-export const forgotService = (data) => {
-  return axios.put('/api/auth/reset/password', data);
+export const forgotPasswordService = (data) => {
+  return axios.post('/api/auth/reset_password', data);
+};
+
+export const resetPasswordService = (data) => {
+  return axios.post('/api/auth/new_password', data);
 };
