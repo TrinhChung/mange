@@ -29,7 +29,7 @@ describe('Spec Chapter', () => {
     })
 
     it('Kiểm tra hiển thị list chapter khi nhấn vào tên chapter', () => {
-        cy.contains('Chapter 10').should('be.visible').click()
+        cy.get('.ant-select-selector').contains('Chapter 10').should('be.visible').click()
         cy.contains('Chapter 7').click()
         cy.url().should('include', '11220')
     })

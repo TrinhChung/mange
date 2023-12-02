@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 import Navbar from '../../components/layout/Navbar';
-import FooterComponent from './ Footer';
+import FooterComponent from './Footer';
 import { useEffect } from 'react';
 const { Content } = Layout;
 
