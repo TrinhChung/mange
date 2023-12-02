@@ -15,24 +15,27 @@ import { toast } from 'react-toastify';
 const CommentComponent = ({
   comment = {},
   id = { id },
-  handleComment = () => {},
+  handleComment = () => { },
 }) => {
   const [reply, setReply] = useState(false);
+
+  const handleReportComment = async () => {
+    try {
+      const data = await reportComment({ id: comment?.id });
+      if (data.status === 200) {
+        toast.success(data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  }
+
   const items = [
     {
       label: (
         <Row
           style={{ cursor: 'pointer' }}
-          onClick={async () => {
-            try {
-              const data = await reportComment({ id: comment?.id });
-              if (data.status === 200) {
-                toast.success(data?.message);
-              }
-            } catch (error) {
-              toast.error(error?.message);
-            }
-          }}
+          onClick={handleReportComment}
         >
           <FlagOutlined />
           <label style={{ paddingLeft: 4 }}>Báo cáo</label>
@@ -85,7 +88,7 @@ const CommentComponent = ({
                 Trả lời
               </Col>
               <Col style={{ color: 'var(--gray)', fontWeight: 'bold' }}>
-                {comment?.created_at ? comment.created_at : 'Date'}
+                {comment?.created_at && comment.created_at}
               </Col>
             </Row>
             {reply && (

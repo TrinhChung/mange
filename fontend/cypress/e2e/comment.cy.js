@@ -30,7 +30,7 @@ describe('Spec Bình luận', () => {
             body: { "message": "Unauthenticated." },
         });
 
-        cy.get('textarea[placeholder="VIết bình luận"]')
+        cy.get('textarea[placeholder="Viết bình luận"]')
             .type('hay{enter}');
 
 
@@ -63,10 +63,74 @@ describe('Spec Bình luận', () => {
         })
 
 
-        cy.get('textarea[placeholder="VIết bình luận"]')
+        cy.get('textarea[placeholder="Viết bình luận"]')
             .type('hay{enter}');
 
 
         cy.contains('Đã bình luận')
+    })
+
+    it('Trả lời một bình luận thành công', () => {
+        //đăng nhập
+        cy.visit('http://localhost:3000/auth/login');
+
+        cy.intercept('POST', '/api/auth/login', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('login');
+
+        cy.get('button').contains('Đăng nhập').click();
+
+        cy.visit('http://localhost:3000/detail-manga/58');
+
+        //comment
+        cy.intercept('POST', 'http://localhost:8000/api/mangas/58/comment', {
+            statusCode: 200,
+            fixture: 'manga/comment.json'
+        }).as('comment');
+
+        cy.intercept('GET', 'http://localhost:8000/api/mangas/58/comments?page=1', {
+            statusCode: 200,
+            fixture: 'manga/comment_page_1.json'
+        })
+
+
+        cy.contains('Trả lời').click();
+        cy.get('textarea[placeholder="Viết bình luận"]').last().type('hay{enter}');
+
+
+        cy.contains('Đã bình luận')
+    })
+
+    it('Báo cáo một bình luận thành công', () => {
+        //đăng nhập
+        cy.visit('http://localhost:3000/auth/login');
+
+        cy.intercept('POST', '/api/auth/login', {
+            statusCode: 200,
+            fixture: 'login/login_success.json',
+        }).as('login');
+
+        cy.get('button').contains('Đăng nhập').click();
+
+        cy.visit('http://localhost:3000/detail-manga/58');
+
+        //comment
+        cy.intercept('POST', 'http://localhost:8000/api/report/comment/7', {
+            statusCode: 200,
+            fixture: 'comment/report_success.json'
+        }).as('comment_report');
+
+        cy.intercept('GET', 'http://localhost:8000/api/mangas/58/comments?page=1', {
+            statusCode: 200,
+            fixture: 'manga/comment_page_1.json'
+        })
+
+
+        cy.get('span.anticon-more').last().click();
+        cy.contains('Báo cáo').click();
+
+
+        cy.contains('được gửi đi')
     })
 });

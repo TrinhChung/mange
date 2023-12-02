@@ -1,0 +1,16 @@
+{
+  "success": 1,
+  "message": "Đăng ký tài khoản thành công!",
+  "data": {
+    "user": {
+      "username": "newuser",
+      "email": "newuser@gmail.com",
+      "role": "user",
+      "active_token": "f35fd69a193b0a5cdae08f18f5a1c87671d6753642f6dd1fb8055bd471d9e34f",
+      "updated_at": "2023-12-02T09:26:26.000000Z",
+      "created_at": "2023-12-02T09:26:26.000000Z",
+      "id": 105
+    },
+    "token": "4|ZDQTKpsxDqiNzcT1wQgRfknx5z88dWdYMdb0D7anb6e8c0f7"
+  }
+}
