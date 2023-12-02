@@ -25,7 +25,7 @@ class resetPassword extends Mailable
 
     public function build()
     {
-        return $this->subject('Yêu cầu thay đổi mật khẩu')
+        return $this->subject('Đặt lại mật khẩu')
             ->view('account.reset_password')->with('user', $this->user);
     }
 }
