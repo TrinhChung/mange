@@ -18,6 +18,8 @@ class Comment extends Pivot
     const NORMAL = 0;
 
     public $incrementing = true;
+    public int $like_count;
+    public int $dislike_count;
 
     protected $fillable = [
         'manga_id',
@@ -25,6 +27,29 @@ class Comment extends Pivot
         'user_id',
         'comment',
         'parent_id',
+    ];
+
+    protected $guarded = [];
+
+    protected $hidden = [
+        'sentiment_score',
+        'sentiment_magnitude',
+        'toxic',
+        'insult',
+        'profanity',
+        'derogatory',
+        'sexual',
+        'death_harm_tragedy',
+        'violent',
+        'firearms_weapons',
+        'public_safety',
+        'health',
+        'religion_belief',
+        'illicit_drugs',
+        'war_conflict',
+        'politics',
+        'finance',
+        'legal',
     ];
 
     protected static function booted()

@@ -11,6 +11,7 @@ import './Manga.scss';
 import TextArea from 'antd/es/input/TextArea';
 import { reportComment } from '../../services/User';
 import { toast } from 'react-toastify';
+import { censorComment } from '../../utils/commonFunc';
 
 const CommentComponent = ({
   comment = {},
@@ -61,7 +62,7 @@ const CommentComponent = ({
               {comment?.user?.username ? comment.user.username : 'User'}
             </Row>
             <Row style={{ fontSize: 16 }}>
-              {comment ? comment.comment : 'Content'}
+              {comment ? censorComment(comment) : 'Content'}
             </Row>
             <Row style={{ gap: 8 }}>
               <Col
