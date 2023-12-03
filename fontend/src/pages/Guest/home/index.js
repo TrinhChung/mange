@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Row } from 'antd';
 import Banner from './Banner';
-import MangaBanner from '../../../assets/image/banner_manga_home.jpg';
+import MangaBanner from '../../../assets/image/banner_drstone.jpg';
 import Propose from './Propose';
 import NewUp from './NewUp';
 import TopManga from './TopManga';
@@ -166,12 +166,12 @@ const Home = () => {
   } = useContext(MangaContext);
 
   const manga = {
-    chapter: 'Chapter 100',
+    chapter: 'Chapter 232: End',
     image: MangaBanner,
-    name: 'Attack On Titan',
-    type: 'Thể loại: Action, Adventure, Shounen, Kinh dị',
+    name: 'Dr. Stone',
+    type: 'Thể loại: Action, Manga, Shounen, Supernatural',
     description:
-      'Hơn 100 năm trước, giống người khổng lồ Titan đã tấn công và đẩy loài người tới bờ vực tuyệt chủng. Những con người sống sót tụ tập lại, xây bao quanh mình 1 tòa thành 3 lớp kiên cố và tự nhốt mình bên trong để trốn tránh những cuộc tấn công của người khổng lồ.',
+      'Sau 1 trận đại dịch không rõ nguồn gốc khiến loài người trên toàn thể địa cầu biến thành đá trải qua mấy ngàn năm sau 2 thanh niên chính của chúng ta là Senkuu và Taiju phá đá thoát ra và bắt đầu lập kế hoạch để cùng nhau tái thiết lập lại thế giới theo cách của họ.',
   };
 
   return (

@@ -1,8 +1,11 @@
 import { Col, Image, Row } from 'antd';
 import React from 'react';
 import './Home.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Banner = ({ manga = null }) => {
+  const navigate = useNavigate();
+
   return (
     <Row
       style={{
@@ -31,8 +34,10 @@ const Banner = ({ manga = null }) => {
         span={24}
       >
         <Row style={{ justifyContent: 'end', fontWeight: 'bold' }}>
-          <div className="chip_chapter">
-            {manga ? manga.chapter : 'Chapter 100'}
+          <div className="chip_chapter" onClick={() => {
+            navigate('/live-manga/drstone-hoi-sinh-the-gioi/17697')
+          }}>
+            {manga?.chapter || 'Chapter 100'}
           </div>
         </Row>
         <Row className="name_manga">{manga ? manga.name : 'Name Manga'}</Row>
@@ -42,7 +47,9 @@ const Banner = ({ manga = null }) => {
         <Row className="type_manga">{manga ? manga.type : 'Name Manga'}</Row>
 
         <Row style={{ paddingTop: 30 }}>
-          <div className="button_action">Đọc truyện</div>
+          <div className="button_action" onClick={() => {
+            navigate('/detail-manga/79');
+          }}>Đọc truyện</div>
         </Row>
       </Col>
     </Row>

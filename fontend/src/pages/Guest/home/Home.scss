@@ -6,11 +6,12 @@
 
 .chip_chapter {
   padding: 6px 15px;
-  background-color: gray;
+  background-color: var(--color-main);
   border-radius: 4px;
 }
 
 .chip_chapter:hover {
+  color: rgb(251, 207, 207) !important;
   cursor: pointer;
 }
 
