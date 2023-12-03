@@ -20,3 +20,10 @@ export const checkInputVote = (score) => {
   score = Math.max(0, score);
   return score;
 };
+
+export const trimString = (str, length) => {
+  if (str.length > length) {
+    return str.substring(0, length) + '...';
+  }
+  return str;
+};

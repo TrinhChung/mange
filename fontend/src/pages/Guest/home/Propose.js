@@ -25,7 +25,7 @@ const Propose = ({ proposes = [], loading = true }) => {
   }, [proposes]);
 
   return (
-    <Row className="box-content">
+    <Row className="box-propose">
       <Col>
         <Row>
           <Title title="Đề xuất" />
