@@ -18,8 +18,6 @@ class Comment extends Pivot
     const NORMAL = 0;
 
     public $incrementing = true;
-    public int $like_count;
-    public int $dislike_count;
 
     protected $fillable = [
         'manga_id',

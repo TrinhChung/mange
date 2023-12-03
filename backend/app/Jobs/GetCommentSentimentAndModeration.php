@@ -79,6 +79,11 @@ class GetCommentSentimentAndModeration implements ShouldQueue
             $this->comment->blocked = true;
         }
 
+        // unset $comment->like_count, $comment->dislike_count, $comment->is_like nếu có
+        unset($this->comment->like_count);
+        unset($this->comment->dislike_count);
+        unset($this->comment->is_like);
+
         $this->comment->save();
     }
 }
