@@ -1,9 +1,21 @@
-import { Avatar, Col, Input, Radio, Row, Select, Table } from 'antd';
-import React, { useState } from 'react';
+import {
+  Avatar,
+  Col,
+  Input,
+  Pagination,
+  Radio,
+  Row,
+  Select,
+  Table,
+} from 'antd';
+import React, { useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../components/layout/TitleTopLeft';
 import InputGroup from '../../../../components/management/InputGroup';
-import { LockOutlined, EyeOutlined } from '@ant-design/icons';
+import { LockOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
 import tableColumns from './TableColumns';
+import { getAllUsers } from '../../../../services/Admin';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const breadcrumbData = [
   {
@@ -14,105 +26,59 @@ const breadcrumbData = [
   },
   {
     title: 'Quản lý tài khoản',
-    href: '/management/account',
+    href: '/profile/management-account',
   },
 ];
-
-const data = [
-  {
-    avatar:
-      'https://i.pinimg.com/736x/51/49/72/514972e25d1c76189370487711117de1.jpg',
-    displayName: 'Tran Tu',
-    username: 'tuchan',
-    email: 'trananhtu12345@gmail.com',
-    status: <span style={{ color: '#45B3B4' }}>đã kích hoạt</span>,
-    action: (
-      <>
-        <EyeOutlined />
-        <LockOutlined style={{ color: '#F54558' }} />
-      </>
-    ),
-    role: 'user',
-  },
-  {
-    avatar:
-      'https://i.pinimg.com/736x/51/49/72/514972e25d1c76189370487711117de1.jpg',
-    displayName: 'Trinh Van Chung',
-    username: 'tuchan',
-    email: 'trananhtu12345@gmail.com',
-    status: <span style={{ color: '#F54558' }}>chờ duyệt</span>,
-    action: (
-      <>
-        <EyeOutlined />
-        <LockOutlined style={{ color: '#F54558' }} />
-      </>
-    ),
-    role: 'translator',
-  },
-  {
-    avatar:
-      'https://i.pinimg.com/736x/51/49/72/514972e25d1c76189370487711117de1.jpg',
-    displayName: 'Nguyen Bach',
-    username: 'tuchan',
-    email: 'trananhtu12345@gmail.com',
-    status: <span style={{ color: '#F54558' }}>chưa kích hoạt</span>,
-    action: (
-      <>
-        <EyeOutlined />
-        <LockOutlined style={{ color: '#F54558' }} />
-      </>
-    ),
-    role: 'user',
-  },
-  {
-    avatar:
-      'https://i.pinimg.com/736x/51/49/72/514972e25d1c76189370487711117de1.jpg',
-    displayName: 'Dao Duc Hiep',
-    username: 'tuchan',
-    email: 'trananhtu12345@gmail.com',
-    status: <span style={{ color: '#9F73C1' }}>đã duyệt</span>,
-    action: (
-      <>
-        <EyeOutlined />
-        <LockOutlined style={{ color: '#F54558' }} />
-      </>
-    ),
-    role: 'translator',
-  },
-];
-const optionsData = [
-  { label: 'Người dùng', value: 'user' },
-  { label: 'Dịch giả', value: 'translator' },
-];
-
 const AccountManagement = () => {
-  const [roleOptionValue, setRoleOptionValue] = useState('user');
-  const onChangeRoleOptionValue = ({ target: { value } }) => {
-    setRoleOptionValue(value);
+  const navigate = useNavigate();
+
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  const fetchAllUsers = async () => {
+    try {
+      const res = await getAllUsers(page);
+      console.log('data', res);
+      if (res && res.status === 200) {
+        setTotal(res.data.total);
+        setUsers(
+          res.data?.data
+            ?.filter((user) => user.role === 'user')
+            .map((user) => {
+              return {
+                avatar: user.avatar,
+                username: user.username,
+                email: user.email,
+                status: user.active ? (
+                  <span style={{ color: '#45B3B4' }}>đã kích hoạt</span>
+                ) : (
+                  <span style={{ color: '#F54558' }}>chưa kích hoạt</span>
+                ),
+                action: (
+                  <>
+                    <EyeOutlined />
+                    <EditOutlined />
+                    <LockOutlined style={{ color: '#F54558' }} />
+                  </>
+                ),
+              };
+            })
+        );
+      }
+    } catch (error) {
+      toast.error('Không tìm thấy dữ liệu');
+      navigate('/');
+    }
   };
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, [page]);
 
   return (
     <Row className="box-content">
-      <TitleTopLeft title="Quản lý bình luận" itemList={breadcrumbData} />
-
-      <Col
-        span={24}
-        style={{
-          fontSize: 20,
-          fontWeight: 600,
-          marginBottom: 10,
-          marginTop: 25,
-        }}
-      >
-        <Radio.Group
-          options={optionsData}
-          optionType="button"
-          buttonStyle="solid"
-          defaultValue={'user'}
-          value={roleOptionValue}
-          onChange={onChangeRoleOptionValue}
-        />
-      </Col>
+      <TitleTopLeft title="Quản lý người dùng" itemList={breadcrumbData} />
 
       <Col
         span={24}
@@ -165,9 +131,26 @@ const AccountManagement = () => {
       <Table
         style={{ width: '100%' }}
         columns={tableColumns}
-        dataSource={data.filter((item) => item.role === roleOptionValue)}
+        dataSource={users}
         pagination={false}
       />
+
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: 15,
+        }}
+      >
+        <Pagination
+          pageSize={10}
+          showSizeChanger={false}
+          defaultCurrent={1}
+          total={total}
+          onChange={(page) => setPage(page)}
+        />
+      </div>
     </Row>
   );
 };

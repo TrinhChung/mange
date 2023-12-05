@@ -40,7 +40,7 @@ const Admin = () => {
         <Route path="/" element={<Home />} />
         <Route path="/detail-manga/:name" element={<DetailManga />} />
         <Route path="/live-manga/:name/:id" element={<DetailChapter />} />
-        <Route path="/management/*" element={<Management />} />
+        <Route path="/profile/*" element={<Management />} />
         <Route path="/history" element={<History />} />
         <Route path="/search" element={<Search />} />
       </Routes>

@@ -9,12 +9,6 @@ const tableColumns = [
     align: 'center',
   },
   {
-    title: 'TÊN HIỂN THỊ',
-    dataIndex: 'displayName',
-    key: 'displayName',
-    align: 'center',
-  },
-  {
     title: 'USERNAME',
     dataIndex: 'username',
     key: 'username',

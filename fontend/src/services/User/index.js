@@ -40,6 +40,6 @@ export const updateAvatar = (formData) => {
   return axios.post(`/api/me/avatar`, formData);
 };
 
-export const changePasswordMe =(formData) => {
+export const changePasswordMe = (formData) => {
   return axios.patch(`/api/me`, formData);
-}
+};

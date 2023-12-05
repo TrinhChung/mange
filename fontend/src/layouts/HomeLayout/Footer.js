@@ -14,12 +14,22 @@ const FooterComponent = () => {
 
   const box2 = {
     title: 'Môn học',
-    data: ['Tên: Thực hành phát triển phần mềm', 'Mã môn học: 2324I_INT3139_1', 'Bài tập lớn nhóm 2'],
+    data: [
+      'Tên: Thực hành phát triển phần mềm',
+      'Mã môn học: 2324I_INT3139_1',
+      'Bài tập lớn nhóm 2',
+    ],
   };
 
   const box3 = {
     title: 'Thành viên',
-    data: ['Trịnh Văn Chung', 'Trần Anh Tú', 'Nguyễn Xuân Bách', 'Đào Đức Hiệp', 'Lê Văn Hòa'],
+    data: [
+      'Trịnh Văn Chung',
+      'Trần Anh Tú',
+      'Nguyễn Xuân Bách',
+      'Đào Đức Hiệp',
+      'Lê Văn Hòa',
+    ],
   };
 
   const box4 = {
@@ -43,7 +53,9 @@ const FooterComponent = () => {
     <div className="footer">
       <Col>
         <Row className="top-box">
-          <Col offset={2} span={5}>{BoxContact(box1)}</Col>
+          <Col offset={2} span={5}>
+            {BoxContact(box1)}
+          </Col>
           <Col span={5}>{BoxContact(box2)}</Col>
           <Col span={5}>{BoxContact(box3)}</Col>
           <Col span={5}>{BoxContact(box4)}</Col>

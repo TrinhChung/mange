@@ -155,7 +155,9 @@ const Register = () => {
                         cursor: 'pointer',
                         color: 'var(--color-main)',
                       }}
-                      onClick={() => { navigate('/auth/login'); }}
+                      onClick={() => {
+                        navigate('/auth/login');
+                      }}
                     >
                       Đăng nhập tại đây
                     </Row>

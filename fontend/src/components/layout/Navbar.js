@@ -101,7 +101,7 @@ const Navbar = ({ data }) => {
   const items = [
     {
       label: 'Profile',
-      key: authUser?.role === 'user' ? 'profile' : 'management',
+      key: 'profile',
       icon: <UserOutlined />,
     },
     {

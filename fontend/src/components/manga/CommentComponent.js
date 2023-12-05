@@ -16,7 +16,7 @@ import { censorComment } from '../../utils/commonFunc';
 const CommentComponent = ({
   comment = {},
   id = { id },
-  handleComment = () => { },
+  handleComment = () => {},
 }) => {
   const [reply, setReply] = useState(false);
 
@@ -29,15 +29,12 @@ const CommentComponent = ({
     } catch (error) {
       toast.error(error?.message);
     }
-  }
+  };
 
   const items = [
     {
       label: (
-        <Row
-          style={{ cursor: 'pointer' }}
-          onClick={handleReportComment}
-        >
+        <Row style={{ cursor: 'pointer' }} onClick={handleReportComment}>
           <FlagOutlined />
           <label style={{ paddingLeft: 4 }}>Báo cáo</label>
         </Row>

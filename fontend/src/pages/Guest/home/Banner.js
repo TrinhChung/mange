@@ -34,9 +34,12 @@ const Banner = ({ manga = null }) => {
         span={24}
       >
         <Row style={{ justifyContent: 'end', fontWeight: 'bold' }}>
-          <div className="chip_chapter" onClick={() => {
-            navigate('/live-manga/drstone-hoi-sinh-the-gioi/17697')
-          }}>
+          <div
+            className="chip_chapter"
+            onClick={() => {
+              navigate('/live-manga/drstone-hoi-sinh-the-gioi/17697');
+            }}
+          >
             {manga?.chapter || 'Chapter 100'}
           </div>
         </Row>
@@ -47,9 +50,14 @@ const Banner = ({ manga = null }) => {
         <Row className="type_manga">{manga ? manga.type : 'Name Manga'}</Row>
 
         <Row style={{ paddingTop: 30 }}>
-          <div className="button_action" onClick={() => {
-            navigate('/detail-manga/79');
-          }}>Đọc truyện</div>
+          <div
+            className="button_action"
+            onClick={() => {
+              navigate('/detail-manga/79');
+            }}
+          >
+            Đọc truyện
+          </div>
         </Row>
       </Col>
     </Row>
