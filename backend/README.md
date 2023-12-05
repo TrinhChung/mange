@@ -19,6 +19,12 @@ php artisan serve
 # Để tự restart queue khi sửa code (chậm hơn queue:work): php artisan queue:listen
 ```
 
+Link storage vào folder public (để serve file avatar):
+
+```bash
+php artisan storage:link
+```
+
 Chạy Queue Worker và Laravel Echo Server:
 
 ```bash

@@ -97,8 +97,7 @@ describe('Spec Bình luận', () => {
 
         cy.contains('Trả lời').click();
         cy.get('textarea[placeholder="Viết bình luận"]').last().type('hay{enter}');
-
-
+        cy.wait('@comment');
         cy.contains('Đã bình luận')
     })
 
@@ -129,8 +128,7 @@ describe('Spec Bình luận', () => {
 
         cy.get('span.anticon-more').last().click();
         cy.contains('Báo cáo').click();
-
-
+        cy.wait('@comment_report');
         cy.contains('được gửi đi')
     })
 });

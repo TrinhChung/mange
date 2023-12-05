@@ -18,6 +18,5 @@ module.exports = defineConfig({
       return config;
     },
     experimentalRunAllSpecs: true,
-    defaultCommandTimeout: 10000,
   },
 });
