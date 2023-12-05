@@ -39,3 +39,7 @@ export const voteManga = ({ id: id, score: score }) => {
 export const updateAvatar = (formData) => {
   return axios.post(`/api/me/avatar`, formData);
 };
+
+export const changePasswordMe =(formData) => {
+  return axios.patch(`/api/me`, formData);
+}
