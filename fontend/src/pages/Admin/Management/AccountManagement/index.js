@@ -16,6 +16,7 @@ import tableColumns from './TableColumns';
 import { getAllUsers } from '../../../../services/Admin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { formatAvatarURL } from '../../../../utils/commonFunc';
 
 const breadcrumbData = [
   {
@@ -29,6 +30,7 @@ const breadcrumbData = [
     href: '/profile/management-account',
   },
 ];
+
 const AccountManagement = () => {
   const navigate = useNavigate();
 
@@ -47,7 +49,7 @@ const AccountManagement = () => {
             ?.filter((user) => user.role === 'user')
             .map((user) => {
               return {
-                avatar: user.avatar,
+                avatar: formatAvatarURL(user.avatar),
                 username: user.username,
                 email: user.email,
                 status: user.active ? (
