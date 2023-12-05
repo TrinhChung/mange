@@ -1,35 +1,42 @@
 import { useState, useContext } from 'react';
 import { Col, Row, Dropdown } from 'antd';
 import { Avatar } from 'antd';
-import { UserOutlined, MoreOutlined, FlagOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  MoreOutlined,
+  FlagOutlined,
+  HeartOutlined,
+} from '@ant-design/icons';
 import './Manga.scss';
 import TextArea from 'antd/es/input/TextArea';
 import { reportComment } from '../../services/User';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../providers/authProvider';
+import { censorComment } from '../../utils/commonFunc';
 
 const CommentComponent = ({
   comment = {},
   id = { id },
-  handleComment = () => {},
+  handleComment = () => { },
 }) => {
-  const { authUser } = useContext(AuthContext);
   const [reply, setReply] = useState(false);
+
+  const handleReportComment = async () => {
+    try {
+      const data = await reportComment({ id: comment?.id });
+      if (data.status === 200) {
+        toast.success(data?.message);
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  }
+
   const items = [
     {
       label: (
         <Row
           style={{ cursor: 'pointer' }}
-          onClick={async () => {
-            try {
-              const data = await reportComment({ id: comment?.id });
-              if (data.status === 200) {
-                toast.success(data?.message);
-              }
-            } catch (error) {
-              toast.error(error?.message);
-            }
-          }}
+          onClick={handleReportComment}
         >
           <FlagOutlined />
           <label style={{ paddingLeft: 4 }}>Báo cáo</label>
@@ -55,16 +62,23 @@ const CommentComponent = ({
               {comment?.user?.username ? comment.user.username : 'User'}
             </Row>
             <Row style={{ fontSize: 16 }}>
-              {comment ? comment.comment : 'Content'}
+              {comment ? censorComment(comment) : 'Content'}
             </Row>
             <Row style={{ gap: 8 }}>
               <Col
-                className="action-comment"
                 onClick={() => {
                   console.log('like');
                 }}
               >
-                Thích
+                <Row>
+                  <Col style={{ color: 'var(--jade)' }}>
+                    {comment?.like_count}
+                  </Col>
+                  <HeartOutlined
+                    style={{ paddingLeft: 2 }}
+                    className="action-comment hover-like"
+                  />
+                </Row>
               </Col>
               <Col
                 className="action-comment"
@@ -75,7 +89,7 @@ const CommentComponent = ({
                 Trả lời
               </Col>
               <Col style={{ color: 'var(--gray)', fontWeight: 'bold' }}>
-                {comment?.created_at ? comment.created_at : 'Date'}
+                {comment?.created_at && comment.created_at}
               </Col>
             </Row>
             {reply && (

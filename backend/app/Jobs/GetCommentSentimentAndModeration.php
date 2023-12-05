@@ -46,7 +46,7 @@ class GetCommentSentimentAndModeration implements ShouldQueue
         $sentiment_url = config('google.url_sentiment').'?key='.$key;
         $moderate_url = config('google.url_moderate').'?key='.$key;
 
-        // Tính sentiment
+        // Tính sentiment (-1 đến 1)
         $sentiment_response = Http::post($sentiment_url, [
             'document' => [
                 'type' => 'PLAIN_TEXT',
@@ -60,7 +60,7 @@ class GetCommentSentimentAndModeration implements ShouldQueue
         $this->comment->sentiment_score = $sentiment['score'];
         $this->comment->sentiment_magnitude = $sentiment['magnitude'];
 
-        // Tính các moderation
+        // Tính các moderation (0 đến 1)
         $moderate_response = Http::post($moderate_url, [
             'document' => [
                 'type' => 'PLAIN_TEXT',
@@ -73,6 +73,16 @@ class GetCommentSentimentAndModeration implements ShouldQueue
         for ($i = 0; $i < count($moderations); $i++) {
             $this->comment->{$this->MAP[$moderations[$i]['name']]} = $moderations[$i]['confidence'];
         }
+
+        // Tự block nếu sentiment < -0.8 và Toxic > 0.4
+        if ($this->comment->sentiment_score < -0.8 && $this->comment->toxic > 0.4) {
+            $this->comment->blocked = true;
+        }
+
+        // unset $comment->like_count, $comment->dislike_count, $comment->is_like nếu có
+        unset($this->comment->like_count);
+        unset($this->comment->dislike_count);
+        unset($this->comment->is_like);
 
         $this->comment->save();
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('manga_id')->constrained('mangas');
             $table->foreignId('chapter_id')->constrained('chapters');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }

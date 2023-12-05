@@ -1,23 +1,45 @@
 import { useEffect, useRef, useState, useContext } from 'react';
-import { Col, Row, Select } from 'antd';
+import { Col, Row, Select, Breadcrumb } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChapterDetail } from '../../../services/Guest/index';
-import { LeftCircleOutlined, RightCircleOutlined } from '@ant-design/icons';
+import {
+  LeftCircleOutlined,
+  RightCircleOutlined,
+  HomeOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import Comment from '../DetailManga/Comment';
 import ImageCustom from '../../../components/manga/ImageCustom';
 import { MangaContext } from '../../../providers/mangaProvider/index';
-import { getCommentChapter } from '../../../services/User/index';
 
 const DetailChapter = () => {
   const [images, setImages] = useState([]);
   const [chapters, setChapters] = useState([]);
   const [index, setIndex] = useState(0);
+  const [manga, setManga] = useState({});
   const { name, id } = useParams();
-  const [comments, setComments] = useState([]);
   const chapterElement = useRef(null);
   const navigate = useNavigate();
 
   const { setHistories } = useContext(MangaContext);
+  const items = [
+    {
+      href: '/',
+      title: <HomeOutlined />,
+    },
+    {
+      href: `/detail-manga/${manga?.id}`,
+      title: (
+        <>
+          <UserOutlined />
+          <span>{manga.name}</span>
+        </>
+      ),
+    },
+    {
+      title: chapters[index]?.label ? chapters[index]?.label : 'Chapter',
+    },
+  ];
 
   const fetchDetailChapter = async (id) => {
     const data = await getChapterDetail(id);
@@ -25,6 +47,7 @@ const DetailChapter = () => {
       setImages(data.data.images);
       if (data.data.manga && data.data.manga.chapters) {
         var arr = data.data.manga.chapters;
+        setManga(data?.data?.manga);
         setChapters(
           arr.map((chapter) => {
             return { value: chapter.id, label: chapter.name };
@@ -39,6 +62,7 @@ const DetailChapter = () => {
           slug: data?.data?.manga?.slug,
           time: new Date(),
           chapter: data?.data?.name,
+          mangaId: data?.data?.manga?.id,
         });
       }
     }
@@ -51,14 +75,15 @@ const DetailChapter = () => {
     id = 0,
     chapter = 0,
     slug = 'name',
+    mangaId = 0,
   }) => {
     const histories =
       localStorage.getItem('histories') !== null
         ? JSON.parse(localStorage.getItem('histories'))
         : [];
 
-    const manga = { name, time, thumbnail, id, chapter, slug };
-    const i = histories.findIndex((history) => history?.id == id);
+    const manga = { name, time, thumbnail, id, chapter, slug, mangaId };
+    const i = histories.findIndex((history) => history?.mangaId == mangaId);
 
     if (i === -1) {
       if (histories.length >= 10) {
@@ -87,23 +112,12 @@ const DetailChapter = () => {
     fetchDetailChapter(id);
   }, [id]);
 
-  useEffect(() => {
-    const handleScroll = (event) => {
-      // console.log(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <Row style={{ justifyContent: 'center' }} ref={chapterElement}>
       <Col span={18}>
-        <Row></Row>
-        <Row>Breakcumb</Row>
+        <Row style={{ paddingTop: 20 }}>
+          <Breadcrumb separator="/" items={items} />
+        </Row>
         <Row
           style={{
             alignItems: 'center',

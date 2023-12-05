@@ -88,7 +88,6 @@ describe('Spec Theo dõi truyện', () => {
         cy.contains('Xóa bookmark thành công')
 
     })
-
 });
 
 

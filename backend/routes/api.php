@@ -37,6 +37,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->middleware('activated');
     Route::post('/signup', [AuthController::class, 'signup']);
+    Route::post('/reset_password', [AuthController::class, 'reset_password']);
+    Route::post('/new_password', [AuthController::class, 'update_password']);
     Route::middleware('auth:sanctum')->delete('/logout', [AuthController::class, 'logout']);
 });
 
@@ -86,11 +88,13 @@ Route::prefix('report')->middleware('auth:sanctum')->group(function () {
     Route::post('{reportable}/{id}', [ReportController::class, 'create']);
 });
 
-Route::prefix('me')->middleware('auth:sanctum')->group(function () {
-    Route::get('/', [UserController::class, 'me']);
-    Route::patch('/', [UserController::class, 'patchMe']);
-    Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
-    Route::get('/history', [UserController::class, 'history']);
+Route::prefix('me')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/', [UserController::class, 'me']);
+        Route::patch('/', [UserController::class, 'patchMe']);
+        Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
+        Route::get('/history', [UserController::class, 'history']);
+    });
     Route::get('/recommendation', [MangaController::class, 'getRecommendation']);
 });
 

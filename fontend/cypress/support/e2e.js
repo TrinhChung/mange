@@ -31,4 +31,8 @@ beforeEach(() => {
     statusCode: 200,
     fixture: 'manga/categories.json',
   }).as('categories');
+  cy.intercept('GET', 'https://api.mange.uetvnu.id.vn/api/me/history', {
+    statusCode: 200,
+    fixture: 'manga/history.json',
+  }).as('history');
 });

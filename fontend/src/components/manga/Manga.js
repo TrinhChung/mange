@@ -2,6 +2,7 @@ import { Col, Row, Badge } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { hostImg } from '../../const/index';
+import { trimString } from '../../utils/commonFunc';
 
 const Manga = ({ manga = null, isPropose = false }) => {
   const navigate = useNavigate();
@@ -49,7 +50,6 @@ const Manga = ({ manga = null, isPropose = false }) => {
           navigate(`/live-manga/${manga?.slug}/${manga.last_3_chapters[0].id}`);
         }}
       >
-        #
         {manga?.last_3_chapters?.length > 0 && manga.last_3_chapters[0].name
           ? manga.last_3_chapters[0].name
           : '100'}
@@ -69,7 +69,7 @@ const Manga = ({ manga = null, isPropose = false }) => {
           }
         }}
       >
-        {manga?.name ? manga.name : 'Name'}
+        {manga?.name ? trimString(manga.name, 60) : 'Name'}
       </Row>
     </Col>
   );

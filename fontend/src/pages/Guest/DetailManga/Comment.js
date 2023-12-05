@@ -83,7 +83,7 @@ const Comment = ({ isChapter = true, id = 1 }) => {
         <Row style={{ paddingTop: 20 }}>
           <TextArea
             rows={4}
-            placeholder="VIết bình luận"
+            placeholder="Viết bình luận"
             maxLength={1000}
             onChange={(e) => {
               setContent(e.target.value);

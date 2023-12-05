@@ -143,9 +143,8 @@ const Search = () => {
                     <Row gutter={[8, 8]}>
                       <Col>
                         <Button
-                          className={`button-filter ${
-                            status === -1 ? 'button-selected' : ''
-                          }`}
+                          className={`button-filter ${status === -1 ? 'button-selected' : ''
+                            }`}
                           onClick={() => setStatus(-1)}
                         >
                           Tất cả
@@ -153,9 +152,8 @@ const Search = () => {
                       </Col>
                       <Col>
                         <Button
-                          className={`button-filter ${
-                            status === 1 ? 'button-selected' : ''
-                          }`}
+                          className={`button-filter ${status === 1 ? 'button-selected' : ''
+                            }`}
                           onClick={() => {
                             setStatus(1);
                           }}
@@ -165,9 +163,8 @@ const Search = () => {
                       </Col>
                       <Col>
                         <Button
-                          className={`button-filter ${
-                            status === 0 ? 'button-selected' : ''
-                          }`}
+                          className={`button-filter ${status === 0 ? 'button-selected' : ''
+                            }`}
                           onClick={() => {
                             setStatus(0);
                           }}
@@ -188,9 +185,8 @@ const Search = () => {
                         return (
                           <Col>
                             <Button
-                              className={`button-filter ${
-                                sortBy === item.value ? 'button-selected' : ''
-                              }`}
+                              className={`button-filter ${sortBy === item.value ? 'button-selected' : ''
+                                }`}
                               onClick={() => setSortBy(item.value)}
                             >
                               {item.label}
@@ -221,11 +217,10 @@ const Search = () => {
                     categories.map((item) => {
                       return (
                         <Col
-                          className={`category ${
-                            findCategory(item.id) !== -1
+                          className={`category ${findCategory(item.id) !== -1
                               ? 'category-selected'
                               : ''
-                          }`}
+                            }`}
                           span={12}
                           onClick={() => {
                             const check = findCategory(item.id);

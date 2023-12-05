@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Facades\Auth;
 
 class Comment extends Pivot
 {
@@ -25,6 +26,49 @@ class Comment extends Pivot
         'comment',
         'parent_id',
     ];
+
+    protected $guarded = [];
+
+    protected $hidden = [
+        'sentiment_score',
+        'sentiment_magnitude',
+        'toxic',
+        'insult',
+        'profanity',
+        'derogatory',
+        'sexual',
+        'death_harm_tragedy',
+        'violent',
+        'firearms_weapons',
+        'public_safety',
+        'health',
+        'religion_belief',
+        'illicit_drugs',
+        'war_conflict',
+        'politics',
+        'finance',
+        'legal',
+    ];
+
+    protected static function booted()
+    {
+        $user = Auth::guard('sanctum')->user();
+        static::retrieved(function ($comment) use ($user) {
+            $reaction = $comment->reacted_by;
+            $likeCount = $reaction->where('pivot.like', Comment::LIKE)->count();
+            $dislikeCount = $reaction->where('pivot.like', Comment::DISLIKE)->count();
+            if ($user) {
+                $checkLike = $reaction->where('id', $user->id)->first();
+                if ($checkLike) {
+                    $comment->is_like = $checkLike->pivot->like;
+                }
+            }
+
+            $comment->like_count = $likeCount;
+            $comment->dislike_count = $dislikeCount;
+            unset($comment->reacted_by);
+        });
+    }
 
     public function getCreatedAtAttribute($value)
     {

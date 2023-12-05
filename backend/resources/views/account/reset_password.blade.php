@@ -5,10 +5,10 @@
 </head>
 <body>
 
-    <h1>Hi, {{ $user->fullname }}</h1>
+    <h1>Hi, {{ $user->username }}</h1>
     <p>{{ $user->email }}</p>
 
     <p>Hãy nhấn vào đường link dưới để tiếp tục</p>
-    <a href="cần ui làm xong đã">Đổi mật khẩu</a>
+    <a href="{{env('APP_ENV') === 'production' ? 'https://recurup.com/auth/new-password?token='.$user->reset_token : 'http://localhost:3000/auth/new-password?token='.$user->reset_token}}">Đổi mật khẩu</a>
 </body>
 </html>

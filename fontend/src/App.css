@@ -97,6 +97,12 @@
   margin: 10px 0;
 }
 
+.box-propose {
+  background-color: white;
+  padding: 20px 20px 10px 20px;
+  margin: 10px 0;
+}
+
 .scroll-bar-custom::-webkit-scrollbar {
   width: 3px;
 }
@@ -192,6 +198,15 @@
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
+.hover-like:hover {
+  cursor: pointer;
+  color: var(--color-main);
+}
+
+.mg-10 {
+  margin-bottom: 10px !important;
+}
+
 .story-item {
   margin-top: 20px;
   align-items: center;
@@ -200,3 +215,4 @@
 .story-item:hover {
   background-color: #eee;
 }
+
