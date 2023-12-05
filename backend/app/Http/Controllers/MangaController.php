@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MangaCollection;
 use App\Models\Manga;
+use App\Models\Othername;
 use App\Traits\AuthTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -148,7 +149,6 @@ class MangaController extends Controller
             ->withCount(['bookmarked_by as follow_count', 'comments as comment_count', 'voted_by as vote_count'])
             ->withAvg('voted_by as vote_score', 'votes.score')
             ->findOrFail($fields['id']);
-        $manga->slug = explode('/', $manga->thumbnail)[0];
 
         // Thêm thông tin nếu user đã đăng nhập
         $user = Auth::guard('sanctum')->user();
@@ -172,6 +172,86 @@ class MangaController extends Controller
             'message' => 'Lấy thông tin truyện thành công',
             'data' => $manga,
         ], 200);
+    }
+
+    public function create(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'admin') {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Can not access',
+            ], 403);
+        }
+
+        $fields = $this->validate($request, [
+            'name' => 'required|string',
+            'othernames' => 'array',
+            'othernames.*' => 'string',
+            'description' => 'required|string',
+            'thumbnail' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:10240'],
+            'status' => 'required|integer|in:0,1',
+            'categories' => 'required|array',
+            'categories.*' => 'integer',
+            'authors' => 'required|array',
+            'authors.*' => 'string',
+        ]);
+
+        $slug = \Str::slug($fields['name'], '-');
+
+        $manga = Manga::where('slug', $slug)->first();
+
+        if ($manga) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Truyện đã tồn tại',
+            ], 400);
+        }
+
+        DB::beginTransaction();
+        $manga = Manga::create([
+            'name' => $fields['name'],
+            'description' => $fields['description'],
+            'status' => $fields['status'],
+            'thumbnail' => $slug.'/thumbnail.jpg',
+            'slug' => $slug,
+        ]);
+
+        $authors = $fields['authors'];
+        $categories = $fields['categories'];
+        $othernames = $fields['othernames'];
+
+        // create authors if not exists by name
+        $authors = array_map(function ($author) {
+            return ['name' => $author];
+        }, $authors);
+        $authors = array_map(function ($author) {
+            return \App\Models\Author::firstOrCreate($author)->id;
+        }, $authors);
+
+        if (count($othernames) > 0) {
+            Othername::insert(array_map(function ($othername) use ($manga) {
+                return [
+                    'name' => $othername,
+                    'manga_id' => $manga->id,
+                ];
+            }, $othernames));
+        }
+
+        DB::commit();
+        $manga->categories()->sync($categories);
+        $manga->authors()->sync($authors);
+
+        // Upload thumbnail
+        $thumbnail = $request->file('thumbnail');
+        \Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Thêm truyện thành công',
+            'data' => $manga,
+        ], 201);
     }
 
     public function getBookmarkedMangas(Request $request)

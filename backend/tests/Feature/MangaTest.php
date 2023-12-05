@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Manga;
 use App\Models\User;
 use App\Traits\TestHelper;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class MangaTest extends TestCase
@@ -87,6 +90,29 @@ class MangaTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    public function test_create_manga_success(): void
+    {
+        $admin = $this->create_admin();
+        Storage::fake('ftp');
+        Storage::disk('ftp')->deleteDirectory('manga-1');
+        $image = UploadedFile::fake()->image('image1.jpg');
+        Category::create([
+            'name' => 'Category 1',
+        ]);
+
+        $response = $this->actingAs($admin)->post('/api/mangas/', [
+            'name' => 'Manga 1',
+            'description' => 'Description',
+            'status' => 0,
+            'thumbnail' => $image,
+            'categories' => [1],
+            'othernames' => ['Other name 1'],
+            'authors' => ['Author 1'],
+        ]);
+
+        $response->assertStatus(201);
     }
 
     public function test_search_query_success(): void

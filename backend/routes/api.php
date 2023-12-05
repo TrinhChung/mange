@@ -44,6 +44,7 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('mangas')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/', [MangaController::class, 'create']);
         Route::get('/bookmarked', [MangaController::class, 'getBookmarkedMangas']);
         Route::post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
         Route::post('{manga_id}/comment', [CommentController::class, 'create']);

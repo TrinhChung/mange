@@ -20,6 +20,7 @@ class Manga extends Model
         'description',
         'thumbnail',
         'view',
+        'slug',
     ];
 
     protected $searchable = [
