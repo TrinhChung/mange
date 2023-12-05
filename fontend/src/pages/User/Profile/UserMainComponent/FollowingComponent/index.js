@@ -1,8 +1,10 @@
 import { Col, Input, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../../components/layout/TitleTopLeft';
 import UserStory from '../UserStory';
 import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../../../../../providers/authProvider';
+import { getMangasBookmark } from '../../../../../services/User';
 
 const breadcrumbData = [
   {
@@ -24,6 +26,26 @@ const FollowingComponent = () => {
     searchParams.get('userSearchBar') ? searchParams.get('userSearchBar') : ''
   );
 
+  const { authUser } = useContext(AuthContext);
+  const [follows, setFollows] = useState([]);
+
+  const fetchFollowed = async () => {
+    try {
+      const data = await getMangasBookmark();
+
+      if (data.status === 200) {
+        setFollows(data?.data?.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFollowed();
+  }, []);
+
+  console.log('follows', follows);
   return (
     <Row className="box-content">
       <Col
@@ -36,7 +58,7 @@ const FollowingComponent = () => {
         }}
       >
         <TitleTopLeft title="Truyện đang theo dõi" itemList={breadcrumbData} />
-        <Search
+        {/* <Search
           placeholder="Tìm kiếm truyện"
           allowClear
           style={{ width: 250 }}
@@ -46,14 +68,13 @@ const FollowingComponent = () => {
           onChange={(e) => {
             setKey(e.target.value);
           }}
-        />
+        /> */}
       </Col>
       <UserStory
         headerText={{
-          text1: 'TÊN TRUYỆN',
-          text2: 'XEM GẦN NHẤT',
-          text3: 'NGÀY CẬP NHẬT',
+          text1: 'DANH SÁCH TRUYỆN ĐANG THEO RÕI',
         }}
+        follows={follows}
       />
     </Row>
   );

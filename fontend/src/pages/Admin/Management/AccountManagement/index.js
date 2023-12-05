@@ -32,7 +32,7 @@ const data = [
         <LockOutlined style={{ color: '#F54558' }} />
       </>
     ),
-    role: 'user'
+    role: 'user',
   },
   {
     avatar:
@@ -46,7 +46,8 @@ const data = [
         <EyeOutlined />
         <LockOutlined style={{ color: '#F54558' }} />
       </>
-    ), role: 'translator'
+    ),
+    role: 'translator',
   },
   {
     avatar:
@@ -60,7 +61,8 @@ const data = [
         <EyeOutlined />
         <LockOutlined style={{ color: '#F54558' }} />
       </>
-    ), role: 'user'
+    ),
+    role: 'user',
   },
   {
     avatar:
@@ -74,7 +76,8 @@ const data = [
         <EyeOutlined />
         <LockOutlined style={{ color: '#F54558' }} />
       </>
-    ), role: 'translator'
+    ),
+    role: 'translator',
   },
 ];
 const optionsData = [
@@ -105,7 +108,7 @@ const AccountManagement = () => {
           options={optionsData}
           optionType="button"
           buttonStyle="solid"
-          defaultValue={"user"}
+          defaultValue={'user'}
           value={roleOptionValue}
           onChange={onChangeRoleOptionValue}
         />
@@ -162,7 +165,7 @@ const AccountManagement = () => {
       <Table
         style={{ width: '100%' }}
         columns={tableColumns}
-        dataSource={data.filter(item => item.role === roleOptionValue)}
+        dataSource={data.filter((item) => item.role === roleOptionValue)}
         pagination={false}
       />
     </Row>

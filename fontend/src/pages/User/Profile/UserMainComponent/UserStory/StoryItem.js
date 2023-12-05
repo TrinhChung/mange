@@ -1,21 +1,30 @@
 import { Col, Image, Row } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const StoryItem = ({ manga, date1, date2 }) => {
+  const navigate = useNavigate();
   return (
-    <Row style={{ marginTop: 20, alignItems: 'center' }}>
+    <Row
+      className="story-item"
+      onClick={() => {
+        if (manga?.id) {
+          navigate(`/detail-manga/${manga.id}`);
+        }
+      }}
+    >
       <Col span={14} style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
         <Image
           src={manga ? manga.image : null}
           preview={false}
-          width={45}
-          height={60}
+          width={60}
+          height={80}
         />
         <div>
           <div
             style={{
               color: 'var(--gray)',
-              fontSize: 15,
+              fontSize: 18,
               fontWeight: 600,
             }}
           >
@@ -24,7 +33,7 @@ const StoryItem = ({ manga, date1, date2 }) => {
           <div
             style={{
               color: 'var(--gray)',
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: 600,
             }}
           >

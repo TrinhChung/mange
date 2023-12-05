@@ -18,15 +18,16 @@ function App() {
   window.io = require('socket.io-client');
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken')?.slice(1, localStorage.getItem('accessToken').length - 1);
+    const token = localStorage
+      .getItem('accessToken')
+      ?.slice(1, localStorage.getItem('accessToken').length - 1);
 
     window.echo = new Echo({
       broadcaster: 'socket.io',
       auth: {
-        headers:
-        {
-            Authorization: `Bearer ${token}`
-        }
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
       host:
         process.env.NODE_ENV === 'production'
@@ -42,10 +43,12 @@ function App() {
       // console.log('disconnected');
     });
 
-    if(authUser) {
-      window.echo.channel(`laravel_database_private-App.Models.User.${authUser.id}`).notification((notification) => {
-        console.log(notification);
-      })
+    if (authUser) {
+      window.echo
+        .channel(`laravel_database_private-App.Models.User.${authUser.id}`)
+        .notification((notification) => {
+          console.log(notification);
+        });
     }
   }, [authUser]);
 
