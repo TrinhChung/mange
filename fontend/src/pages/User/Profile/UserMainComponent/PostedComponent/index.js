@@ -37,7 +37,7 @@ const PostedComponent = () => {
         }}
       >
         <TitleTopLeft title="Truyện đã đăng" itemList={breadcrumbData} />
-        <Search
+        {/* <Search
           placeholder="Tìm kiếm truyện"
           allowClear
           style={{ width: 250 }}
@@ -47,7 +47,7 @@ const PostedComponent = () => {
           onChange={(e) => {
             setKey(e.target.value);
           }}
-        />
+        /> */}
         <div
           className="button-view bg-color-main"
           onClick={() => navigate('/profile/post')}
@@ -57,9 +57,7 @@ const PostedComponent = () => {
       </Col>
       <UserStory
         headerText={{
-          text1: 'TÊN TRUYỆN',
-          text2: 'NGÀY ĐĂNG',
-          text3: 'LƯỢT THEO DÕI',
+          text1: 'DANH SÁCH TRUYỆN ĐÃ ĐĂNG',
         }}
       />
     </Row>

@@ -35,3 +35,7 @@ export const reportComment = ({ id: id }) => {
 export const voteManga = ({ id: id, score: score }) => {
   return axios.post(`/api/mangas/${id}/vote`, { score: score });
 };
+
+export const updateAvatar = (formData) => {
+  return axios.post(`/api/me/avatar`, formData);
+};

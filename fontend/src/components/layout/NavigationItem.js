@@ -15,7 +15,7 @@ const NavigationItem = ({ startIcon = null, content, action }) => {
       }}
     >
       <Col style={{ minWidth: 25 }}>{startIcon}</Col>
-      <Col style={{ cursor: 'pointer', minWidth: 200 }}>{content}</Col>
+      <Col style={{ cursor: 'pointer', minWidth: 175 }}>{content}</Col>
       <Col>
         <RightOutlined />
       </Col>

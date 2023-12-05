@@ -3,7 +3,7 @@ import React from 'react';
 import NavigationArea from '../../../components/profile/NavigationArea';
 import { useLocation, Routes, Route } from 'react-router-dom';
 import GeneralComponent from './UserMainComponent/GeneralComponent';
-import ProfileComponent from './UserMainComponent/ProfileComponent';
+import ChangePasswordComponent from './UserMainComponent/ChangePasswordComponent';
 import FollowingComponent from './UserMainComponent/FollowingComponent';
 import PostedComponent from './UserMainComponent/PostedComponent';
 import AvatarArea from '../../../components/profile/AvatarArea';
@@ -20,10 +20,10 @@ import History from '../../Guest/History';
 const menu = [
   {
     content: 'Thông tin chung',
-    path: '/profile/general',
+    path: '/profile',
     icon: <InfoCircleOutlined />,
   },
-  { content: 'Hồ sơ cá nhân', path: '/profile/', icon: <UserOutlined /> },
+  // { content: 'Hồ sơ cá nhân', path: '/profile/', icon: <UserOutlined /> },
   {
     content: 'Truyện đang theo dõi',
     path: '/profile/following',
@@ -35,8 +35,11 @@ const menu = [
     icon: <ReadOutlined />,
   },
   // { content: 'Tải truyện lên', path: '/profile/post', icon: <KeyOutlined /> },
-  { content: 'Đổi mật khẩu', path: '/profile/general', icon: <KeyOutlined /> },
-  { content: 'Đăng xuất', path: null, icon: <LogoutOutlined /> },
+  {
+    content: 'Đổi mật khẩu',
+    path: '/profile/change-password',
+    icon: <KeyOutlined />,
+  },
 ];
 
 const Profile = () => {
@@ -53,10 +56,13 @@ const Profile = () => {
           </Col>
           <Col span={16}>
             <Routes>
-              <Route path="/" element={<ProfileComponent />} />
+              <Route path="/" element={<GeneralComponent />} />
               <Route path="following" element={<FollowingComponent />} />
               <Route path="posted" element={<PostedComponent />} />
-              <Route path="general" element={<GeneralComponent />} />
+              <Route
+                path="change-password"
+                element={<ChangePasswordComponent />}
+              />
               <Route path="post" element={<PostManga />} />
             </Routes>
           </Col>

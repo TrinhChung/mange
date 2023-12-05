@@ -36,7 +36,6 @@ const menu = [
     icon: <ReadOutlined />,
   },
   { content: 'Đổi mật khẩu', path: null, icon: <KeyOutlined /> },
-  { content: 'Đăng xuất', path: null, icon: <LogoutOutlined /> },
 ];
 
 const Management = () => {
@@ -53,7 +52,7 @@ const Management = () => {
           </Col>
           <Col span={16}>
             <Routes>
-              <Route path="/" element={<General/>} />
+              <Route path="/" element={<General />} />
               <Route path="account" element={<AccountManagement />} />
               <Route path="comment" element={<CommentManagement />} />
               <Route path="story" element={<StoryManagement />} />
