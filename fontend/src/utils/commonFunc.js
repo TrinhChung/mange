@@ -1,3 +1,9 @@
+const NODE_ENV = process.env.NODE_ENV;
+const API_URL =
+  NODE_ENV === 'production'
+    ? 'https://api.mange.uetvnu.id.vn'
+    : 'http://localhost:8000';
+
 export const buildHistories = (histories) => {
   return histories.map((history) => {
     return {
@@ -27,6 +33,14 @@ export const trimString = (str, length) => {
   }
   return str;
 };
+
+export const formatAvatarURL = (avatar) => {
+    if (avatar.includes('http')) {
+        return avatar;
+    } else {
+        return `${API_URL}/storage/avatars/${avatar}`;
+    }
+}
 
 export const censorComment = (comment) => {
   if (!comment) return 'Comment trống';

@@ -16,6 +16,7 @@ import tableColumns from './TableColumns';
 import { getAllUsers } from '../../../../services/Admin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { formatAvatarURL } from '../../../../utils/commonFunc';
 
 const breadcrumbData = [
   {
@@ -29,6 +30,7 @@ const breadcrumbData = [
     href: '/profile/management-account',
   },
 ];
+
 const AccountManagement = () => {
   const navigate = useNavigate();
 
@@ -47,7 +49,7 @@ const AccountManagement = () => {
             ?.filter((user) => user.role === 'user')
             .map((user) => {
               return {
-                avatar: user.avatar,
+                avatar: formatAvatarURL(user.avatar),
                 username: user.username,
                 email: user.email,
                 status: user.active ? (
@@ -80,7 +82,7 @@ const AccountManagement = () => {
     <Row className="box-content">
       <TitleTopLeft title="Quản lý người dùng" itemList={breadcrumbData} />
 
-      <Col
+      {/* <Col
         span={24}
         style={{
           fontSize: 20,
@@ -95,7 +97,6 @@ const AccountManagement = () => {
       <Col
         span={24}
         style={{
-          marginBottom: 16,
           display: 'flex',
           gap: 20,
         }}
@@ -126,10 +127,10 @@ const AccountManagement = () => {
         >
           Lọc
         </Row>
-      </Col>
+      </Col> */}
 
       <Table
-        style={{ width: '100%' }}
+        style={{ marginTop: 16, width: '100%' }}
         columns={tableColumns}
         dataSource={users}
         pagination={false}

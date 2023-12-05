@@ -4,12 +4,8 @@ import { AuthContext } from '../../providers/authProvider';
 import './AvatarArea.scss';
 import { updateAvatar } from '../../services/User';
 import { toast } from 'react-toastify';
+import { formatAvatarURL } from '../../utils/commonFunc';
 
-const NODE_ENV = process.env.NODE_ENV;
-const API_URL =
-  NODE_ENV === 'production'
-    ? 'https://api.mange.uetvnu.id.vn'
-    : 'http://localhost:8000';
 const AvatarArea = () => {
   const { authUser, setAuthUser } = useContext(AuthContext);
   console.log(authUser);
@@ -74,7 +70,7 @@ const AvatarArea = () => {
       <Col>
         <Row style={{ color: 'var(--gray)', justifyContent: 'center' }}>
           <Avatar
-            src={`${API_URL}/storage/avatars/${authUser?.avatar}`}
+            src={formatAvatarURL(authUser?.avatar)}
             size={180}
           />
         </Row>
@@ -132,7 +128,7 @@ const AvatarArea = () => {
               src={
                 image
                   ? previewUrl
-                  : `${API_URL}/storage/avatars/${authUser?.avatar}`
+                  : formatAvatarURL(authUser?.avatar)
               }
               alt="preview"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
