@@ -30,7 +30,7 @@ class UserController extends Controller
         $per_page = $fields['per_page'] ?? 10;
         $page = $fields['page'] ?? 1;
 
-        $users = User::query()->select(['id', 'username', 'email', 'role', 'active', 'updated_at'])
+        $users = User::query()->select(['id', 'username', 'email', 'avatar', 'role', 'active', 'updated_at'])
             ->paginate($per_page, ['*'], 'page', $page);
 
         return response()->json([
