@@ -38,14 +38,17 @@ const ChangePasswordComponent = () => {
     }
 
     try {
-      const data = await changePasswordMe({email: authUser.email, password: passwordData.newPassword});
+      const data = await changePasswordMe({
+        email: authUser.email,
+        password: passwordData.newPassword,
+      });
       if (data.status === 200) {
         toast.success(data?.message);
       }
     } catch (error) {
       toast.error(error?.message);
     }
-  }
+  };
 
   return (
     <Row className="box-content">
@@ -76,7 +79,9 @@ const ChangePasswordComponent = () => {
           />
         </InputGroupContainer>
       </Col>
-      <Col className="button-view bg-color-jade" onClick={onSubmitPassword}>Cập nhật</Col>
+      <Col className="button-view bg-color-jade" onClick={onSubmitPassword}>
+        Cập nhật
+      </Col>
     </Row>
   );
 };

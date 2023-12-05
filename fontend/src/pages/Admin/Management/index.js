@@ -36,7 +36,11 @@ const menu = [
     path: '/profile/management-story',
     icon: <ReadOutlined />,
   },
-  { content: 'Đổi mật khẩu', path: '/profile/change-password', icon: <KeyOutlined /> },
+  {
+    content: 'Đổi mật khẩu',
+    path: '/profile/change-password',
+    icon: <KeyOutlined />,
+  },
 ];
 
 const Management = () => {
@@ -53,11 +57,20 @@ const Management = () => {
           </Col>
           <Col span={16}>
             <Routes>
-              <Route path="/" element={<GeneralComponent/>} />
-              <Route path="management-account" element={<AccountManagement />} />
-              <Route path="management-comment" element={<CommentManagement />} />
+              <Route path="/" element={<GeneralComponent />} />
+              <Route
+                path="management-account"
+                element={<AccountManagement />}
+              />
+              <Route
+                path="management-comment"
+                element={<CommentManagement />}
+              />
               <Route path="management-story" element={<StoryManagement />} />
-              <Route path="change-password" element={<ChangePasswordComponent/>} />
+              <Route
+                path="change-password"
+                element={<ChangePasswordComponent />}
+              />
             </Routes>
           </Col>
         </Row>

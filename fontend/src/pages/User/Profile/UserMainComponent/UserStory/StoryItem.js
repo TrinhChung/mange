@@ -1,7 +1,7 @@
 import { Col, Image, Row } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './story-item.scss'
+import './story-item.scss';
 
 const StoryItem = ({ manga, date1, date2 }) => {
   const navigate = useNavigate();
