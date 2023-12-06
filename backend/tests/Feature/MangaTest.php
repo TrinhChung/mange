@@ -320,4 +320,26 @@ class MangaTest extends TestCase
             ],
         ]);
     }
+
+    public function test_report_manga_success()
+    {
+        $manga = Manga::factory()->create();
+        $user = User::factory()->create([
+            'activated_at' => now(),
+            'active' => true,
+        ]);
+        $response = $this->actingAs($user)->post("/api/report/manga/$manga->id");
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+    }
+
+    public function test_report_comment_failed_not_login()
+    {
+        $manga = Manga::factory()->create();
+        $response = $this->post("/api/report/comment/$manga->id");
+        $response->assertStatus(401);
+    }
 }
