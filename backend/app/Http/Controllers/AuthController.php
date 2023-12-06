@@ -62,7 +62,7 @@ class AuthController extends Controller
     public function reset_password(Request $request)
     {
         $fields = $this->validate($request, [
-            'email' => 'required|string',
+            'email' => 'required|string|email',
         ]);
 
         $user = User::where('email', $fields['email'])->where('active', 1)->first();
@@ -70,7 +70,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => 0,
                 'message' => 'user not found',
-            ]);
+            ], 404);
         }
         DB::beginTransaction();
         $user->update([
@@ -95,23 +95,23 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('reset_token', $fields['reset_token'])->where('active', 1)->first();
-        if ($user->reset_sent_at && Carbon::now()->diffInMinutes(Carbon::parse($user->reset_sent_at)) > 10) {
-            return response()->json([
-                'success' => 0,
-                'message' => 'Token quá hạn',
-            ]);
-        }
         if (! $user) {
             return response()->json([
                 'success' => 0,
                 'message' => 'user not found',
-            ]);
+            ], 404);
+        }
+        if ($user->reset_sent_at && Carbon::now()->diffInMinutes(Carbon::parse($user->reset_sent_at)) > 10) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Token quá hạn',
+            ], 503);
         }
         if ($fields['password'] !== $fields['password_confirm']) {
             return response()->json([
                 'success' => 0,
                 'message' => 'Mật khẩu mới không trùng khớp',
-            ]);
+            ], 422);
         }
         $user->update([
             'password' => md5($fields['password']),
