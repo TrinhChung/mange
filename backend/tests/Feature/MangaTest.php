@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
+use App\Models\Chapter;
 use App\Models\Manga;
 use App\Models\User;
+use App\Models\View;
 use App\Traits\TestHelper;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -113,6 +115,47 @@ class MangaTest extends TestCase
         ]);
 
         $response->assertStatus(201);
+    }
+
+    public function test_create_fail_with_user_not_admin(): void
+    {
+        $image = UploadedFile::fake()->image('image1.jpg');
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->post('/api/mangas/', [
+            'name' => 'Manga 1',
+            'description' => 'Description',
+            'status' => 0,
+            'thumbnail' => $image,
+            'categories' => [1],
+            'othernames' => ['Other name 1'],
+            'authors' => ['Author 1'],
+        ]);
+        $response->assertStatus(403);
+    }
+
+    public function test_create_fail_with_manga_existed(): void
+    {
+        $admin = $this->create_admin();
+        Storage::fake('ftp');
+        Storage::disk('ftp')->deleteDirectory('manga-1');
+        $image = UploadedFile::fake()->image('image1.jpg');
+        Category::create([
+            'name' => 'Category 1',
+        ]);
+
+        $image = UploadedFile::fake()->image('image1.jpg');
+        $manga = Manga::factory()->create(['name' => 'tham du', 'slug' => 'tham-du']);
+
+        $response = $this->actingAs($admin)->post('/api/mangas/', [
+            'name' => 'tham dự',
+            'description' => 'Description',
+            'status' => 0,
+            'thumbnail' => $image,
+            'categories' => [1],
+            'othernames' => ['Other name 1'],
+            'authors' => ['Author 1'],
+        ]);
+        $response->assertStatus(400);
     }
 
     public function test_search_query_success(): void
@@ -336,10 +379,51 @@ class MangaTest extends TestCase
         ]);
     }
 
-    public function test_report_comment_failed_not_login()
+    public function test_report_manga_failed_not_login(): void
     {
         $manga = Manga::factory()->create();
         $response = $this->post("/api/report/comment/$manga->id");
         $response->assertStatus(401);
+    }
+
+    public function test_get_reported_mangas_success(): void
+    {
+        $mangas = Manga::factory(10)->create();
+        $user = User::factory(15)->create(['role' => 'user', 'active' => 1, 'activated_at' => now()]);
+        foreach ($mangas as $manga) {
+            $manga->reported_by()->attach($user->pluck('id')->toArray());
+        }
+
+        $admin = User::factory()->create(['role' => 'admin', 'active' => 1, 'activated_at' => now()]);
+        $response = $this->actingAs($admin)->get('/api/mangas/reported');
+        $response->assertStatus(200);
+        $data = $response->json();
+        $this->assertEquals($data['data']['total'], 10);
+    }
+
+    public function test_get_reported_mangas_failed_with_not_admin(): void
+    {
+        $user = User::factory()->create(['role' => 'user', 'active' => 1, 'activated_at' => now()]);
+        $response = $this->actingAs($user)->get('/api/mangas/reported');
+        $response->assertStatus(403);
+    }
+
+    public function test_get_recommendation_success(): void
+    {
+        $user = User::factory()->create(['role' => 'user', 'active' => 1, 'activated_at' => now()]);
+        $response = $this->actingAs($user)->get('/api/me/recommendation');
+        $response->assertStatus(200);
+        $response->assertJsonCount(15, 'data');
+    }
+
+    public function test_get_recommendation_success_with_view(): void
+    {
+        $user = User::factory()->create(['role' => 'user', 'active' => 1, 'activated_at' => now()]);
+        $chapters = Chapter::factory(5)->create();
+        foreach ($chapters as $chapter) {
+            View::create(['manga_id' => $chapter->manga->id, 'chapter_id' => $chapter->id, 'user_id' => $user->id]);
+        }
+        $response = $this->actingAs($user)->get('/api/me/recommendation');
+        $response->assertStatus(200);
     }
 }

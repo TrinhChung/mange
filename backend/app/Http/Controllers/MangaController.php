@@ -11,12 +11,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class MangaController extends Controller
 {
     use AuthTrait;
 
-    const REPORT_LIMIT = 100;
+    const REPORT_LIMIT = 10;
 
     private function roundUpToNextFive(float $number)
     {
@@ -198,7 +199,7 @@ class MangaController extends Controller
             'authors.*' => 'string',
         ]);
 
-        $slug = \Str::slug($fields['name'], '-');
+        $slug = Str::slug($fields['name'], '-');
 
         $manga = Manga::where('slug', $slug)->first();
 
@@ -322,11 +323,11 @@ class MangaController extends Controller
             ], 403);
         }
 
-        $reportedMangas = Manga::has('reported_by', '>', $this::REPORT_LIMIT)->get();
+        $reportedMangas = Manga::has('reported_by', '>', $this::REPORT_LIMIT)->withCount('reported_by as report_count')->paginate(10);
 
         return response()->json([
             'success' => 1,
-            'data' => new MangaCollection($reportedMangas),
+            'data' => $reportedMangas,
             'message' => 'success',
         ], 200);
     }

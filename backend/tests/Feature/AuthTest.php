@@ -3,9 +3,11 @@
 namespace Tests\Feature;
 
 use App\Mail\activeAccount;
+use App\Mail\resetPassword;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -177,5 +179,121 @@ class AuthTest extends TestCase
         $response->assertJsonStructure([
             'message',
         ]);
+    }
+
+    public function test_reset_password_success(): void
+    {
+        Mail::fake();
+
+        $user = User::factory()->create([
+            'email' => 'test_random_user@gmail.com',
+            'active' => true,
+            'activated_at' => now(),
+        ]);
+        $response = $this->post('/api/auth/reset_password', ['email' => $user->email]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+
+        $user->refresh();
+
+        $this->assertNotNull($user->reset_token);
+        $this->assertNotNull($user->reset_sent_at);
+
+        Mail::assertSent(resetPassword::class, function ($mail) use ($user) {
+            return $mail->hasTo($user['email']);
+        });
+    }
+
+    public function test_reset_password_fail_with_notfound_user(): void
+    {
+        Mail::fake();
+
+        $response = $this->post('/api/auth/reset_password', ['email' => 'abcd@gmail.com']);
+
+        $response->assertStatus(404);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+    }
+
+    public function test_update_pass_success(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test_random_user@gmail.com',
+            'active' => true,
+            'activated_at' => now(),
+        ]);
+        $this->post('/api/auth/reset_password', ['email' => $user->email]);
+
+        $user->refresh();
+
+        $response = $this->post('/api/auth/new_password', ['reset_token' => $user->reset_token, 'password' => 'new_password', 'password_confirm' => 'new_password']);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+
+        $user->refresh();
+        $this->assertEquals($user->password, md5('new_password'));
+    }
+
+    public function test_update_pass_fail_with_notfound_user(): void
+    {
+        $response = $this->post('/api/auth/new_password', ['reset_token' => 'abcasdasdasdasd', 'password' => 'new_password', 'password_confirm' => 'new_password']);
+
+        $response->assertStatus(404);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+    }
+
+    public function test_update_pass_fail_with_password_not_confirm(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test_random_user@gmail.com',
+            'active' => true,
+            'activated_at' => now(),
+        ]);
+        $this->post('/api/auth/reset_password', ['email' => $user->email]);
+
+        $user->refresh();
+
+        $response = $this->post('/api/auth/new_password', ['reset_token' => $user->reset_token, 'password' => 'new_password', 'password_confirm' => 'new_password_123']);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+    }
+
+    public function test_update_fail_with_token_outdated(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test_random_user@gmail.com',
+            'active' => true,
+            'activated_at' => now(),
+        ]);
+        $this->post('/api/auth/reset_password', ['email' => $user->email]);
+
+        $user->refresh();
+        Carbon::setTestNow(now()->addMinutes(20));
+
+        $response = $this->post('/api/auth/new_password', ['reset_token' => $user->reset_token, 'password' => 'new_password_123', 'password_confirm' => 'new_password_123']);
+
+        $response->assertStatus(503);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+        parent::tearDown();
     }
 }

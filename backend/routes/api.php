@@ -67,10 +67,6 @@ Route::prefix('chapters')->group(function () {
     Route::get('{chapter_id}/comments', [CommentController::class, 'getAllComment']);
 });
 
-Route::prefix('user')->group(function () {
-    Route::post('/request_reset_password', [UserController::class, 'requestResetPassword']);
-});
-
 Route::prefix('forms')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [UserController::class, 'createForm']);
