@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Chapter;
+use App\Models\Manga;
 use App\Models\User;
+use App\Models\View;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -475,5 +478,46 @@ class UserTest extends TestCase
         ]);
         Storage::assertMissing('public/avatars/avatar153269.jpg');
         Storage::delete('public/avatars/'.$user->avatar);
+    }
+
+    public function test_get_history_success()
+    {
+        $user = User::factory()->create([
+            'activated_at' => now(),
+            'active' => true,
+        ]);
+        for ($i = 1; $i <= 10; $i++) {
+            $manga = Manga::factory()->create();
+            for ($k = 1; $k <= 10; $k++) {
+                $chapter = Chapter::factory()->create(['manga_id' => $manga->id, 'folder' => '/folder/'.$manga->name.$k]);
+                View::create(['manga_id' => $manga->id, 'chapter_id' => $chapter->id, 'user_id' => $user->id]);
+            }
+        }
+        $response = $this->actingAs($user)->get('/api/me/history');
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'manga_id',
+                    'name',
+                    'amount',
+                    'pivot' => [
+                        'user_id',
+                        'manga_id',
+                        'chapter_id',
+                    ],
+                    'manga' => [
+                        'id',
+                        'name',
+                        'slug',
+                        'status',
+                        'description',
+                        'thumbnail',
+                        'view',
+                    ],
+                ],
+            ],
+        ]);
     }
 }

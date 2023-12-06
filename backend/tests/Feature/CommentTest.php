@@ -341,4 +341,30 @@ class CommentTest extends TestCase
         ]);
         $response->assertStatus(500);
     }
+
+    public function test_report_comment_success()
+    {
+        $manga = Manga::factory()->create();
+        $user = User::factory()->create([
+            'activated_at' => now(),
+            'active' => true,
+        ]);
+        $this->createNestedComments($manga->id, 'manga');
+        $comment = Comment::first();
+        $response = $this->actingAs($user)->post("/api/report/comment/$comment->id");
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'success',
+            'message',
+        ]);
+    }
+
+    public function test_report_comment_failed_not_login()
+    {
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+        $comment = Comment::first();
+        $response = $this->post("/api/report/comment/$comment->id");
+        $response->assertStatus(401);
+    }
 }
