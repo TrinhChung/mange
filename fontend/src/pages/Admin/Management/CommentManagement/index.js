@@ -20,7 +20,7 @@ const breadcrumbData = [
     title: 'Admin',
   },
   {
-    title: 'Quản lý bình luận',
+    title: 'Bình luận bị báo cáo',
     href: '/profile/management-comment',
   },
 ];
@@ -83,7 +83,7 @@ const CommentManagement = () => {
   return (
     <>
       <Row className="box-content">
-        <TitleTopLeft title="Quản lý bình luận" itemList={breadcrumbData} />
+        <TitleTopLeft title="Bình luận bị báo cáo" itemList={breadcrumbData} />
         {/* <Col
           span={24}
           style={{

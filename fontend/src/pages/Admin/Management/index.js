@@ -5,8 +5,10 @@ import {
   InfoCircleOutlined,
   KeyOutlined,
   LogoutOutlined,
+  FlagOutlined,
   ReadOutlined,
 } from '@ant-design/icons';
+
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import AccountManagement from './AccountManagement';
@@ -29,9 +31,9 @@ const menu = [
     icon: <ReadOutlined />,
   },
   {
-    content: 'Quản lý bình luận',
+    content: 'Bình luận bị báo cáo',
     path: '/profile/management-comment',
-    icon: <ReadOutlined />,
+    icon: <FlagOutlined />,
   },
   {
     content: 'Quản lý truyện',

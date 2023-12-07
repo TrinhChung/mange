@@ -9,7 +9,7 @@ const tableColumns = [
     width: '35%',
   },
   {
-    title: 'USERNAME',
+    title: 'TÁC GIẢ',
     dataIndex: 'authors',
     key: 'authors',
     align: 'center',
