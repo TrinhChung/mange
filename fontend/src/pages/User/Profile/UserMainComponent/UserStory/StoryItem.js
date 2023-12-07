@@ -2,8 +2,10 @@ import { Col, Image, Row } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './story-item.scss';
+import { trimString } from '../../../../../utils/commonFunc';
+import { hostImg } from '../../../../../const';
 
-const StoryItem = ({ manga, date1, date2 }) => {
+const StoryItem = ({ manga }) => {
   const navigate = useNavigate();
   return (
     <Row
@@ -16,7 +18,7 @@ const StoryItem = ({ manga, date1, date2 }) => {
     >
       <Col style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
         <Image
-          src={manga ? manga.image : null}
+          src={manga ? hostImg + manga.thumbnail : null}
           preview={false}
           width={60}
           height={80}
@@ -38,7 +40,7 @@ const StoryItem = ({ manga, date1, date2 }) => {
               fontWeight: 600,
             }}
           >
-            Chapter {manga.chap}
+            Chapter {manga.chap ? manga.chap : 100}
           </div>
         </div>
       </Col>

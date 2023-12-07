@@ -41,7 +41,6 @@ const AccountManagement = () => {
   const fetchAllUsers = async () => {
     try {
       const res = await getAllUsers(page);
-      console.log('data', res);
       if (res && res.status === 200) {
         setTotal(res.data.total);
         setUsers(

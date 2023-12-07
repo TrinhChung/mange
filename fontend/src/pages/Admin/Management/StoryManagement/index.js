@@ -29,7 +29,6 @@ const StoryManagement = () => {
   const fetchAllMangas = async () => {
     try {
       const res = await getAllMangas(page);
-      console.log('getAllMangas', res);
       if (res && res.status === 200) {
         setTotal(res.meta.total);
         setMangas(

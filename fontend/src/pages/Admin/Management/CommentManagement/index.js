@@ -49,7 +49,6 @@ const CommentManagement = () => {
   const fetchAllReportedComment = async () => {
     try {
       const res = await getAllReportedComment();
-      console.log('getAllReportedComment', res);
       if (res && res.status === 200) {
         setReportedComments(
           res.data?.map((comment) => {
