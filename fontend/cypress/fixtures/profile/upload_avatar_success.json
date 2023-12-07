@@ -1,0 +1,19 @@
+{
+  "success": 1,
+  "message": "Cập nhật avatar thành công",
+  "data": {
+    "id": 1,
+    "username": "admin",
+    "email": "rachael.huel@example.org",
+    "avatar": "1_1701921833.png",
+    "email_verified_at": "2023-11-10T02:19:26.000000Z",
+    "role": "admin",
+    "active": 1,
+    "activated_at": "2023-11-10T02:19:26.000000Z",
+    "active_token": "v0qdKBcL15rzKFBf4928",
+    "reset_token": null,
+    "reset_sent_at": null,
+    "created_at": "2023-11-10T02:19:26.000000Z",
+    "updated_at": "2023-12-07T04:03:53.000000Z"
+  }
+}
