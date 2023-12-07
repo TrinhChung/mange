@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     //
-    const REPORT_LIMIT = 100;
+    const REPORT_LIMIT = 1;
 
     public function create(Request $request)
     {
@@ -132,12 +132,32 @@ class CommentController extends Controller
             ], 403);
         }
 
-        $reportedComments = Comment::has('reported_by', '>', $this::REPORT_LIMIT)->get();
+        $reportedComments = Comment::has('reported_by', '>', $this::REPORT_LIMIT)->with(['user', 'manga', 'chapter'])->get();
 
         return response()->json([
             'success' => 1,
             'data' => $reportedComments,
             'message' => 'success',
         ], 200);
+    }
+
+    public function deleteComment(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'admin') {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Can not access',
+            ], 403);
+        }
+
+        $comment = Comment::findOrFail($request->id);
+        $comment->delete();
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Đã xóa comment',
+        ]);
     }
 }
