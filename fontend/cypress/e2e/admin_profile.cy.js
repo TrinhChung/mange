@@ -61,4 +61,9 @@ describe('Spec profile admin', () => {
 
     cy.contains('thành công');
   })
+
+  it("Có thể hiển thị các bình luận bị báo cáo", () => {
+    cy.contains('Quản lý bình luận').click();
+    // TODO: Add logic
+  })
 });

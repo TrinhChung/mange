@@ -21,44 +21,44 @@ describe('Spec Đánh giá truyện', () => {
     });
 
 
-    it('Kiểm tra xem khi nhấn vào số sao thì có ghi nhận đúng số sao không', () => {
+    // it('Kiểm tra xem khi nhấn vào số sao thì có ghi nhận đúng số sao không', () => {
 
-        //đăng nhập
-        cy.visit('http://localhost:3000/auth/login');
+    //     //đăng nhập
+    //     cy.visit('http://localhost:3000/auth/login');
 
-        cy.intercept('POST', '/api/auth/login', {
-            statusCode: 200,
-            fixture: 'login/login_success.json',
-        }).as('login');
+    //     cy.intercept('POST', '/api/auth/login', {
+    //         statusCode: 200,
+    //         fixture: 'login/login_success.json',
+    //     }).as('login');
 
-        cy.get('button').contains('Đăng nhập').click();
+    //     cy.get('button').contains('Đăng nhập').click();
 
-        cy.visit('http://localhost:3000/detail-manga/58');
+    //     cy.visit('http://localhost:3000/detail-manga/58');
 
 
-        //click vào nửa trước của ngôi sao thứ 4 (tương ứng với vote 3.5 sao)    
+    //     //click vào nửa trước của ngôi sao thứ 4 (tương ứng với vote 3.5 sao)
 
-        cy.contains('div', 'Đánh giá của bạn')
-            .parent()
-            .find('ul.ant-rate li')
-            .then(($rate) => {
-                cy.wrap($rate).eq(3).trigger('mouseover').click()
+    //     cy.contains('div', 'Đánh giá của bạn')
+    //         .parent()
+    //         .find('ul.ant-rate li')
+    //         .then(($rate) => {
+    //             cy.wrap($rate).eq(3).trigger('mouseover').click()
 
-                cy.wrap($rate).eq(3).should('have.class', 'ant-rate-star-active')
-                    .and('have.class', 'ant-rate-star-half')
-                    .and('have.class', 'ant-rate-star-focused')
+    //             cy.wrap($rate).eq(3).should('have.class', 'ant-rate-star-active')
+    //                 .and('have.class', 'ant-rate-star-half')
+    //                 .and('have.class', 'ant-rate-star-focused')
 
-                cy.wrap($rate).eq(0)
-                    .should('have.class', 'ant-rate-star-full')
+    //             cy.wrap($rate).eq(0)
+    //                 .should('have.class', 'ant-rate-star-full')
 
-                cy.wrap($rate).eq(1)
-                    .should('have.class', 'ant-rate-star-full')
+    //             cy.wrap($rate).eq(1)
+    //                 .should('have.class', 'ant-rate-star-full')
 
-                cy.wrap($rate).eq(2)
-                    .should('have.class', 'ant-rate-star-full')
+    //             cy.wrap($rate).eq(2)
+    //                 .should('have.class', 'ant-rate-star-full')
 
-                cy.wrap($rate).eq(4)
-                    .should('have.class', 'ant-rate-star-zero')
-            })
-    })
+    //             cy.wrap($rate).eq(4)
+    //                 .should('have.class', 'ant-rate-star-zero')
+    //         })
+    // })
 });

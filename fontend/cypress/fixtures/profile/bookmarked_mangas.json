@@ -1,0 +1,45 @@
+{
+  "success": 1,
+  "message": "Lấy danh sách bookmark thành công",
+  "data": {
+    "current_page": 1,
+    "data": [
+      {
+        "id": 78,
+        "name": "Đối Phương Phải Tỏ Tình Trước",
+        "thumbnail": "doi-phuong-phai-to-tinh-truoc/thumbnail.jpg",
+        "slug": "doi-phuong-phai-to-tinh-truoc",
+        "chapters": [
+          {
+            "id": 17464,
+            "manga_id": 78,
+            "name": "Chapter 281.7: Phụ lục Vol 26",
+            "folder": "doi-phuong-phai-to-tinh-truoc/281.7/",
+            "amount": 11,
+            "created_at": "2023-11-10T02:20:03.000000Z",
+            "updated_at": "2023-11-10T02:20:03.000000Z"
+          }
+        ]
+      }
+    ],
+    "first_page_url": "https://api.mange.uetvnu.id.vn/api/mangas/bookmarked?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "https://api.mange.uetvnu.id.vn/api/mangas/bookmarked?page=1",
+    "links": [
+      { "url": null, "label": "&laquo; Previous", "active": false },
+      {
+        "url": "https://api.mange.uetvnu.id.vn/api/mangas/bookmarked?page=1",
+        "label": "1",
+        "active": true
+      },
+      { "url": null, "label": "Next &raquo;", "active": false }
+    ],
+    "next_page_url": null,
+    "path": "https://api.mange.uetvnu.id.vn/api/mangas/bookmarked",
+    "per_page": 10,
+    "prev_page_url": null,
+    "to": 1,
+    "total": 1
+  }
+}

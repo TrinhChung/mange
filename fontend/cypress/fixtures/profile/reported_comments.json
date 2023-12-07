@@ -1,0 +1,32 @@
+{
+  "success": 1,
+  "data": [
+    {
+      "id": 1,
+      "manga_id": null,
+      "chapter_id": 1501,
+      "user_id": 1,
+      "parent_id": null,
+      "comment": "test comment sentiment",
+      "created_at": "7/12/2023",
+      "updated_at": "7/12/2023",
+      "blocked": 0,
+      "like_count": 0,
+      "dislike_count": 0
+    },
+    {
+      "id": 2,
+      "manga_id": null,
+      "chapter_id": 1501,
+      "user_id": 1,
+      "parent_id": null,
+      "comment": "test comment sentiment",
+      "created_at": "7/12/2023",
+      "updated_at": "7/12/2023",
+      "blocked": 0,
+      "like_count": 0,
+      "dislike_count": 0
+    }
+  ],
+  "message": "success"
+}
