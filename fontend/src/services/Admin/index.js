@@ -11,3 +11,7 @@ export const getAllReportedComment = () => {
 export const deleteComment = (id) => {
   return axios.post(`/api/comments/delete/${id}`);
 };
+
+export const getAllMangas = (page = 1) => {
+  return axios.get(`/api/mangas?page=${page}`);
+};
