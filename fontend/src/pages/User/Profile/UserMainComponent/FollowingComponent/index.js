@@ -1,10 +1,13 @@
-import { Col, Input, Row } from 'antd';
+import { Col, Input, Pagination, Row, Table } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../../components/layout/TitleTopLeft';
 import UserStory from '../UserStory';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../../providers/authProvider';
 import { getMangasBookmark } from '../../../../../services/User';
+import { LockOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
+import tableColumns from './TableColumns';
+import { trimString } from '../../../../../utils/commonFunc';
 
 const breadcrumbData = [
   {
@@ -20,6 +23,8 @@ const breadcrumbData = [
 ];
 const { Search } = Input;
 const FollowingComponent = () => {
+  const navigate = useNavigate();
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const [key, setKey] = useState(
@@ -28,13 +33,35 @@ const FollowingComponent = () => {
 
   const { authUser } = useContext(AuthContext);
   const [follows, setFollows] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   const fetchFollowed = async () => {
     try {
-      const data = await getMangasBookmark();
+      const res = await getMangasBookmark();
 
-      if (data.status === 200) {
-        setFollows(data?.data?.data);
+      if (res.status === 200) {
+        setTotal(res.data.total);
+        setFollows(
+          res?.data?.data.map((manga) => {
+            return {
+              id: manga.id,
+              manga: {
+                name: trimString(manga.name, 40),
+                thumbnail: manga.thumbnail,
+              },
+              action: (
+                <EyeOutlined
+                  onClick={() => {
+                    if (manga?.id) {
+                      navigate(`/detail-manga/${manga.id}`);
+                    }
+                  }}
+                />
+              ),
+            };
+          })
+        );
       }
     } catch (error) {
       console.log(error);
@@ -43,7 +70,7 @@ const FollowingComponent = () => {
 
   useEffect(() => {
     fetchFollowed();
-  }, []);
+  }, [page]);
 
   console.log('follows', follows);
   return (
@@ -70,12 +97,30 @@ const FollowingComponent = () => {
           }}
         /> */}
       </Col>
-      <UserStory
-        headerText={{
-          text1: 'DANH SÁCH TRUYỆN ĐANG THEO RÕI',
-        }}
-        follows={follows}
+
+      <Table
+        style={{ width: '100%', marginTop: 16 }}
+        columns={tableColumns}
+        dataSource={follows}
+        pagination={false}
       />
+
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: 15,
+        }}
+      >
+        <Pagination
+          pageSize={10}
+          showSizeChanger={false}
+          defaultCurrent={1}
+          total={total}
+          onChange={(page) => setPage(page)}
+        />
+      </div>
     </Row>
   );
 };
