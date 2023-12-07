@@ -69,10 +69,7 @@ const AvatarArea = () => {
     >
       <Col>
         <Row style={{ color: 'var(--gray)', justifyContent: 'center' }}>
-          <Avatar
-            src={formatAvatarURL(authUser?.avatar)}
-            size={180}
-          />
+          <Avatar src={formatAvatarURL(authUser?.avatar)} size={180} />
         </Row>
         <Row
           style={{
@@ -125,11 +122,7 @@ const AvatarArea = () => {
         <div className="modal-container">
           <div className="preview-image">
             <img
-              src={
-                image
-                  ? previewUrl
-                  : formatAvatarURL(authUser?.avatar)
-              }
+              src={image ? previewUrl : formatAvatarURL(authUser?.avatar)}
               alt="preview"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
