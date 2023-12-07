@@ -1,6 +1,7 @@
 import { Col, Image, Row } from 'antd';
 import React from 'react';
-import { hostImg } from '../../../../const';
+import { hostImg } from '../../const';
+import { trimString } from '../../utils/commonFunc';
 
 const StoryRow = ({ manga }) => {
   return (
@@ -19,7 +20,7 @@ const StoryRow = ({ manga }) => {
             fontWeight: 600,
           }}
         >
-          {manga.name}
+          {trimString(manga.name, 20)}
         </div>
       </div>
     </div>

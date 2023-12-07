@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../components/layout/TitleTopLeft';
 import InputGroup from '../../../../components/management/InputGroup';
 import StoryItem from '../../../User/Profile/UserMainComponent/UserStory/StoryItem';
-import StoryRow from './StoryRow';
 import tableColumns from './TableColumns';
 import {
   deleteComment,
@@ -86,7 +85,7 @@ const CommentManagement = () => {
     <>
       <Row className="box-content">
         <TitleTopLeft title="Quản lý bình luận" itemList={breadcrumbData} />
-        <Col
+        {/* <Col
           span={24}
           style={{
             fontSize: 20,
@@ -96,8 +95,8 @@ const CommentManagement = () => {
           }}
         >
           BỘ LỌC
-        </Col>
-        <Col
+        </Col> */}
+        {/* <Col
           span={24}
           style={{
             marginBottom: 16,
@@ -135,14 +134,14 @@ const CommentManagement = () => {
           >
             Lọc
           </Row>
-        </Col>
+        </Col> */}
         <Table
-          style={{ width: '100%' }}
+          style={{ width: '100%', marginTop: 16 }}
           columns={tableColumns}
           dataSource={reportedComments}
           pagination={false}
         />
-      </Row>{' '}
+      </Row>
       <Modal
         title="Xóa bình luận"
         open={isOpenModal}
