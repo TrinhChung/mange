@@ -68,6 +68,13 @@ class Comment extends Pivot
             $comment->dislike_count = $dislikeCount;
             unset($comment->reacted_by);
         });
+
+        static::deleting(function ($comment) {
+            React::where('comment_id', $comment->id)->delete();
+            $comment->childs->each(function ($child) {
+                $child->delete();
+            });
+        });
     }
 
     public function getCreatedAtAttribute($value)
@@ -106,5 +113,15 @@ class Comment extends Pivot
     {
         return $this->belongsToMany(User::class, 'reacts', 'comment_id', 'user_id')
             ->using(React::class)->withPivot('id', 'user_id', 'comment_id', 'like')->withTimestamps();
+    }
+
+    public function manga()
+    {
+        return $this->belongsTo(Manga::class, 'manga_id', 'id');
+    }
+
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class, 'chapter_id', 'id');
     }
 }

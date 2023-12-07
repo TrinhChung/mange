@@ -9,6 +9,8 @@ class React extends Pivot
 {
     use HasFactory;
 
+    protected $table = 'reacts';
+
     protected $fillable = [
         'comment_id',
         'user_id',

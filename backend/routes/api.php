@@ -79,6 +79,7 @@ Route::prefix('forms')->group(function () {
 Route::prefix('comments')->middleware('auth:sanctum')->group(function () {
     Route::post('{id}/react', [CommentController::class, 'react']);
     Route::get('reported', [CommentController::class, 'getReportedComments']);
+    Route::post('delete/{id}', [CommentController::class, 'deleteComment']);
 });
 
 Route::prefix('report')->middleware('auth:sanctum')->group(function () {
