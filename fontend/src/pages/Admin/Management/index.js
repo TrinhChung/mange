@@ -14,6 +14,8 @@ import StoryManagement from './StoryManagement';
 import CommentManagement from './CommentManagement';
 import GeneralComponent from '../../User/Profile/UserMainComponent/GeneralComponent';
 import ChangePasswordComponent from '../../User/Profile/UserMainComponent/ChangePasswordComponent';
+import PostedComponent from '../../User/Profile/UserMainComponent/PostedComponent';
+import PostManga from '../../User/Profile/UserMainComponent/PostManga';
 
 const menu = [
   {
@@ -34,6 +36,11 @@ const menu = [
   {
     content: 'Quản lý truyện',
     path: '/profile/management-story',
+    icon: <ReadOutlined />,
+  },
+  {
+    content: 'Truyện đã đăng',
+    path: '/profile/posted',
     icon: <ReadOutlined />,
   },
   {
@@ -67,6 +74,8 @@ const Management = () => {
                 element={<CommentManagement />}
               />
               <Route path="management-story" element={<StoryManagement />} />
+              <Route path="posted" element={<PostedComponent />} />
+              <Route path="post" element={<PostManga />} />
               <Route
                 path="change-password"
                 element={<ChangePasswordComponent />}

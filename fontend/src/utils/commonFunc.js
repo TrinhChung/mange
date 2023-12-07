@@ -35,12 +35,12 @@ export const trimString = (str, length) => {
 };
 
 export const formatAvatarURL = (avatar) => {
-    if (avatar.includes('http')) {
-        return avatar;
-    } else {
-        return `${API_URL}/storage/avatars/${avatar}`;
-    }
-}
+  if (avatar.includes('http')) {
+    return avatar;
+  } else {
+    return `${API_URL}/storage/avatars/${avatar}`;
+  }
+};
 
 export const censorComment = (comment) => {
   if (!comment) return 'Comment trống';

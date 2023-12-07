@@ -3,8 +3,8 @@ import StoryRow from './StoryRow';
 const tableColumns = [
   {
     title: 'TÊN TRUYỆN',
-    dataIndex: 'title',
-    key: 'title',
+    dataIndex: 'manga',
+    key: 'manga',
     render: (manga) => <StoryRow manga={manga} />,
     width: '35%',
   },
@@ -15,16 +15,16 @@ const tableColumns = [
     align: 'center',
   },
   {
-    title: 'NỘI DUNG BÌNH LUẬN',
+    title: 'NỘI DUNG',
     dataIndex: 'content',
     key: 'content',
     width: '35%',
   },
   {
-    title: 'ĐÁNH GIÁ',
-    dataIndex: 'evaluation',
+    title: 'XÓA',
+    dataIndex: 'action',
     render: (text) => <div style={{ fontSize: 22 }}>{text}</div>,
-    key: 'evaluation',
+    key: 'action',
     align: 'center',
   },
 ];

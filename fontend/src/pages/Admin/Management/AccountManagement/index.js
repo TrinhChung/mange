@@ -53,9 +53,13 @@ const AccountManagement = () => {
                 username: user.username,
                 email: user.email,
                 status: user.active ? (
-                  <span style={{ color: '#45B3B4' }}>đã kích hoạt</span>
+                  <span style={{ color: '#45B3B4', fontWeight: 700 }}>
+                    đã kích hoạt
+                  </span>
                 ) : (
-                  <span style={{ color: '#F54558' }}>chưa kích hoạt</span>
+                  <span style={{ color: '#F54558', fontWeight: 700 }}>
+                    chưa kích hoạt
+                  </span>
                 ),
                 action: (
                   <>
