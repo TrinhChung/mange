@@ -367,4 +367,26 @@ class CommentTest extends TestCase
         $response = $this->post("/api/report/comment/$comment->id");
         $response->assertStatus(401);
     }
+
+    public function test_delete_comment_success()
+    {
+        $manga = Manga::factory()->create();
+        $this->createNestedComments($manga->id, 'manga');
+        $old = Comment::count();
+        $admin = User::factory()->create(['active' => 1, 'activated_at' => now(), 'role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post('/api/comments/delete/'.Comment::first()->id);
+
+        $response->assertStatus(200);
+        $this->assertLessThan($old, Comment::count());
+    }
+
+    public function test_delete_comment_fail_with_not_admin()
+    {
+        $user = User::factory()->create(['active' => 1, 'activated_at' => now(), 'role' => 'user']);
+
+        $response = $this->actingAs($user)->post('/api/comments/delete/'.Comment::first()->id);
+
+        $response->assertStatus(403);
+    }
 }
