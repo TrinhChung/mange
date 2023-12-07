@@ -52,7 +52,7 @@ const PostedComponent = () => {
           className="button-view bg-color-main"
           onClick={() => navigate('/profile/post')}
         >
-          Đăng truyện
+          Tạo truyện
         </div>
       </Col>
       <UserStory
