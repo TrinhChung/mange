@@ -40,7 +40,6 @@ const AvatarArea = () => {
   const onChangeAvatar = async () => {
     if (image) {
       const formData = new FormData();
-      formData.append('avatar', image);
 
       try {
         const data = await updateAvatar(formData);

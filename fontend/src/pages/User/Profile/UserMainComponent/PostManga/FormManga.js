@@ -1,21 +1,73 @@
-import { Form, Input, Select } from 'antd';
-import React from 'react';
+import { Button, Form, Input, Select } from 'antd';
+import React, { useContext, useState } from 'react';
 import './PostManga.scss';
-
+import { toast } from 'react-toastify';
+import { MangaContext } from '../../../../../providers/mangaProvider';
+import { createManga } from '../../../../../services/Admin';
+import {
+  CloseOutlined
+} from '@ant-design/icons';
 const { TextArea } = Input;
 
-const FormManga = () => {
-  const options = [];
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      label: i.toString(36) + i,
-      value: i.toString(36) + i,
-    });
-  }
+const FormManga = ({currentStep, setCurrentStep}) => {
+  const {categories} = useContext(MangaContext)
+  const [name, setName] = useState('')
+  const [author, setAuthor] = useState('')
+  const [categoryList, setCategoryList] = useState([])
+  const [description, setDescription] = useState('')
+  const [thumbnail, setThumbnail] = useState(null)
+  const [previewUrl, setPreviewUrl] = useState(null)
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
+  const handleChange = (value, valueObj) => {
+    setCategoryList(valueObj.map(obj => obj.categoryId));
   };
+
+  const handleThumbnailChange = (e) => {
+    const selectedFile = e.target.files[0];
+    console.log('selectedFile', selectedFile);
+    if (selectedFile) {
+      setThumbnail(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setThumbnail(null);
+      setPreviewUrl(null);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    setThumbnail(null);
+    setPreviewUrl(null);
+  };
+
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('authors[0]',  author);
+    categoryList.forEach((value, index) => {
+      formData.append(`categories[${index}]`, value);
+    });
+    formData.append('description', description);
+    formData.append('thumbnail', thumbnail);
+    formData.append('status', 0);
+    formData.append('othernames[0]', 'test');
+
+    console.log('formData', formData);
+
+    try {
+      const res = await createManga(formData);
+      toast.success(res.message)
+
+      setCurrentStep(1)
+    } catch (error) {
+      toast.error(error?.message)
+    }
+
+}
+
   return (
     <Form
       name="basic"
@@ -33,48 +85,37 @@ const FormManga = () => {
       style={{ width: '100%', paddingTop: 40 }}
     >
       <Form.Item
-        label="Tiêu đề"
-        name="title"
+        label="Tên truyện"
         rules={[
           {
             required: true,
-            message: 'Vui lòng nhập tiêu đề',
+            message: 'Vui lòng nhập trên truyện',
           },
         ]}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       >
         <Input className="input-form" />
       </Form.Item>
       <Form.Item
         label="Tác giả"
-        name="author"
         rules={[
           {
             required: true,
             message: 'Vui lòng nhập tên tác giả',
           },
         ]}
+        value={author}
+        onChange={(e) => setAuthor(e.target.value)}
       >
         <Input className="input-form" />
       </Form.Item>
       <Form.Item
-        label="Dịch giả"
-        name="translator"
+        label="Thể loại"
         rules={[
           {
             required: true,
-            message: 'Vui lòng nhập tên dịch giả',
-          },
-        ]}
-      >
-        <Input className="input-form" />
-      </Form.Item>
-      <Form.Item
-        label="Chủ đề"
-        name="topic"
-        rules={[
-          {
-            required: true,
-            message: 'Vui lòng chọn chủ đề',
+            message: 'Vui lòng chọn thể loại',
           },
         ]}
       >
@@ -86,18 +127,18 @@ const FormManga = () => {
           }}
           className="select-input"
           placeholder="Vui lòng chọn"
-          defaultValue={['a10', 'c12']}
+          defaultValue={[]}
           onChange={handleChange}
-          options={options}
+          options={categories.map(category => ({value: category.name, label: category.name, categoryId: category.id}))}
         />
       </Form.Item>
       <Form.Item
-        label="Giới thiệu"
+        label="Mô tả"
         name="description"
         rules={[
           {
             required: true,
-            message: 'Giới thiệu truyện bắt buộc',
+            message: 'Mô tả truyện bắt buộc',
           },
         ]}
       >
@@ -105,88 +146,54 @@ const FormManga = () => {
           className="input-form"
           rows={4}
           placeholder="maxLength is 6"
-          maxLength={6}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </Form.Item>
       <Form.Item
-        label="Tình trạng"
-        name="status"
-        rules={[
-          {
-            required: true,
-            message: 'Vui lòng chọn tình trạng truyện',
-          },
-        ]}
-      >
-        <Select
-          defaultValue="lucy"
-          style={{
-            width: 400,
-          }}
-          className="select-input"
-          onChange={handleChange}
-          options={[
-            {
-              value: 'jack',
-              label: 'Jack',
-            },
-            {
-              value: 'lucy',
-              label: 'Lucy',
-            },
-            {
-              value: 'Yiminghe',
-              label: 'yiminghe',
-            },
-          ]}
-        />
-      </Form.Item>
-      <Form.Item
-        label="Ảnh bìa"
+        label="Thumbnail"
         name="thumbnail"
         rules={[
           {
             required: true,
-            message: 'Vui lòng chọn ảnh bìa',
+            message: 'Vui lòng chọn Thumbnail',
           },
         ]}
       >
-        <label
+        { !thumbnail ? <label
           className="label-upload-image"
           for="basic_thumbnail"
           style={{ height: 160, width: 140 }}
         >
           Nhấp để upload ảnh
-        </label>
+        </label>:
+        <div    className="preview-thumbnail"   style={{ height: 160, width: 140 }}>
+          <CloseOutlined className="preview-thumbnail-close-icon" onClick={handleDeleteImage}/>
+        <img
+              src={previewUrl}
+              alt="preview"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+            
+            </div>}
         <input
           type="file"
           className="upload-image"
           id="basic_thumbnail"
+          accept="image/*"
+          onChange={handleThumbnailChange}
         ></input>
       </Form.Item>
-      <Form.Item
-        label="Ảnh chính"
-        name="main-image"
-        rules={[
-          {
-            required: true,
-            message: 'Vui lòng chọn ảnh đại diện',
-          },
-        ]}
-      >
-        <label
-          className="label-upload-image"
-          for="basic_thumbnail"
-          style={{ height: 141, width: 231 }}
-        >
-          Nhấp để upload ảnh
-        </label>
-        <input
-          type="file"
-          className="upload-image"
-          id="basic_thumbnail"
-        ></input>
-      </Form.Item>
+
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0px' }}>
+          <Button
+            className="bg-color-main"
+            style={{ color: 'white' }}
+            onClick={handleSubmit}
+          >
+            Tạo truyện
+          </Button>
+        </div>
     </Form>
   );
 };

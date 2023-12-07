@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Col, Form, Input, Row, Select } from 'antd';
+import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
-const FormChapter = () => {
+const FormChapter = ({currentStep, setCurrentStep}) => {
   const [uploadedImages, setUploadedImages] = useState([]);
 
   const handleImageUpload = (e) => {
@@ -23,6 +23,11 @@ const FormChapter = () => {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  const handleSubmit = () => {
+      setCurrentStep(2)
+}
+
   return (
     <Form
       name="basic"
@@ -120,6 +125,16 @@ const FormChapter = () => {
           ))}
         </div>
       )}
+
+<div style={{  display: 'flex',justifyContent: 'center', padding: '10px 0px' }}>
+          <Button
+            className="bg-color-main"
+            style={{ color: 'white' }}
+            onClick={handleSubmit}
+          >
+            Next
+          </Button>
+        </div>
     </Form>
   );
 };

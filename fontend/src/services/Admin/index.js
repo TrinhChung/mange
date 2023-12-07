@@ -15,3 +15,8 @@ export const deleteComment = (id) => {
 export const getAllMangas = (page = 1) => {
   return axios.get(`/api/mangas?page=${page}`);
 };
+
+export const createManga = (formData) => {
+  console.log('createManga', formData);
+  return axios.post(`/api/mangas`, formData);
+};

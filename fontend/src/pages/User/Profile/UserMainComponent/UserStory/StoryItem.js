@@ -20,8 +20,8 @@ const StoryItem = ({ manga }) => {
         <Image
           src={manga ? hostImg + manga.thumbnail : null}
           preview={false}
-          width={60}
-          height={80}
+          width={45}
+          height={60}
         />
         <div>
           <div
