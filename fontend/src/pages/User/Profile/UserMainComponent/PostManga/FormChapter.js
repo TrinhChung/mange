@@ -5,7 +5,7 @@ import { createChapter } from '../../../../../services/Admin';
 import { toast } from 'react-toastify';
 const { TextArea } = Input;
 
-const FormChapter = ({ createdMangaId, setCurrentStep }) => {
+const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
   const [number, setNumber] = useState(0);
   const [name, setName] = useState('');
 
@@ -21,6 +21,7 @@ const FormChapter = ({ createdMangaId, setCurrentStep }) => {
       toast.success(res.message);
 
       setCurrentStep(2);
+      setFirstChapterId(res.data.id)
     } catch (error) {
       toast.error(error?.message);
     }

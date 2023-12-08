@@ -3,20 +3,24 @@ import React, { useContext, useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../../components/layout/TitleTopLeft';
 import FormManga from './FormManga';
 import FormChapter from './FormChapter';
-import PostSuccess from './PostSuccess';
 import { getCategories } from '../../../../../services/Guest';
 import { MangaContext } from '../../../../../providers/mangaProvider';
+import UploadImage from './UploadImage';
 
 const PostManga = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [createdMangaId, setCreatedMangaId] = useState(null);
+  const [firstChapterId, setFirstChapterId] = useState(null);
 
   const items = [
     {
       title: <Row className="bold">Tạo truyện</Row>,
     },
     {
-      title: <Row className="bold">Đăng chapter</Row>,
+      title: <Row className="bold">Tạo chapter</Row>,
+    },
+    {
+      title: <Row className="bold">Tải ảnh lên</Row>,
     },
   ];
 
@@ -55,10 +59,11 @@ const PostManga = () => {
           ) : currentStep === 1 ? (
             <FormChapter
               createdMangaId={createdMangaId}
+              setFirstChapterId={setFirstChapterId}
               setCurrentStep={setCurrentStep}
             />
           ) : (
-            <PostSuccess />
+            <UploadImage firstChapterId={firstChapterId}/>
           )}
         </Row>
       </Col>
