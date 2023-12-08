@@ -5,7 +5,6 @@ import { useLocation, Routes, Route } from 'react-router-dom';
 import GeneralComponent from './UserMainComponent/GeneralComponent';
 import ChangePasswordComponent from './UserMainComponent/ChangePasswordComponent';
 import FollowingComponent from './UserMainComponent/FollowingComponent';
-import PostedComponent from './UserMainComponent/PostedComponent';
 import AvatarArea from '../../../components/profile/AvatarArea';
 import {
   InfoCircleOutlined,
@@ -58,7 +57,6 @@ const Profile = () => {
             <Routes>
               <Route path="/" element={<GeneralComponent />} />
               <Route path="following" element={<FollowingComponent />} />
-              <Route path="posted" element={<PostedComponent />} />
               <Route
                 path="change-password"
                 element={<ChangePasswordComponent />}

@@ -4,22 +4,20 @@ import './PostManga.scss';
 import { toast } from 'react-toastify';
 import { MangaContext } from '../../../../../providers/mangaProvider';
 import { createManga } from '../../../../../services/Admin';
-import {
-  CloseOutlined
-} from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 const { TextArea } = Input;
 
-const FormManga = ({currentStep, setCurrentStep}) => {
-  const {categories} = useContext(MangaContext)
-  const [name, setName] = useState('')
-  const [author, setAuthor] = useState('')
-  const [categoryList, setCategoryList] = useState([])
-  const [description, setDescription] = useState('')
-  const [thumbnail, setThumbnail] = useState(null)
-  const [previewUrl, setPreviewUrl] = useState(null)
+const FormManga = ({ setCreatedMangaId, setCurrentStep }) => {
+  const { categories } = useContext(MangaContext);
+  const [name, setName] = useState('');
+  const [author, setAuthor] = useState('');
+  const [categoryList, setCategoryList] = useState([]);
+  const [description, setDescription] = useState('');
+  const [thumbnail, setThumbnail] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleChange = (value, valueObj) => {
-    setCategoryList(valueObj.map(obj => obj.categoryId));
+    setCategoryList(valueObj.map((obj) => obj.categoryId));
   };
 
   const handleThumbnailChange = (e) => {
@@ -46,7 +44,7 @@ const FormManga = ({currentStep, setCurrentStep}) => {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('name', name);
-    formData.append('authors[0]',  author);
+    formData.append('authors[0]', author);
     categoryList.forEach((value, index) => {
       formData.append(`categories[${index}]`, value);
     });
@@ -59,14 +57,14 @@ const FormManga = ({currentStep, setCurrentStep}) => {
 
     try {
       const res = await createManga(formData);
-      toast.success(res.message)
+      toast.success(res.message);
 
-      setCurrentStep(1)
+      setCurrentStep(1);
+      setCreatedMangaId(res.data.id);
     } catch (error) {
-      toast.error(error?.message)
+      toast.error(error?.message);
     }
-
-}
+  };
 
   return (
     <Form
@@ -129,7 +127,11 @@ const FormManga = ({currentStep, setCurrentStep}) => {
           placeholder="Vui lòng chọn"
           defaultValue={[]}
           onChange={handleChange}
-          options={categories.map(category => ({value: category.name, label: category.name, categoryId: category.id}))}
+          options={categories.map((category) => ({
+            value: category.name,
+            label: category.name,
+            categoryId: category.id,
+          }))}
         />
       </Form.Item>
       <Form.Item
@@ -160,22 +162,30 @@ const FormManga = ({currentStep, setCurrentStep}) => {
           },
         ]}
       >
-        { !thumbnail ? <label
-          className="label-upload-image"
-          for="basic_thumbnail"
-          style={{ height: 160, width: 140 }}
-        >
-          Nhấp để upload ảnh
-        </label>:
-        <div    className="preview-thumbnail"   style={{ height: 160, width: 140 }}>
-          <CloseOutlined className="preview-thumbnail-close-icon" onClick={handleDeleteImage}/>
-        <img
+        {!thumbnail ? (
+          <label
+            className="label-upload-image"
+            for="basic_thumbnail"
+            style={{ height: 160, width: 140 }}
+          >
+            Nhấp để upload ảnh
+          </label>
+        ) : (
+          <div
+            className="preview-thumbnail"
+            style={{ height: 160, width: 140 }}
+          >
+            <CloseOutlined
+              className="preview-thumbnail-close-icon"
+              onClick={handleDeleteImage}
+            />
+            <img
               src={previewUrl}
               alt="preview"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
-            
-            </div>}
+          </div>
+        )}
         <input
           type="file"
           className="upload-image"
@@ -185,15 +195,21 @@ const FormManga = ({currentStep, setCurrentStep}) => {
         ></input>
       </Form.Item>
 
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0px' }}>
-          <Button
-            className="bg-color-main"
-            style={{ color: 'white' }}
-            onClick={handleSubmit}
-          >
-            Tạo truyện
-          </Button>
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '10px 0px',
+        }}
+      >
+        <Button
+          className="bg-color-main"
+          style={{ color: 'white' }}
+          onClick={handleSubmit}
+        >
+          Tạo truyện
+        </Button>
+      </div>
     </Form>
   );
 };

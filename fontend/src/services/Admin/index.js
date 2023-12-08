@@ -20,3 +20,7 @@ export const createManga = (formData) => {
   console.log('createManga', formData);
   return axios.post(`/api/mangas`, formData);
 };
+
+export const createChapter = (mangaId, formData) => {
+  return axios.post(`/api/mangas/${mangaId}/chapter`, formData);
+};

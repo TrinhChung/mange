@@ -9,6 +9,7 @@ import { MangaContext } from '../../../../../providers/mangaProvider';
 
 const PostManga = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [createdMangaId, setCreatedMangaId] = useState(null);
 
   const items = [
     {
@@ -47,9 +48,15 @@ const PostManga = () => {
         </Row>
         <Row>
           {currentStep === 0 ? (
-            <FormManga currentStep={currentStep} setCurrentStep={setCurrentStep}/>
+            <FormManga
+              setCreatedMangaId={setCreatedMangaId}
+              setCurrentStep={setCurrentStep}
+            />
           ) : currentStep === 1 ? (
-            <FormChapter currentStep={currentStep} setCurrentStep={setCurrentStep}/>
+            <FormChapter
+              createdMangaId={createdMangaId}
+              setCurrentStep={setCurrentStep}
+            />
           ) : (
             <PostSuccess />
           )}

@@ -38,7 +38,7 @@ const TestUploadChapter = () => {
   }, []);
 
   const getChapter = async () => {
-    const res = await axios.get('/api/chapters/18186');
+    const res = await axios.get('/api/chapters/1501');
     setChapter(res.data);
     setImageOrder(
       res.data.images.map((image, index) => {
