@@ -77,15 +77,13 @@ const Management = () => {
                 element={<CommentManagement />}
               />
               <Route path="management-story" element={<StoryManagement />} />
-              <Route path="post" element={<PostManga />} />
               <Route
                 path="change-password"
                 element={<ChangePasswordComponent />}
               />
-                 <Route
-                path="post/:mangaId"
-                element={<PostManga/>}
-              />
+              <Route path="post" element={<PostManga />} />
+              <Route path="post/:mangaId" element={<PostManga />} />
+              <Route path="post/:mangaId/:chapterId" element={<PostManga />} />
             </Routes>
           </Col>
         </Row>

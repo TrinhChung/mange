@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const { TextArea } = Input;
 
 const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
-  const {mangaId} = useParams();
+  const { mangaId } = useParams();
 
   const navigate = useNavigate();
 
@@ -22,11 +22,14 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
     console.log('formData', formData);
 
     try {
-      const res = await createChapter(mangaId ? mangaId : createdMangaId, formData);
+      const res = await createChapter(
+        mangaId ? mangaId : createdMangaId,
+        formData
+      );
       toast.success(res.message);
 
       setCurrentStep(2);
-      setFirstChapterId(res.data.id)
+      setFirstChapterId(res.data.id);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -85,7 +88,7 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
           display: 'flex',
           justifyContent: 'center',
           padding: '10px 0px',
-          gap: 20
+          gap: 20,
         }}
       >
         <Button
@@ -96,11 +99,9 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
           Tạo chapter
         </Button>
 
-        <Button
-              onClick={() => navigate('/')}         type="primary"
-            >
-              Bỏ qua
-            </Button>
+        <Button onClick={() => navigate('/')} type="primary">
+          Bỏ qua
+        </Button>
       </div>
     </Form>
   );
