@@ -11,24 +11,41 @@ const NotifyCard = ({
     chapter_id: '12074',
     thumbnail: 'inu-yashiki/thumbnail.jpg',
   },
+  handleClick = () => {}
 }) => {
   const navigate = useNavigate();
 
   return (
     <Row className="notify-card">
       <Col>
-        <Badge dot={notify?.read_at}>
-          <Image
-            width={50}
-            height={70}
-            src={notify ? hostImg + notify?.thumbnail : null}
-            preview={false}
-            className="box-hover"
-            onClick={() => {
-              navigate(`/live-manga/${notify?.slug}/${notify?.chapter_id}`);
-            }}
-          />
-        </Badge>
+      {notify?.read_at === null ?
+        <Badge dot={true}>
+        <Image
+          width={50}
+          height={70}
+          src={notify ? hostImg + notify?.thumbnail : null}
+          preview={false}
+          className="box-hover"
+          onClick={() => {
+            console.log(notify);
+            handleClick([notify?.id])
+            navigate(`/live-manga/${notify?.slug}/${notify?.chapter_id}`);
+          }}
+        />
+      </Badge> : <Image
+          width={50}
+          height={70}
+          src={notify ? hostImg + notify?.thumbnail : null}
+          preview={false}
+          className="box-hover"
+          onClick={() => {
+            console.log(notify);
+            handleClick([notify?.id])
+            navigate(`/live-manga/${notify?.slug}/${notify?.chapter_id}`);
+          }}
+        />
+      }
+
       </Col>
       <Col style={{ paddingLeft: 8 }}>
         <Row style={{ fontWeight: 'bold', maxWidth: '100px!important' }}>
@@ -39,6 +56,8 @@ const NotifyCard = ({
               suffix: '...',
             }}
             onClick={() => {
+              console.log(notify.id);
+              handleClick([notify?.id])
               navigate(`/live-manga/${notify?.slug}/${notify?.chapter_id}`);
             }}
           >

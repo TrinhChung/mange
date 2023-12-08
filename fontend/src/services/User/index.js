@@ -48,6 +48,11 @@ export const getNotifications = () => {
   return axios.get(`/api/me/notifications`);
 };
 
-export const readAllNotifications = (ids = []) => {
-  return axios.post(`/api/me/notifications/read`, ids);
+export const readAllNotifications = () => {
+  return axios.post(`/api/me/notifications/readAll`);
+};
+
+export const readNotifications = (ids = []) => {
+  console.log(ids);
+  return axios.post(`/api/me/notifications/read`, {ids: ids});
 };

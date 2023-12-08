@@ -436,12 +436,12 @@ class MangaController extends Controller
             $ratings = [];
             foreach ($votedMangas as $manga) {
                 $items[] = $manga->id - 1;
-                $ratings[] = $manga->pivot->score;
+                $ratings[] = ['id' => $manga->id - 1, 'rate' => $manga->pivot->score];
             }
             foreach ($viewedMangas as $manga) {
                 if (! in_array($manga['id'], $items)) {
                     $items[] = $manga['id'];
-                    $ratings[] = $manga['rate'];
+                    $ratings[] = ['id' => $manga['id'], 'rate' => $manga['rate']];
                 }
             }
             $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
