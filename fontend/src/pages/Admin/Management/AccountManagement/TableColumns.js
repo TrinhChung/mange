@@ -33,7 +33,7 @@ const tableColumns = [
       <div
         style={{
           display: 'flex',
-          gap: 12,
+          gap: 20,
           justifyContent: 'center',
           fontSize: 20,
         }}

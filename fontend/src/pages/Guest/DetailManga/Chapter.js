@@ -1,10 +1,13 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Col, Row, Skeleton } from 'antd';
 import TitleChildren from '../../../components/layout/TitleChildren';
 import { UnorderedListOutlined, EditOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../providers/authProvider';
 
 const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
+  const { authUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const handleViewChapter = (chapter) => {
     navigate(`/live-manga/${nameManga}/${chapter.id}`);
@@ -93,14 +96,16 @@ const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
                         date={
                           <div>
                             {chapter?.created_at_formated}{' '}
-                            <EditOutlined
-                              onClick={() =>
-                                navigate(
-                                  `/profile/post/${chapter?.manga_id}/${chapter?.id}`
-                                )
-                              }
-                              style={{ fontSize: 20, marginLeft: 20 }}
-                            />
+                            {authUser?.role === 'admin' && (
+                              <EditOutlined
+                                onClick={() =>
+                                  navigate(
+                                    `/profile/post/${chapter?.manga_id}/${chapter?.id}`
+                                  )
+                                }
+                                style={{ fontSize: 20, marginLeft: 20 }}
+                              />
+                            )}
                           </div>
                         }
                         action={handleViewChapter}

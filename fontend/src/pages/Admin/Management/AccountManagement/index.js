@@ -2,6 +2,7 @@ import {
   Avatar,
   Col,
   Input,
+  Modal,
   Pagination,
   Radio,
   Row,
@@ -11,9 +12,17 @@ import {
 import React, { useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../components/layout/TitleTopLeft';
 import InputGroup from '../../../../components/management/InputGroup';
-import { LockOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  LockOutlined,
+  EyeOutlined,
+  EditOutlined,
+  UnlockOutlined,
+} from '@ant-design/icons';
 import tableColumns from './TableColumns';
-import { getAllUsers } from '../../../../services/Admin';
+import {
+  getAllUsers,
+  updateActiveStatusUser,
+} from '../../../../services/Admin';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { formatAvatarURL } from '../../../../utils/commonFunc';
@@ -37,6 +46,23 @@ const AccountManagement = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+  const [reload, setReload] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [activeStatusData, setActiveStatusData] = useState({
+    userId: null,
+    status: false,
+  });
+
+  const handleUpdateActiveStatusUser = async (userId, status) => {
+    try {
+      const res = await updateActiveStatusUser(userId, status);
+      toast.success(res.message);
+      setReload(!reload);
+      setIsOpenModal(false);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
 
   const fetchAllUsers = async () => {
     try {
@@ -62,9 +88,24 @@ const AccountManagement = () => {
                 ),
                 action: (
                   <>
-                    <EyeOutlined />
                     <EditOutlined />
-                    <LockOutlined style={{ color: '#F54558' }} />
+                    {user.active ? (
+                      <LockOutlined
+                        style={{ color: '#F54558' }}
+                        onClick={() => {
+                          setIsOpenModal(true);
+                          setActiveStatusData({ userId: user?.id, status: 0 });
+                        }}
+                      />
+                    ) : (
+                      <UnlockOutlined
+                        style={{ color: '#45B3B4' }}
+                        onClick={() => {
+                          setIsOpenModal(true);
+                          setActiveStatusData({ userId: user?.id, status: 1 });
+                        }}
+                      />
+                    )}
                   </>
                 ),
               };
@@ -79,13 +120,14 @@ const AccountManagement = () => {
 
   useEffect(() => {
     fetchAllUsers();
-  }, [page]);
+  }, [page, reload]);
 
   return (
-    <Row className="box-content">
-      <TitleTopLeft title="Quản lý người dùng" itemList={breadcrumbData} />
+    <>
+      <Row className="box-content">
+        <TitleTopLeft title="Quản lý người dùng" itemList={breadcrumbData} />
 
-      {/* <Col
+        {/* <Col
         span={24}
         style={{
           fontSize: 20,
@@ -132,30 +174,49 @@ const AccountManagement = () => {
         </Row>
       </Col> */}
 
-      <Table
-        style={{ marginTop: 16, width: '100%' }}
-        columns={tableColumns}
-        dataSource={users}
-        pagination={false}
-      />
-
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: 15,
-        }}
-      >
-        <Pagination
-          pageSize={10}
-          showSizeChanger={false}
-          defaultCurrent={1}
-          total={total}
-          onChange={(page) => setPage(page)}
+        <Table
+          style={{ marginTop: 16, width: '100%' }}
+          columns={tableColumns}
+          dataSource={users}
+          pagination={false}
         />
-      </div>
-    </Row>
+
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: 15,
+          }}
+        >
+          <Pagination
+            pageSize={10}
+            showSizeChanger={false}
+            defaultCurrent={1}
+            total={total}
+            onChange={(page) => setPage(page)}
+          />
+        </div>
+      </Row>
+      <Modal
+        title={`${
+          activeStatusData.status === 0 ? 'Khóa' : 'Kích Hoạt'
+        } tài khoản.`}
+        open={isOpenModal}
+        centered={true}
+        onOk={() => {
+          handleUpdateActiveStatusUser(
+            activeStatusData.userId,
+            activeStatusData.status
+          );
+        }}
+        onCancel={() => setIsOpenModal(false)}
+      >
+        <p>{`Bạn có chắc chắc muốn ${
+          activeStatusData.status === 0 ? 'Khóa' : 'Kích Hoạt'
+        } tài khoản này ?`}</p>
+      </Modal>
+    </>
   );
 };
 
