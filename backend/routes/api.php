@@ -95,6 +95,7 @@ Route::prefix('me')->group(function () {
         Route::get('/history', [UserController::class, 'history']);
         Route::get('/notifications', [UserController::class, 'notifications']);
         Route::post('/notifications/read', [UserController::class, 'readNotifications']);
+        Route::post('/notifications/readAll', [UserController::class, 'readAllNotifications']);
     });
     Route::get('/recommendation', [MangaController::class, 'getRecommendation']);
 });
