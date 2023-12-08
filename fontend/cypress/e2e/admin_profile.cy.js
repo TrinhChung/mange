@@ -34,9 +34,14 @@ describe('Spec profile admin', () => {
     cy.url().should('include', '/management-story');
   })
 
-  it("Có thể chuyển hướng tới quản lý bình luận", () => {
-    cy.contains('Quản lý bình luận').click();
+  it("Có thể chuyển hướng tới quản lý bình luận bị báo cáo", () => {
+    cy.contains('Bình luận bị báo cáo').click();
     cy.url().should('include', '/management-comment');
+  })
+
+  it("Có thể chuyển hướng tới màn thêm truyện mới", () => {
+    cy.contains('Thêm truyện mới').click();
+    cy.url().should('include', '/post');
   })
 
   it("Có thể chọn Upload Ảnh", () => {
@@ -63,7 +68,7 @@ describe('Spec profile admin', () => {
   })
 
   it("Có thể hiển thị các bình luận bị báo cáo", () => {
-    cy.contains('Quản lý bình luận').click();
+    cy.contains('Bình luận bị báo cáo').click();
     // TODO: Add logic
   })
 });
