@@ -74,6 +74,23 @@ class UserController extends Controller
         ]);
     }
 
+    public function readAllNotifications(Request $request)
+    {
+
+        $user = $request->user();
+
+        $user->unreadNotifications()->update(['read_at' => now()]);
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'notifications' => $user->notifications,
+                'unread_count' => $user->unreadNotifications()->count(),
+            ],
+            'message' => 'read notification success',
+        ]);
+    }
+
     public function show($user_id, Request $request): JsonResponse
     {
         $user = User::findOrFail($user_id);
