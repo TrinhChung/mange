@@ -43,3 +43,11 @@ export const updateAvatar = (formData) => {
 export const changePasswordMe = (formData) => {
   return axios.patch(`/api/me`, formData);
 };
+
+export const getNotifications = () => {
+  return axios.get(`/api/me/notifications`);
+};
+
+export const readAllNotifications = (ids = []) => {
+  return axios.post(`/api/me/notifications/read`, ids);
+};

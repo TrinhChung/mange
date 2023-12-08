@@ -1,5 +1,15 @@
 import { useState, useEffect, useContext, memo, useRef } from 'react';
-import { Layout, Row, Col, Dropdown, Modal, Input, Badge } from 'antd';
+import {
+  Layout,
+  Row,
+  Col,
+  Dropdown,
+  Modal,
+  Input,
+  Badge,
+  notification,
+  Empty,
+} from 'antd';
 import {
   BellFilled,
   UserOutlined,
@@ -17,6 +27,10 @@ import MangaSearch from '../manga/MangaSearch';
 import { MangaContext } from '../../providers/mangaProvider/index';
 import './Navbar.scss';
 import NotifyCard from './NotifyCard';
+import {
+  getNotifications,
+  readAllNotifications as readAllNotificationsService,
+} from '../../services/User/index';
 
 const { Header } = Layout;
 const Navbar = ({ data }) => {
@@ -34,6 +48,7 @@ const Navbar = ({ data }) => {
   const searchParams = new URLSearchParams(location.search);
   const [results, setResults] = useState([]);
   const [notifyCount, setNotifyCount] = useState(100);
+  const [notifications, setNotifications] = useState([]);
   const [key, setKey] = useState(
     searchParams.get('search') ? searchParams.get('search') : ''
   );
@@ -82,6 +97,33 @@ const Navbar = ({ data }) => {
       setCurrent(pathArr[1]);
     }
   }, [pathname]);
+
+  const fetchNotificationsService = async () => {
+    try {
+      const data = await getNotifications();
+      if (data.success === 1) {
+        setNotifyCount(data?.unread_count ? data.unread_count : 0);
+        setNotifications(data?.notifications);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  // Truyen them socket tai day
+  useEffect(() => {
+    if (authUser) {
+      fetchNotificationsService();
+    }
+  }, []);
+
+  const readAllNotifications = async () => {
+    try {
+      await readAllNotificationsService([]);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const onLogout = async () => {
     try {
@@ -257,6 +299,7 @@ const Navbar = ({ data }) => {
                   parent={wrapperDropdownNotify}
                   width="370px"
                   left={-240}
+                  handleOnClose={readAllNotifications}
                 >
                   <Col
                     span={24}
@@ -271,14 +314,13 @@ const Navbar = ({ data }) => {
                     >
                       Danh sách thông báo
                     </Row>
-                    <NotifyCard />
-                    <NotifyCard />
-                    <NotifyCard />
-                    <NotifyCard />
-                    <NotifyCard />
-                    <NotifyCard />
-                    <NotifyCard />
-                    <NotifyCard />
+                    {notifications && notifications.length > 0 ? (
+                      notifications.map((notification) => {
+                        return <NotifyCard notify={notification} />;
+                      })
+                    ) : (
+                      <Empty />
+                    )}
                   </Col>
                 </DropdownCustom>
               </Col>

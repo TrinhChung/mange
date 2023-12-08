@@ -10,11 +10,13 @@ const DropdownCustom = ({
   children,
   width = '100%',
   left = 0,
+  handleOnClose = () => {},
 }) => {
   useEffect(() => {
     function handleClickOutside(event) {
       if (parent && parent.current && !parent.current.contains(event.target)) {
         setOpen(false);
+        handleOnClose();
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
