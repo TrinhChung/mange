@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MangaController extends Controller
@@ -246,11 +247,86 @@ class MangaController extends Controller
 
         // Upload thumbnail
         $thumbnail = $request->file('thumbnail');
-        \Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+        Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
 
         return response()->json([
             'success' => 1,
             'message' => 'Thêm truyện thành công',
+            'data' => $manga,
+        ], 201);
+    }
+
+    public function update(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'admin') {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Can not access',
+            ], 403);
+        }
+
+        $fields = $this->validate($request, [
+            'name' => 'string',
+            'othernames' => 'array',
+            'othernames.*' => 'string',
+            'description' => 'string',
+            'thumbnail' => ['image', 'mimes:jpeg,jpg,png', 'max:10240'],
+            'status' => 'integer|in:0,1',
+            'categories' => 'array',
+            'categories.*' => 'integer',
+            'authors' => 'array',
+            'authors.*' => 'string',
+        ]);
+
+        $slug = Str::slug($fields['name'], '-');
+
+        $manga = Manga::findOrFail($request->id);
+
+        DB::beginTransaction();
+        $manga = $manga->update([
+            'name' => $fields['name'],
+            'description' => $fields['description'],
+            'status' => $fields['status'],
+            'thumbnail' => $slug.'/thumbnail.jpg',
+            'slug' => $slug,
+        ]);
+
+        $authors = $fields['authors'];
+        $categories = $fields['categories'];
+        $othernames = $fields['othernames'];
+
+        // create authors if not exists by name
+        $authors = array_map(function ($author) {
+            return ['name' => $author];
+        }, $authors);
+        $authors = array_map(function ($author) {
+            return \App\Models\Author::firstOrCreate($author)->id;
+        }, $authors);
+
+        if (count($othernames) > 0) {
+            Othername::upsert(array_map(function ($othername) use ($manga) {
+                return [
+                    'name' => $othername,
+                    'manga_id' => $manga->id,
+                ];
+            }, $othernames), ['name']);
+        }
+
+        DB::commit();
+        $manga->categories()->sync($categories);
+        $manga->authors()->sync($authors);
+
+        // Upload thumbnail
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+        }
+
+        return response()->json([
+            'success' => 1,
+            'message' => 'Cập nhật truyện thành công',
             'data' => $manga,
         ], 201);
     }
