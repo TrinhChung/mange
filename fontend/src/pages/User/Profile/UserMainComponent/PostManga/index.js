@@ -13,7 +13,7 @@ const PostManga = () => {
   const [createdMangaId, setCreatedMangaId] = useState(null);
   const [firstChapterId, setFirstChapterId] = useState(null);
 
-  const {mangaId} = useParams();
+  const { mangaId, chapterId } = useParams();
 
   const items = [
     {
@@ -41,10 +41,13 @@ const PostManga = () => {
   ];
 
   useEffect(() => {
-    if (mangaId) {
-      setCurrentStep(1)
+    console.log(mangaId, chapterId);
+    if (mangaId && chapterId) {
+      setCurrentStep(2);
+    } else if (mangaId) {
+      setCurrentStep(1);
     }
-  }, [mangaId]);
+  }, [mangaId, chapterId]);
 
   return (
     <Row className="box-content">
@@ -72,7 +75,7 @@ const PostManga = () => {
               setCurrentStep={setCurrentStep}
             />
           ) : (
-            <UploadImage firstChapterId={firstChapterId}/>
+            <UploadImage firstChapterId={firstChapterId} />
           )}
         </Row>
       </Col>

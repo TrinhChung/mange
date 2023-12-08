@@ -22,10 +22,12 @@ import {
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import { getChapterDetail } from '../../../../../services/Guest';
-import axios from '../../../../../config/axios'
+import axios from '../../../../../config/axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const UploadImage = ({firstChapterId}) => {
+const UploadImage = ({ firstChapterId }) => {
+  const { mangaId, chapterId } = useParams();
+
   const navigate = useNavigate();
 
   const [fileList, setFileList] = useState([]);
@@ -38,16 +40,17 @@ const UploadImage = ({firstChapterId}) => {
 
   const getChapter = async () => {
     try {
-      const res = await getChapterDetail(firstChapterId);
+      const res = await getChapterDetail(
+        chapterId ? chapterId : firstChapterId
+      );
       setChapter(res.data);
       setImageOrder(
         res.data.images.map((image, index) => {
           return { position: index, imageLink: `${image}?${Date.now()}` };
         })
-      ); 
-      
+      );
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
@@ -67,21 +70,25 @@ const UploadImage = ({firstChapterId}) => {
       }
       setUploading(true);
 
-      const response = await axios.post(`/api/chapters/${firstChapterId}`, formData, {
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setUploadProgress(percentCompleted);
-          console.log('percentCompleted', percentCompleted);
-        },
-        responseType: 'stream',
-        onDownloadProgress: (progressEvent) => {
-          const allLines =
-            progressEvent.event.target.responseText.split('data: ');
-          setStreamData(allLines[allLines.length - 1]);
-        },
-      });
+      const response = await axios.post(
+        `/api/chapters/${chapterId ? chapterId : firstChapterId}`,
+        formData,
+        {
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setUploadProgress(percentCompleted);
+            console.log('percentCompleted', percentCompleted);
+          },
+          responseType: 'stream',
+          onDownloadProgress: (progressEvent) => {
+            const allLines =
+              progressEvent.event.target.responseText.split('data: ');
+            setStreamData(allLines[allLines.length - 1]);
+          },
+        }
+      );
 
       toast.success('Tải ảnh lên thành công');
       setUploading(false);
@@ -98,7 +105,10 @@ const UploadImage = ({firstChapterId}) => {
       const order = imageOrder.map((data) => data.position);
       setSavingOrder(true);
 
-      const response = await axios.post(`/api/chapters/${firstChapterId}/sort`, { order });
+      const response = await axios.post(
+        `/api/chapters/${chapterId ? chapterId : firstChapterId}/sort`,
+        { order }
+      );
       toast.success(response.message);
       setSavingOrder(false);
       setChapter(null);
@@ -157,7 +167,9 @@ const UploadImage = ({firstChapterId}) => {
     <div>
       <Row>
         <Col span={24} offset={3}>
-          <Typography.Title level={2}>Tải ảnh cho chapter vừa tạo</Typography.Title>
+          <Typography.Title level={2}>
+            Tải ảnh cho chapter vừa tạo
+          </Typography.Title>
         </Col>
       </Row>
       <Row>
@@ -257,40 +269,38 @@ const UploadImage = ({firstChapterId}) => {
         </Col>
       </Row>
       <br />
-      {!imageOrder.every(
-                (data, index) => data.position === index
-              ) &&<Row>
-        <Col offset={6} span={12} align="middle">
-          <Space>
-            <Button
-              disabled={imageOrder.every(
-                (data, index) => data.position === index
-              )}
-              onClick={revertChanges}
-            >
-              Hoàn tác
-            </Button>
-            <Button
-              disabled={imageOrder.every(
-                (data, index) => data.position === index
-              )}
-              type="primary"
-              onClick={handleSaveOrder}
-              loading={savingOrder}
-            >
-              Lưu lại
-            </Button>
-          </Space>
-        </Col>
-      </Row>}
+      {!imageOrder.every((data, index) => data.position === index) && (
+        <Row>
+          <Col offset={6} span={12} align="middle">
+            <Space>
+              <Button
+                disabled={imageOrder.every(
+                  (data, index) => data.position === index
+                )}
+                onClick={revertChanges}
+              >
+                Hoàn tác
+              </Button>
+              <Button
+                disabled={imageOrder.every(
+                  (data, index) => data.position === index
+                )}
+                type="primary"
+                onClick={handleSaveOrder}
+                loading={savingOrder}
+              >
+                Lưu lại
+              </Button>
+            </Space>
+          </Col>
+        </Row>
+      )}
 
-      <Row style={{marginTop: 20}}>
+      <Row style={{ marginTop: 20 }}>
         <Col offset={6} span={24} align="middle">
-        <Button
-              onClick={() => navigate('/')}         type="primary"
-            >
-              Bỏ qua
-            </Button>
+          <Button onClick={() => navigate('/')} type="primary">
+            Thoát
+          </Button>
         </Col>
       </Row>
       <br />
