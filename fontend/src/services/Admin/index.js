@@ -24,3 +24,7 @@ export const createManga = (formData) => {
 export const createChapter = (mangaId, formData) => {
   return axios.post(`/api/mangas/${mangaId}/chapter`, formData);
 };
+
+export const updateActiveStatusUser = (userId, status) => {
+  return axios.patch(`/api/users/${userId}`, { active: status });
+};

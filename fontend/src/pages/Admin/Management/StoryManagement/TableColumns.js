@@ -32,7 +32,18 @@ const tableColumns = [
   {
     title: 'HÀNH ĐỘNG',
     dataIndex: 'action',
-    render: (text) => <div style={{ fontSize: 22 }}>{text}</div>,
+    render: (text) => (
+      <div
+        style={{
+          display: 'flex',
+          gap: 16,
+          justifyContent: 'center',
+          fontSize: 20,
+        }}
+      >
+        {text}
+      </div>
+    ),
     key: 'action',
     align: 'center',
     width: '14%',

@@ -40,13 +40,16 @@ const StoryManagement = () => {
               view: manga.view_count,
               follow: manga.follow_count,
               action: (
-                <EyeOutlined
-                  onClick={() => {
-                    if (manga?.id) {
-                      navigate(`/detail-manga/${manga.id}`);
-                    }
-                  }}
-                />
+                <>
+                  <EditOutlined />
+                  <EyeOutlined
+                    onClick={() => {
+                      if (manga?.id) {
+                        navigate(`/detail-manga/${manga.id}`);
+                      }
+                    }}
+                  />
+                </>
               ),
             };
           })
