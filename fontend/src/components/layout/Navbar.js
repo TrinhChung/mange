@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, memo, useRef } from 'react';
-import { Layout, Row, Col, Dropdown, Modal, Input } from 'antd';
+import { Layout, Row, Col, Dropdown, Modal, Input, Badge } from 'antd';
 import {
   BellFilled,
   UserOutlined,
@@ -16,6 +16,7 @@ import { getMangaNewUpdate } from '../../services/Guest/index';
 import MangaSearch from '../manga/MangaSearch';
 import { MangaContext } from '../../providers/mangaProvider/index';
 import './Navbar.scss';
+import NotifyCard from './NotifyCard';
 
 const { Header } = Layout;
 const Navbar = ({ data }) => {
@@ -24,12 +25,15 @@ const Navbar = ({ data }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [current, setCurrent] = useState('home');
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
+  const [isOpenNotify, setIsOpenNotify] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const wrapperDropdown = useRef(null);
+  const wrapperDropdownNotify = useRef(null);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const [results, setResults] = useState([]);
+  const [notifyCount, setNotifyCount] = useState(100);
   const [key, setKey] = useState(
     searchParams.get('search') ? searchParams.get('search') : ''
   );
@@ -229,13 +233,58 @@ const Navbar = ({ data }) => {
                 gap: 10,
               }}
             >
-              <Col>
-                <BellFilled
-                  style={{ fontSize: '20px' }}
-                  className="color-icon"
-                />
+              <Col
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  position: 'relative',
+                }}
+                ref={wrapperDropdownNotify}
+              >
+                <Badge count={notifyCount} offset={[10, -5]} overflowCount={10}>
+                  <BellFilled
+                    style={{ fontSize: '20px', cursor: 'pointer' }}
+                    className="color-icon"
+                    onClick={() => {
+                      setIsOpenNotify(!isOpenNotify);
+                    }}
+                  />
+                </Badge>
+
+                <DropdownCustom
+                  open={isOpenNotify}
+                  setOpen={setIsOpenNotify}
+                  parent={wrapperDropdownNotify}
+                  width="370px"
+                  left={-240}
+                >
+                  <Col
+                    span={24}
+                    style={{ maxHeight: 400, overflow: 'auto', color: 'black' }}
+                  >
+                    <Row
+                      style={{
+                        fontWeight: 'bold',
+                        lineHeight: '40px',
+                        paddingLeft: 8,
+                      }}
+                    >
+                      Danh sách thông báo
+                    </Row>
+                    <NotifyCard />
+                    <NotifyCard />
+                    <NotifyCard />
+                    <NotifyCard />
+                    <NotifyCard />
+                    <NotifyCard />
+                    <NotifyCard />
+                    <NotifyCard />
+                  </Col>
+                </DropdownCustom>
               </Col>
+
               <Col>|</Col>
+
               <Dropdown menu={menuProps} trigger={['click']}>
                 <Row style={{ gap: 5, cursor: 'pointer' }}>
                   <Col>

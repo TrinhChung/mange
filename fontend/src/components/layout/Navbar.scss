@@ -9,3 +9,23 @@
   z-index: 1;
   color: white;
 }
+
+.color-icon {
+  color: white !important;
+}
+
+.notify-card {
+  line-height: 20px;
+  padding: 4px 8px;
+  .content-notify {
+    min-width: 275px;
+    max-width: 275px;
+    word-wrap: break-word;
+    margin-bottom: 0;
+    line-height: 17px;
+  }
+  .content-notify:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

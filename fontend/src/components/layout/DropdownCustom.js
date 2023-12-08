@@ -9,6 +9,7 @@ const DropdownCustom = ({
   parent,
   children,
   width = '100%',
+  left = 0,
 }) => {
   useEffect(() => {
     function handleClickOutside(event) {
@@ -30,7 +31,7 @@ const DropdownCustom = ({
       onClick={(e) => {
         e.stopPropagation();
       }}
-      style={{ top: top, width: width }}
+      style={{ top: top, width: width, left: left }}
     >
       {children}
     </Row>
