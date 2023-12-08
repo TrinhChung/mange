@@ -268,21 +268,19 @@ class MangaController extends Controller
         }
 
         $fields = $this->validate($request, [
-            'name' => 'string',
+            'name' => 'required|string',
             'othernames' => 'array',
-            'othernames.*' => 'string',
-            'description' => 'string',
-            'thumbnail' => ['image', 'mimes:jpeg,jpg,png', 'max:10240'],
-            'status' => 'integer|in:0,1',
-            'categories' => 'array',
-            'categories.*' => 'integer',
-            'authors' => 'array',
-            'authors.*' => 'string',
+            'description' => 'required|string',
+            'thumbnail' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:10240'],
+            'status' => 'required|integer|in:0,1',
+            'categories' => 'required|array',
+            'authors' => 'required|array',
         ]);
 
         $slug = Str::slug($fields['name'], '-');
 
         $manga = Manga::findOrFail($request->id);
+        $oldSlug = $manga->slug;
 
         DB::beginTransaction();
         $manga = $manga->update([
@@ -304,6 +302,7 @@ class MangaController extends Controller
         $authors = array_map(function ($author) {
             return \App\Models\Author::firstOrCreate($author)->id;
         }, $authors);
+        $manga->authors()->sync($authors);
 
         if (count($othernames) > 0) {
             Othername::upsert(array_map(function ($othername) use ($manga) {
@@ -314,11 +313,13 @@ class MangaController extends Controller
             }, $othernames), ['name']);
         }
 
-        DB::commit();
         $manga->categories()->sync($categories);
-        $manga->authors()->sync($authors);
+
+        DB::commit();
 
         // Upload thumbnail
+        Storage::disk('ftp')->move($oldSlug, $slug);
+
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
