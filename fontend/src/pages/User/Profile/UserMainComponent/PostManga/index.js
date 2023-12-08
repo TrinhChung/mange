@@ -3,19 +3,27 @@ import React, { useContext, useEffect, useState } from 'react';
 import TitleTopLeft from '../../../../../components/layout/TitleTopLeft';
 import FormManga from './FormManga';
 import FormChapter from './FormChapter';
-import PostSuccess from './PostSuccess';
 import { getCategories } from '../../../../../services/Guest';
 import { MangaContext } from '../../../../../providers/mangaProvider';
+import UploadImage from './UploadImage';
+import { useParams } from 'react-router-dom';
 
 const PostManga = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [createdMangaId, setCreatedMangaId] = useState(null);
+  const [firstChapterId, setFirstChapterId] = useState(null);
+
+  const {mangaId} = useParams();
 
   const items = [
     {
       title: <Row className="bold">Tạo truyện</Row>,
     },
     {
-      title: <Row className="bold">Đăng chapter</Row>,
+      title: <Row className="bold">Tạo chapter</Row>,
+    },
+    {
+      title: <Row className="bold">Tải ảnh lên</Row>,
     },
   ];
 
@@ -32,6 +40,12 @@ const PostManga = () => {
     },
   ];
 
+  useEffect(() => {
+    if (mangaId) {
+      setCurrentStep(1)
+    }
+  }, [mangaId]);
+
   return (
     <Row className="box-content">
       <Col span={24}>
@@ -47,11 +61,18 @@ const PostManga = () => {
         </Row>
         <Row>
           {currentStep === 0 ? (
-            <FormManga currentStep={currentStep} setCurrentStep={setCurrentStep}/>
+            <FormManga
+              setCreatedMangaId={setCreatedMangaId}
+              setCurrentStep={setCurrentStep}
+            />
           ) : currentStep === 1 ? (
-            <FormChapter currentStep={currentStep} setCurrentStep={setCurrentStep}/>
+            <FormChapter
+              createdMangaId={createdMangaId}
+              setFirstChapterId={setFirstChapterId}
+              setCurrentStep={setCurrentStep}
+            />
           ) : (
-            <PostSuccess />
+            <UploadImage firstChapterId={firstChapterId}/>
           )}
         </Row>
       </Col>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Card,
@@ -20,11 +20,14 @@ import {
   LoadingOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import Dragger from 'antd/es/upload/Dragger';
-import axios from '../../../config/axios';
 import { toast } from 'react-toastify';
+import { getChapterDetail } from '../../../../../services/Guest';
+import axios from '../../../../../config/axios'
+import { useNavigate, useParams } from 'react-router-dom';
 
-const TestUploadChapter = () => {
+const UploadImage = ({firstChapterId}) => {
+  const navigate = useNavigate();
+
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
@@ -33,19 +36,24 @@ const TestUploadChapter = () => {
   const [imageOrder, setImageOrder] = useState([]);
   const [savingOrder, setSavingOrder] = useState(false);
 
+  const getChapter = async () => {
+    try {
+      const res = await getChapterDetail(firstChapterId);
+      setChapter(res.data);
+      setImageOrder(
+        res.data.images.map((image, index) => {
+          return { position: index, imageLink: `${image}?${Date.now()}` };
+        })
+      ); 
+      
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
   useEffect(() => {
     getChapter();
   }, []);
-
-  const getChapter = async () => {
-    const res = await axios.get('/api/chapters/1501');
-    setChapter(res.data);
-    setImageOrder(
-      res.data.images.map((image, index) => {
-        return { position: index, imageLink: `${image}?${Date.now()}` };
-      })
-    ); // prevent cache
-  };
 
   const handleUpload = async () => {
     try {
@@ -54,15 +62,12 @@ const TestUploadChapter = () => {
         formData.append('zip', fileList[0]);
       } else {
         for (let i = 0; i < fileList.length; i++) {
-          formData.append('images[]', fileList[i]);
+          formData.append(`images[${i}]`, fileList[i]);
         }
       }
       setUploading(true);
 
-      const response = await axios.post('/api/chapters/18186', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+      const response = await axios.post(`/api/chapters/${firstChapterId}`, formData, {
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
@@ -93,7 +98,7 @@ const TestUploadChapter = () => {
       const order = imageOrder.map((data) => data.position);
       setSavingOrder(true);
 
-      const response = await axios.post('/api/chapters/18186/sort', { order });
+      const response = await axios.post(`/api/chapters/${firstChapterId}/sort`, { order });
       toast.success(response.message);
       setSavingOrder(false);
       setChapter(null);
@@ -151,12 +156,12 @@ const TestUploadChapter = () => {
   return (
     <div>
       <Row>
-        <Col span={18} offset={3}>
-          <Typography.Title level={2}>Tải ảnh lên</Typography.Title>
+        <Col span={24} offset={3}>
+          <Typography.Title level={2}>Tải ảnh cho chapter vừa tạo</Typography.Title>
         </Col>
       </Row>
       <Row>
-        <Col span={18} offset={3}>
+        <Col span={24} offset={3}>
           <Typography.Text>
             Tải lên nhiều file ảnh hoặc 1 file zip, tối đa 400MB.
           </Typography.Text>
@@ -213,7 +218,7 @@ const TestUploadChapter = () => {
                   if (imageName.split('?').length > 1)
                     imageName = imageName.split('?')[0];
                   return (
-                    <Col span={6} key={data.position}>
+                    <Col span={8} key={data.position}>
                       <Card
                         title={
                           <Select
@@ -252,7 +257,9 @@ const TestUploadChapter = () => {
         </Col>
       </Row>
       <br />
-      <Row>
+      {!imageOrder.every(
+                (data, index) => data.position === index
+              ) &&<Row>
         <Col offset={6} span={12} align="middle">
           <Space>
             <Button
@@ -275,10 +282,20 @@ const TestUploadChapter = () => {
             </Button>
           </Space>
         </Col>
+      </Row>}
+
+      <Row style={{marginTop: 20}}>
+        <Col offset={6} span={24} align="middle">
+        <Button
+              onClick={() => navigate('/')}         type="primary"
+            >
+              Bỏ qua
+            </Button>
+        </Col>
       </Row>
       <br />
     </div>
   );
 };
 
-export default TestUploadChapter;
+export default UploadImage;

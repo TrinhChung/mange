@@ -314,6 +314,15 @@ const Overview = ({ manga = null, loading = true }) => {
                   {followElement}
                   Theo dõi
                 </Col>
+
+                {authUser?.role == 'admin' && <Col
+                  className="button-view bg-color-jade button-hover-primary"
+                  onClick={() => {
+                    navigate(`/profile/post/${manga?.id}`)
+                 }}
+                >
+                  Thêm chapter
+                </Col>}
               </Row>
             </Col>
           </Row>
