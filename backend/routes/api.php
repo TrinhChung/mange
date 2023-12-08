@@ -93,6 +93,8 @@ Route::prefix('me')->group(function () {
         Route::patch('/', [UserController::class, 'patchMe']);
         Route::post('/avatar', [UserController::class, 'updateMyAvatar']);
         Route::get('/history', [UserController::class, 'history']);
+        Route::get('/notifications', [UserController::class, 'notifications']);
+        Route::post('/notifications/read', [UserController::class, 'readNotifications']);
     });
     Route::get('/recommendation', [MangaController::class, 'getRecommendation']);
 });

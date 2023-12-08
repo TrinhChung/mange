@@ -39,6 +39,41 @@ class UserController extends Controller
         ], 200);
     }
 
+    public function notifications(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'notifications' => $user->notifications,
+                'unread_count' => $user->unreadNotifications()->count(),
+            ],
+            'message' => 'get unread notifications success',
+        ]);
+    }
+
+    public function readNotifications(Request $request)
+    {
+
+        $user = $request->user();
+        $fields = $this->validate($request, [
+            'ids' => ['array'],
+            'ids.*' => 'string',
+        ]);
+
+        $user->unreadNotifications()->whereIn('id', $fields['ids'])->update(['read_at' => now()]);
+
+        return response()->json([
+            'success' => 1,
+            'data' => [
+                'notifications' => $user->notifications,
+                'unread_count' => $user->unreadNotifications()->count(),
+            ],
+            'message' => 'read notification success',
+        ]);
+    }
+
     public function show($user_id, Request $request): JsonResponse
     {
         $user = User::findOrFail($user_id);

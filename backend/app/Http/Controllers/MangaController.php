@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MangaController extends Controller
@@ -267,15 +268,15 @@ class MangaController extends Controller
         }
 
         $fields = $this->validate($request, [
-            'name' => 'required|string',
+            'name' => 'string',
             'othernames' => 'array',
             'othernames.*' => 'string',
-            'description' => 'required|string',
-            'thumbnail' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:10240'],
-            'status' => 'required|integer|in:0,1',
-            'categories' => 'required|array',
+            'description' => 'string',
+            'thumbnail' => ['image', 'mimes:jpeg,jpg,png', 'max:10240'],
+            'status' => 'integer|in:0,1',
+            'categories' => 'array',
             'categories.*' => 'integer',
-            'authors' => 'required|array',
+            'authors' => 'array',
             'authors.*' => 'string',
         ]);
 
@@ -318,8 +319,10 @@ class MangaController extends Controller
         $manga->authors()->sync($authors);
 
         // Upload thumbnail
-        $thumbnail = $request->file('thumbnail');
-        Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+        }
 
         return response()->json([
             'success' => 1,

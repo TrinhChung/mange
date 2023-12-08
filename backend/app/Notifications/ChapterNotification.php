@@ -58,7 +58,8 @@ class ChapterNotification extends Notification
             'content' => "Bộ truyện {$manga->name} đã cập nhật {$this->chapter->name}. Đến xem ngay!",
             'chapter_id' => $this->chapter->id,
             'thumbnail' => $manga->thumbnail,
-            'time' => Carbon::now()->toDateTimeString(),
+            'slug' => $manga->slug,
+            'time' => Carbon::now()->diffForHumans(),
         ];
     }
 }
