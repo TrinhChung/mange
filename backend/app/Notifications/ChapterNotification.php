@@ -6,6 +6,7 @@ use App\Models\Chapter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Carbon;
 
 class ChapterNotification extends Notification
 {
@@ -56,6 +57,8 @@ class ChapterNotification extends Notification
             //
             'content' => "Bộ truyện {$manga->name} đã cập nhật {$this->chapter->name}. Đến xem ngay!",
             'chapter_id' => $this->chapter->id,
+            'thumbnail' => $manga->thumbnail,
+            'time' => Carbon::now()->toDateTimeString(),
         ];
     }
 }

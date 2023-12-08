@@ -48,6 +48,7 @@ Route::prefix('mangas')->group(function () {
         Route::get('/bookmarked', [MangaController::class, 'getBookmarkedMangas']);
         Route::post('/bookmark/{manga_id}', [MangaController::class, 'bookmarkToggle']);
         Route::post('{manga_id}/comment', [CommentController::class, 'create']);
+        Route::post('{id}', [MangaController::class, 'update']);
         Route::post('{manga_id}/vote', [VoteController::class, 'vote']);
         Route::post('{manga_id}/chapter', [ChapterController::class, 'create']);
         Route::get('reported', [MangaController::class, 'getReportedMangas']);
