@@ -3,10 +3,12 @@ import { Button, Col, Form, Input, InputNumber, Row, Select } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { createChapter } from '../../../../../services/Admin';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const { TextArea } = Input;
 
 const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
+  const {mangaId} = useParams();
+
   const navigate = useNavigate();
 
   const [number, setNumber] = useState(0);
@@ -20,7 +22,7 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
     console.log('formData', formData);
 
     try {
-      const res = await createChapter(createdMangaId, formData);
+      const res = await createChapter(mangaId ? mangaId : createdMangaId, formData);
       toast.success(res.message);
 
       setCurrentStep(2);

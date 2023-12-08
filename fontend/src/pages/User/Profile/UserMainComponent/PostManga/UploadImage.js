@@ -23,7 +23,7 @@ import {
 import { toast } from 'react-toastify';
 import { getChapterDetail } from '../../../../../services/Guest';
 import axios from '../../../../../config/axios'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const UploadImage = ({firstChapterId}) => {
   const navigate = useNavigate();

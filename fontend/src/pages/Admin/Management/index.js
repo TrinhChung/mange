@@ -82,6 +82,10 @@ const Management = () => {
                 path="change-password"
                 element={<ChangePasswordComponent />}
               />
+                 <Route
+                path="post/:mangaId"
+                element={<PostManga/>}
+              />
             </Routes>
           </Col>
         </Row>

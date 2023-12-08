@@ -6,11 +6,14 @@ import FormChapter from './FormChapter';
 import { getCategories } from '../../../../../services/Guest';
 import { MangaContext } from '../../../../../providers/mangaProvider';
 import UploadImage from './UploadImage';
+import { useParams } from 'react-router-dom';
 
 const PostManga = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [createdMangaId, setCreatedMangaId] = useState(null);
   const [firstChapterId, setFirstChapterId] = useState(null);
+
+  const {mangaId} = useParams();
 
   const items = [
     {
@@ -36,6 +39,12 @@ const PostManga = () => {
       href: '/profile/post',
     },
   ];
+
+  useEffect(() => {
+    if (mangaId) {
+      setCurrentStep(1)
+    }
+  }, [mangaId]);
 
   return (
     <Row className="box-content">
