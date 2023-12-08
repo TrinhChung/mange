@@ -23,8 +23,11 @@ import {
 import { toast } from 'react-toastify';
 import { getChapterDetail } from '../../../../../services/Guest';
 import axios from '../../../../../config/axios'
+import { useNavigate } from 'react-router-dom';
 
 const UploadImage = ({firstChapterId}) => {
+  const navigate = useNavigate();
+
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
@@ -178,7 +181,6 @@ const UploadImage = ({firstChapterId}) => {
             multiple
             accept="image/png, image/jpeg, image/jpg, application/zip"
             placeholder="Chọn file (nhiều file ảnh hoặc 1 file zip)"
-            style={{display: 'none'}}
           />
         </Col>
       </Row>
@@ -255,7 +257,9 @@ const UploadImage = ({firstChapterId}) => {
         </Col>
       </Row>
       <br />
-      <Row>
+      {!imageOrder.every(
+                (data, index) => data.position === index
+              ) &&<Row>
         <Col offset={6} span={12} align="middle">
           <Space>
             <Button
@@ -277,6 +281,16 @@ const UploadImage = ({firstChapterId}) => {
               Lưu lại
             </Button>
           </Space>
+        </Col>
+      </Row>}
+
+      <Row style={{marginTop: 20}}>
+        <Col offset={6} span={24} align="middle">
+        <Button
+              onClick={() => navigate('/')}         type="primary"
+            >
+              Bỏ qua
+            </Button>
         </Col>
       </Row>
       <br />

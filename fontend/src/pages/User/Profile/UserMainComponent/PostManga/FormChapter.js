@@ -3,9 +3,12 @@ import { Button, Col, Form, Input, InputNumber, Row, Select } from 'antd';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { createChapter } from '../../../../../services/Admin';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const { TextArea } = Input;
 
 const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
+  const navigate = useNavigate();
+
   const [number, setNumber] = useState(0);
   const [name, setName] = useState('');
 
@@ -80,6 +83,7 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
           display: 'flex',
           justifyContent: 'center',
           padding: '10px 0px',
+          gap: 20
         }}
       >
         <Button
@@ -89,6 +93,12 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
         >
           Tạo chapter
         </Button>
+
+        <Button
+              onClick={() => navigate('/')}         type="primary"
+            >
+              Bỏ qua
+            </Button>
       </div>
     </Form>
   );
