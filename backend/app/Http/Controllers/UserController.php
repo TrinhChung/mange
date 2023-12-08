@@ -57,12 +57,7 @@ class UserController extends Controller
     {
 
         $user = $request->user();
-        $fields = $this->validate($request, [
-            'ids' => ['array'],
-            'ids.*' => 'string',
-        ]);
-
-        $user->unreadNotifications()->whereIn('id', $fields['ids'])->update(['read_at' => now()]);
+        $user->unreadNotifications()->whereIn('id', $request->ids)->update(['read_at' => now()]);
 
         return response()->json([
             'success' => 1,

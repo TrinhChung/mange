@@ -59,7 +59,7 @@ class ChapterNotification extends Notification
             'chapter_id' => $this->chapter->id,
             'thumbnail' => $manga->thumbnail,
             'slug' => $manga->slug,
-            'time' => Carbon::now()->diffForHumans(),
+            'time' => Carbon::now(),
         ];
     }
 }

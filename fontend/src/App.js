@@ -42,14 +42,6 @@ function App() {
     window.echo.connector.socket.on('disconnect', function () {
       // console.log('disconnected');
     });
-
-    if (authUser) {
-      window.echo
-        .channel(`laravel_database_private-App.Models.User.${authUser.id}`)
-        .notification((notification) => {
-          console.log(notification);
-        });
-    }
   }, [authUser]);
 
   return (

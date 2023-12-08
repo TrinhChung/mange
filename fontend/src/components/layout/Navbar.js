@@ -29,7 +29,7 @@ import './Navbar.scss';
 import NotifyCard from './NotifyCard';
 import {
   getNotifications,
-  readAllNotifications as readAllNotificationsService,
+  readNotifications as readNotificationsService,
 } from '../../services/User/index';
 
 const { Header } = Layout;
@@ -47,8 +47,9 @@ const Navbar = ({ data }) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const [results, setResults] = useState([]);
-  const [notifyCount, setNotifyCount] = useState(100);
+  const [notifyCount, setNotifyCount] = useState(0);
   const [notifications, setNotifications] = useState([]);
+  const [change, setChange] = useState(false);
   const [key, setKey] = useState(
     searchParams.get('search') ? searchParams.get('search') : ''
   );
@@ -102,24 +103,46 @@ const Navbar = ({ data }) => {
     try {
       const data = await getNotifications();
       if (data.success === 1) {
-        setNotifyCount(data?.unread_count ? data.unread_count : 0);
-        setNotifications(data?.notifications);
+        console.log(data);
+        setNotifyCount(data?.data.unread_count ? data.data.unread_count : 0);
+        setNotifications(data?.data.notifications);
       }
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  // Truyen them socket tai day
+
   useEffect(() => {
+    if (authUser) {
+    async function createSocket() {
+    await window.echo
+        .channel(`laravel_database_private-App.Models.User.${authUser.id}`)
+        .notification((notification) => {
+          console.log(notification);
+          fetchNotificationsService();
+        });
+    }
+    createSocket();
+  }
+  }, []);
+
+
+   // Truyen them socket tai day
+   useEffect(() => {
+    console.log('connect');
     if (authUser) {
       fetchNotificationsService();
     }
   }, []);
 
-  const readAllNotifications = async () => {
+  const readNotifications = async (ids) => {
     try {
-      await readAllNotificationsService([]);
+      const data = await readNotificationsService(ids);
+      if(data.success === 1) {
+        setNotifyCount(data?.data.unread_count ? data.data.unread_count : 0);
+        setNotifications(data?.data.notifications);
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -299,7 +322,7 @@ const Navbar = ({ data }) => {
                   parent={wrapperDropdownNotify}
                   width="370px"
                   left={-240}
-                  handleOnClose={readAllNotifications}
+                  //handleOnClose={readAllNotifications}
                 >
                   <Col
                     span={24}
@@ -316,7 +339,7 @@ const Navbar = ({ data }) => {
                     </Row>
                     {notifications && notifications.length > 0 ? (
                       notifications.map((notification) => {
-                        return <NotifyCard notify={notification} />;
+                        return <NotifyCard notify={{... notification, ... notification.data}} handleClick={readNotifications} />;
                       })
                     ) : (
                       <Empty />
