@@ -454,7 +454,9 @@ class MangaController extends Controller
                 }
             }
             $recommendation = Http::post('https://manga_recommend.bachnguyencoder.id.vn/api/predict', ['items' => $items, 'ratings' => $ratings])['data'];
-            $mangas = Manga::whereIn('id', $recommendation)->get();
+            if (count($recommendation) !== 0) {
+                $mangas = Manga::whereIn('id', $recommendation)->get();
+            }
         }
 
         return new MangaCollection($mangas);
