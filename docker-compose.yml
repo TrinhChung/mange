@@ -52,12 +52,14 @@ services:
       - DB_DATABASE=mange
       - DB_USERNAME=root
       - DB_PASSWORD=1111
+      - BROADCAST_DRIVER=redis
       - REDIS_HOST=redis
       - CACHE_DRIVER=redis
       - QUEUE_CONNECTION=redis
       - SESSION_DRIVER=redis
     volumes:
       - backend_code:/var/www/html/
+      - tmp:/tmp
     command: sh -c "cp -r /app/. /var/www/html/ && chown -R www-data:www-data /var/www/html/ && php-fpm" # Copy sang shared volume
 
   laravel-worker:
@@ -79,12 +81,14 @@ services:
       - DB_DATABASE=mange
       - DB_USERNAME=root
       - DB_PASSWORD=1111
+      - BROADCAST_DRIVER=redis
       - REDIS_HOST=redis
       - CACHE_DRIVER=redis
       - QUEUE_CONNECTION=redis
       - SESSION_DRIVER=redis
     volumes:
       - backend_code:/var/www/html/
+      - tmp:/tmp
     restart: always
     command: ["php", "/var/www/html/artisan", "queue:work", "--tries=3", "--sleep=3"]
 
@@ -120,6 +124,7 @@ services:
       - mange
 
 volumes:
+  tmp:
   mysql_data:
   backend_code:
 
