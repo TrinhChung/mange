@@ -132,14 +132,6 @@ const Overview = ({ manga = null, loading = true }) => {
     }
   };
 
-  const followElement = useMemo(() => {
-    return manga?.user_bookmarked === true ? (
-      <CheckOutlined />
-    ) : (
-      <PlusOutlined />
-    );
-  }, [change]);
-
   return (
     <Row className="box-content" style={{ marginRight: 20 }}>
       <ConfirmModal
@@ -311,7 +303,11 @@ const Overview = ({ manga = null, loading = true }) => {
                     }
                   }}
                 >
-                  {followElement}
+                  {manga?.user_bookmarked === true ? (
+                    <CheckOutlined />
+                  ) : (
+                    <PlusOutlined />
+                  )}
                   Theo dõi
                 </Col>
 

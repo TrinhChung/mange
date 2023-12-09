@@ -89,7 +89,6 @@ const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
               <Col span={24}>
                 {chapters && chapters.length > 0 && !loading ? (
                   chapters.map((chapter) => {
-                    console.log('chapter', chapter);
                     return (
                       <RowChapter
                         chapter={chapter}
