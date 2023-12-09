@@ -11,15 +11,24 @@ import { toast } from 'react-toastify';
 import Comment from './Comment';
 import { editChapter } from '../../../services/Admin';
 
+function extractChapterNumber(inputString) {
+  const match = inputString.match(/Chapter (\d+(\.\d+)?)/);
+  if (match) {
+    return parseFloat(match[1]);
+  }
+  return null; 
+}
+
 const DetailManga = () => {
   const { histories } = useContext(MangaContext);
   const [manga, setManga] = useState({});
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(false);
   const { name } = useParams();
   const navigate = useNavigate();
 
   const [chapterName, setChapterName] = useState('')
-  const [selectedChapterId, setSelectedChapterId] = useState(null)
+  const [selectedChapter, setSelectedChapter] = useState(null)
   const [isOpenEditChapterModal, setIsOpenEditChapterModal] = useState(false)
 
   const fetchDetailManga = async (id) => {
@@ -41,15 +50,16 @@ const DetailManga = () => {
     if (name) {
       fetchDetailManga(name);
     }
-  }, [name]);
+  }, [name, reload]);
 
   const handleEditChapter = async () => {
 try {
-  console.log(selectedChapterId);
-  const res = await editChapter(selectedChapterId.id, {number: selectedChapterId.number, name: chapterName})
+  console.log(selectedChapter);
+  const res = await editChapter(selectedChapter.id, {number: extractChapterNumber(selectedChapter.name), name: chapterName})
   toast.success(res.message)
   setIsOpenEditChapterModal(false)
   setChapterName('')
+  setReload(!reload)
 } catch (error) {
   toast.error(error?.message)
   
@@ -70,7 +80,7 @@ try {
               loading={loading}
               isOpenEditChapterModal={isOpenEditChapterModal}
               setIsOpenEditChapterModal={setIsOpenEditChapterModal}
-              setSelectedChapterId={setSelectedChapterId}
+              setSelectedChapter={setSelectedChapter}
             />
             <Comment isChapter={false} id={name} />
           </Col>
@@ -85,7 +95,7 @@ try {
         </Row>
       </Col>
     </Row><Modal
-    title={`Chỉnh sửa tên chapter`}
+    title={`Chỉnh sửa thông tin chapter`}
     open={isOpenEditChapterModal}
     centered={true}
     onOk={   handleEditChapter}
