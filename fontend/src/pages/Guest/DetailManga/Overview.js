@@ -201,9 +201,12 @@ const Overview = ({ manga = null, loading = true }) => {
       formData.append(`categories[${index}]`, value);
     });
     formData.append('description', description);
-    formData.append('thumbnail', thumbnail);
     formData.append('status', 0);
     formData.append('othernames[0]', 'test');
+
+    if(thumbnail) {
+      formData.append('thumbnail', thumbnail);
+    }
 
     console.log('formData', formData);
 
