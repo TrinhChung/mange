@@ -286,7 +286,7 @@ class MangaController extends Controller
         $oldSlug = $manga->slug;
 
         DB::beginTransaction();
-        $manga = $manga->update([
+        $manga->update([
             'name' => $fields['name'],
             'description' => $fields['description'],
             'status' => $fields['status'],
@@ -318,8 +318,10 @@ class MangaController extends Controller
 
         $manga->categories()->sync($categories);
 
-        if (! Storage::disk('ftp')->move($oldSlug, $slug)) {
-            DB::rollBack();
+        if ($oldSlug !== $slug) {
+            if (! Storage::disk('ftp')->move($oldSlug, $slug)) {
+                DB::rollBack();
+            }
         }
 
         // Upload thumbnail
