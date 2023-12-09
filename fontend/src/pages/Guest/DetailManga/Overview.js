@@ -14,6 +14,12 @@ import { editManga } from '../../../services/Admin';
 const { TextArea } = Input;
 
 const Overview = ({ manga = null, loading = true, handleReloadManga }) => {
+  const {
+    histories,
+    fetchMangaNewUpdate,
+    topMangaMonth,
+  } = useContext(MangaContext);
+
   const { authUser } = useContext(AuthContext);
   const [change, setChange] = useState(false);
   const [score, setScore] = useState(
@@ -206,6 +212,7 @@ const Overview = ({ manga = null, loading = true, handleReloadManga }) => {
     formData.append('othernames[0]', 'test');
 
     console.log('thumbnail', thumbnail);
+    
     if(thumbnail) {
       formData.append('thumbnail', thumbnail);
     }
@@ -218,6 +225,8 @@ const Overview = ({ manga = null, loading = true, handleReloadManga }) => {
       setIsOpenEditMangaModal(false)
       handleReloadManga()
 
+
+      await fetchMangaNewUpdate({page: 1})
       setConfirmLoading(false)
 
     } catch (error) {
