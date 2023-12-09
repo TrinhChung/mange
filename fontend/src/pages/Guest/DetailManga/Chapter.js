@@ -1,11 +1,11 @@
 import React, { memo, useContext } from 'react';
 import { Col, Row, Skeleton } from 'antd';
 import TitleChildren from '../../../components/layout/TitleChildren';
-import { UnorderedListOutlined, EditOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined, EditOutlined,FileAddOutlined  } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../providers/authProvider';
 
-const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
+const Chapter = ({ chapters = [], nameManga = 'name', loading = true ,isOpenEditChapterModal, setIsOpenEditChapterModal, setSelectedChapterId}) => {
   const { authUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -70,7 +70,7 @@ const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
                     fontWeight: 'bold',
                     color: 'black',
                     fontSize: 16,
-                    paddingRight: 50,
+                    paddingRight: authUser?.role === 'admin'? 90 : 10,
                   }}
                 >
                   Ngày cập nhật
@@ -93,17 +93,20 @@ const Chapter = ({ chapters = [], nameManga = 'name', loading = true }) => {
                       <RowChapter
                         chapter={chapter}
                         date={
-                          <div>
+                          <div   style={{ display: 'flex', gap: 25}}>
                             {chapter?.created_at_formated}{' '}
                             {authUser?.role === 'admin' && (
+                              <div       style={{ fontSize: 20,display: 'flex', gap: 16 }}>
+                              <FileAddOutlined onClick={() =>
+                                navigate(
+                                  `/profile/post/${chapter?.manga_id}/${chapter?.id}`
+                                )
+                              } />
                               <EditOutlined
-                                onClick={() =>
-                                  navigate(
-                                    `/profile/post/${chapter?.manga_id}/${chapter?.id}`
-                                  )
-                                }
-                                style={{ fontSize: 20, marginLeft: 20 }}
-                              />
+                                onClick={ () => {setSelectedChapterId({id: chapter?.id, number: chapter?.number})
+                                  setIsOpenEditChapterModal(true)}}
+                          
+                              /> </div>
                             )}
                           </div>
                         }
