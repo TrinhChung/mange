@@ -1,5 +1,5 @@
 import { useState, useContext, useMemo, useEffect } from 'react';
-import { Col, Row, Rate, Image, Skeleton } from 'antd';
+import { Col, Row, Rate, Image, Skeleton, Form, Modal, Input, Select } from 'antd';
 import RowInfo from './RowInfo';
 import { hostImg } from '../../../const/index';
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +7,11 @@ import ConfirmModal from '../../../components/layout/ConfirmModal';
 import { AuthContext } from '../../../providers/authProvider';
 import { mangaBookmark, voteManga } from '../../../services/User/index';
 import { toast } from 'react-toastify';
-import { PlusOutlined, CheckOutlined } from '@ant-design/icons';
+import { PlusOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { checkInputVote } from '../../../utils/commonFunc';
+import { MangaContext } from '../../../providers/mangaProvider';
+import { editManga } from '../../../services/Admin';
+const { TextArea } = Input;
 
 const Overview = ({ manga = null, loading = true }) => {
   const { authUser } = useContext(AuthContext);
@@ -132,7 +135,89 @@ const Overview = ({ manga = null, loading = true }) => {
     }
   };
 
+  const { categories } = useContext(MangaContext);
+  const [name, setName] = useState('');
+  const [author, setAuthor] = useState('');
+  const [categoryList, setCategoryList] = useState([]);
+  const [description, setDescription] = useState('');
+  const [thumbnail, setThumbnail] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [isOpenEditMangaModal, setIsOpenEditMangaModal] = useState(false);
+
+  const handleChange = (value, valueObj) => {
+    setCategoryList(valueObj.map((obj) => obj.categoryId));
+  };
+
+  console.log(description);
+
+  const handleOpenEditMangaModal = () => {
+    setIsOpenEditMangaModal(true)
+    console.log(manga);
+    setName(manga?.name)
+    setDescription(manga?.description)
+    setAuthor(manga?.authors[0]?.name)
+    setCategoryList(manga?.categories?.map((category) =>  category.id))
+    setPreviewUrl(hostImg + manga?.thumbnail)
+  }
+
+
+  const handleCloseEditMangaModal = () => {
+    setIsOpenEditMangaModal(false)
+    console.log(manga);
+    setName('')
+    setDescription('')
+    setAuthor('')
+    setCategoryList(null)
+    setPreviewUrl('')
+  }
+
+
+  const handleThumbnailChange = (e) => {
+    const selectedFile = e.target.files[0];
+    console.log('selectedFile', selectedFile);
+    if (selectedFile) {
+      setThumbnail(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setThumbnail(null);
+      setPreviewUrl(null);
+    }
+  };
+
+  const handleDeleteImage = () => {
+    setThumbnail(null);
+    setPreviewUrl(null);
+  };
+
+  const handleSubmitEditManga = async () => {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('authors[0]', author);
+    categoryList.forEach((value, index) => {
+      formData.append(`categories[${index}]`, value);
+    });
+    formData.append('description', description);
+    formData.append('thumbnail', thumbnail);
+    formData.append('status', 0);
+    formData.append('othernames[0]', 'test');
+
+    console.log('formData', formData);
+
+    try {
+      const res = await editManga(manga?.id ,formData);
+      toast.success(res.message);
+
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
   return (
+    <>
     <Row className="box-content" style={{ marginRight: 20 }}>
       <ConfirmModal
         isModalOpen={isModalOpen}
@@ -312,14 +397,20 @@ const Overview = ({ manga = null, loading = true }) => {
                 </Col>
 
                 {authUser?.role == 'admin' && (
+                  <> 
                   <Col
                     className="button-view bg-color-jade button-hover-primary"
-                    onClick={() => {
-                      navigate(`/profile/post/${manga?.id}`);
-                    }}
+                    onClick={handleOpenEditMangaModal}
                   >
-                    Thêm chapter
-                  </Col>
+                    Sửa truyện
+                  </Col><Col
+                  className="button-view bg-color-jade button-hover-primary"
+                  onClick={() => {
+                    navigate(`/profile/post/${manga?.id}`);
+                  }}
+                >
+                  Thêm chapter
+                </Col></>
                 )}
               </Row>
             </Col>
@@ -327,6 +418,143 @@ const Overview = ({ manga = null, loading = true }) => {
         )}
       </Col>
     </Row>
+    <Modal
+    title={`Chỉnh sửa thông tin truyện`}
+    open={isOpenEditMangaModal}
+    centered={true}
+    onOk={handleSubmitEditManga}
+    onCancel={() => setIsOpenEditMangaModal(false)}
+  >
+  <Form
+      name="basic"
+      labelCol={{
+        span: 6,
+      }}
+      labelAlign="left"
+      wrapperCol={{
+        span: 18,
+      }}
+      initialValues={{
+        remember: true,
+      }}
+      autoComplete="off"
+      style={{ width: '100%', paddingTop: 40 }}
+    >
+      <Form.Item
+        label="Tên truyện"
+        rules={[
+          {
+            required: true,
+            message: 'Vui lòng nhập trên truyện',
+          },
+        ]}
+      
+      >
+        <Input className="input-form"  value={name}
+        onChange={(e) => setName(e.target.value)} />
+      </Form.Item>
+      <Form.Item
+        label="Tác giả"
+        rules={[
+          {
+            required: true,
+            message: 'Vui lòng nhập tên tác giả',
+          },
+        ]}
+       
+      >
+        <Input className="input-form"  value={author}
+        onChange={(e) => setAuthor(e.target.value)}/>
+      </Form.Item>
+      <Form.Item
+        label="Thể loại"
+        rules={[
+          {
+            required: true,
+            message: 'Vui lòng chọn thể loại',
+          },
+        ]}
+      >
+        <Select
+          mode="multiple"
+          allowClear
+          style={{
+            width: '100%',
+          }}
+          className="select-input"
+          placeholder="Vui lòng chọn"
+          defaultValue={manga?.categories?.map((category) => ({
+            value: category.name,
+            label: category.name,
+            categoryId: category.id,
+          }))}
+          onChange={handleChange}
+          options={categories.map((category) => ({
+            value: category.name,
+            label: category.name,
+            categoryId: category.id,
+          }))}
+        />
+      </Form.Item>
+      <Form.Item
+        label="Mô tả"
+        rules={[
+          {
+            required: true,
+            message: 'Mô tả truyện bắt buộc',
+          },
+        ]}
+      >
+        <Input
+          className="input-form"
+          rows={4}
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item
+        label="Thumbnail"
+        rules={[
+          {
+            required: true,
+            message: 'Vui lòng chọn Thumbnail',
+          },
+        ]}
+      >
+        {!previewUrl ? (
+          <label
+            className="label-upload-image"
+            for="basic_thumbnail"
+            style={{ height: 160, width: 140 }}
+          >
+            Nhấp để upload ảnh
+          </label>
+        ) : (
+          <div
+            className="preview-thumbnail"
+            style={{ height: 160, width: 140 }}
+          >
+            <CloseOutlined
+              className="preview-thumbnail-close-icon"
+              onClick={handleDeleteImage}
+            />
+            <img
+              src={previewUrl}
+              alt="preview"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          </div>
+        )}
+        <input
+          type="file"
+          className="upload-image"
+          id="basic_thumbnail"
+          accept="image/*"
+          onChange={handleThumbnailChange}
+        ></input>
+      </Form.Item>
+    </Form>
+  </Modal></>
   );
 };
 

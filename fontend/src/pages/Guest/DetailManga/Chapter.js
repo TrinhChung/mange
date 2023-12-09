@@ -5,7 +5,7 @@ import { UnorderedListOutlined, EditOutlined,FileAddOutlined  } from '@ant-desig
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../providers/authProvider';
 
-const Chapter = ({ chapters = [], nameManga = 'name', loading = true ,isOpenEditChapterModal, setIsOpenEditChapterModal, setSelectedChapterId}) => {
+const Chapter = ({ chapters = [], nameManga = 'name', loading = true ,isOpenEditChapterModal, setIsOpenEditChapterModal, setSelectedChapter}) => {
   const { authUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -89,6 +89,7 @@ const Chapter = ({ chapters = [], nameManga = 'name', loading = true ,isOpenEdit
               <Col span={24}>
                 {chapters && chapters.length > 0 && !loading ? (
                   chapters.map((chapter) => {
+                   
                     return (
                       <RowChapter
                         chapter={chapter}
@@ -103,7 +104,7 @@ const Chapter = ({ chapters = [], nameManga = 'name', loading = true ,isOpenEdit
                                 )
                               } />
                               <EditOutlined
-                                onClick={ () => {setSelectedChapterId({id: chapter?.id, number: chapter?.number})
+                                onClick={ () => {setSelectedChapter({id: chapter?.id, name: chapter?.name})
                                   setIsOpenEditChapterModal(true)}}
                           
                               /> </div>
