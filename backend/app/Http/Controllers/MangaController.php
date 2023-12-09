@@ -241,13 +241,16 @@ class MangaController extends Controller
             }, $othernames));
         }
 
-        DB::commit();
         $manga->categories()->sync($categories);
         $manga->authors()->sync($authors);
 
         // Upload thumbnail
         $thumbnail = $request->file('thumbnail');
-        Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+        if (! Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()))) {
+            DB::rollBack();
+        }
+
+        DB::commit();
 
         return response()->json([
             'success' => 1,
@@ -271,7 +274,7 @@ class MangaController extends Controller
             'name' => 'required|string',
             'othernames' => 'array',
             'description' => 'required|string',
-            'thumbnail' => ['required', 'image', 'mimes:jpeg,jpg,png', 'max:10240'],
+            'thumbnail' => ['image', 'mimes:jpeg,jpg,png', 'max:10240'],
             'status' => 'required|integer|in:0,1',
             'categories' => 'required|array',
             'authors' => 'required|array',
@@ -315,15 +318,19 @@ class MangaController extends Controller
 
         $manga->categories()->sync($categories);
 
-        DB::commit();
+        if (! Storage::disk('ftp')->move($oldSlug, $slug)) {
+            DB::rollBack();
+        }
 
         // Upload thumbnail
-        Storage::disk('ftp')->move($oldSlug, $slug);
-
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
-            Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()));
+            if (! Storage::disk('ftp')->put("/{$slug}/thumbnail.jpg", file_get_contents($thumbnail->path()))) {
+                DB::rollBack();
+            }
         }
+
+        DB::commit();
 
         return response()->json([
             'success' => 1,
