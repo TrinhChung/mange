@@ -13,6 +13,7 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
 
   const [number, setNumber] = useState(0);
   const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     const formData = new FormData();
@@ -22,6 +23,7 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
     console.log('formData', formData);
 
     try {
+      setLoading(true)
       const res = await createChapter(
         mangaId ? mangaId : createdMangaId,
         formData
@@ -30,6 +32,8 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
 
       setCurrentStep(2);
       setFirstChapterId(res.data.id);
+
+      setLoading(false)
     } catch (error) {
       toast.error(error?.message);
     }
@@ -88,18 +92,19 @@ const FormChapter = ({ createdMangaId, setFirstChapterId, setCurrentStep }) => {
           display: 'flex',
           justifyContent: 'center',
           padding: '10px 0px',
-          gap: 20,
+          gap: 25,
         }}
       >
         <Button
           className="bg-color-main"
           style={{ color: 'white' }}
           onClick={handleSubmit}
+          loading={loading}
         >
           Tạo chapter
         </Button>
 
-        <Button onClick={() => navigate('/')} type="primary">
+        <Button onClick={() => window.location.href = '/'} type="primary">
           Bỏ qua
         </Button>
       </div>

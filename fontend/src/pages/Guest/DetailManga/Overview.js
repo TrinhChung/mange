@@ -13,7 +13,7 @@ import { MangaContext } from '../../../providers/mangaProvider';
 import { editManga } from '../../../services/Admin';
 const { TextArea } = Input;
 
-const Overview = ({ manga = null, loading = true }) => {
+const Overview = ({ manga = null, loading = true, handleReloadManga }) => {
   const { authUser } = useContext(AuthContext);
   const [change, setChange] = useState(false);
   const [score, setScore] = useState(
@@ -143,6 +143,7 @@ const Overview = ({ manga = null, loading = true }) => {
   const [thumbnail, setThumbnail] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isOpenEditMangaModal, setIsOpenEditMangaModal] = useState(false);
+  const [confirmLoading,setConfirmLoading] = useState(false)
 
   const handleChange = (value, valueObj) => {
     setCategoryList(valueObj.map((obj) => obj.categoryId));
@@ -168,7 +169,7 @@ const Overview = ({ manga = null, loading = true }) => {
     setDescription('')
     setAuthor('')
     setCategoryList(null)
-    setPreviewUrl('')
+    handleDeleteImage()
   }
 
 
@@ -204,15 +205,20 @@ const Overview = ({ manga = null, loading = true }) => {
     formData.append('status', 0);
     formData.append('othernames[0]', 'test');
 
+    console.log('thumbnail', thumbnail);
     if(thumbnail) {
       formData.append('thumbnail', thumbnail);
     }
 
-    console.log('formData', formData);
-
     try {
+
+      setConfirmLoading(true)
       const res = await editManga(manga?.id ,formData);
       toast.success(res.message);
+      setIsOpenEditMangaModal(false)
+      handleReloadManga()
+
+      setConfirmLoading(false)
 
     } catch (error) {
       toast.error(error?.message);
@@ -426,7 +432,8 @@ const Overview = ({ manga = null, loading = true }) => {
     open={isOpenEditMangaModal}
     centered={true}
     onOk={handleSubmitEditManga}
-    onCancel={() => setIsOpenEditMangaModal(false)}
+    onCancel={handleCloseEditMangaModal}
+    confirmLoading={confirmLoading}
   >
   <Form
       name="basic"

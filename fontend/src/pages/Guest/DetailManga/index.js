@@ -30,6 +30,7 @@ const DetailManga = () => {
   const [chapterName, setChapterName] = useState('')
   const [selectedChapter, setSelectedChapter] = useState(null)
   const [isOpenEditChapterModal, setIsOpenEditChapterModal] = useState(false)
+  const [confirmLoading,setConfirmLoading] = useState(false)
 
   const fetchDetailManga = async (id) => {
     try {
@@ -54,25 +55,31 @@ const DetailManga = () => {
 
   const handleEditChapter = async () => {
 try {
-  console.log(selectedChapter);
+  setConfirmLoading(true)
   const res = await editChapter(selectedChapter.id, {number: extractChapterNumber(selectedChapter.name), name: chapterName})
   toast.success(res.message)
   setIsOpenEditChapterModal(false)
   setChapterName('')
-  setReload(!reload)
+  handleReloadManga()
+
+  setConfirmLoading(false)
+
 } catch (error) {
   toast.error(error?.message)
   
 }
   }
+const handleReloadManga =( ) => {
+  setReload(!reload)
 
+}
   return (
     <>
     <Row style={{ justifyContent: 'center' }}>
       <Col span={18}>
         <Row>
           <Col span={16}>
-            <Overview manga={manga} loading={loading} />
+            <Overview manga={manga} loading={loading} handleReloadManga={handleReloadManga} />
             <Content content={manga?.description} loading={loading} />
             <Chapter
               chapters={manga?.chapters}
@@ -100,6 +107,7 @@ try {
     centered={true}
     onOk={   handleEditChapter}
     onCancel={() => setIsOpenEditChapterModal(false)}
+    confirmLoading={confirmLoading}
   >
  <Form
       name="basic"
