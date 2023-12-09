@@ -15,6 +15,7 @@ const FormManga = ({ setCreatedMangaId, setCurrentStep }) => {
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (value, valueObj) => {
     setCategoryList(valueObj.map((obj) => obj.categoryId));
@@ -56,11 +57,13 @@ const FormManga = ({ setCreatedMangaId, setCurrentStep }) => {
     console.log('formData', formData);
 
     try {
+      setLoading(true)
       const res = await createManga(formData);
       toast.success(res.message);
 
       setCurrentStep(1);
       setCreatedMangaId(res.data.id);
+      setLoading(false)
     } catch (error) {
       toast.error(error?.message);
     }
@@ -206,6 +209,7 @@ const FormManga = ({ setCreatedMangaId, setCurrentStep }) => {
           className="bg-color-main"
           style={{ color: 'white' }}
           onClick={handleSubmit}
+          loading={loading}
         >
           Tạo truyện
         </Button>

@@ -298,7 +298,7 @@ const UploadImage = ({ firstChapterId }) => {
 
       <Row style={{ marginTop: 20 }}>
         <Col offset={6} span={24} align="middle">
-          <Button onClick={() => navigate('/')} type="primary">
+          <Button onClick={() => window.location.href = '/'} type="primary">
             Thoát
           </Button>
         </Col>
